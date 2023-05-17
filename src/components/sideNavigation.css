@@ -1,6 +1,6 @@
 .sideNavBar{
 
-    width: 276px;
+    /* width: 276px; */
     background: #FFFFFF;
     box-shadow: 6px 4px 8px -2px rgba(0, 0, 0, 0.08);
     border-radius: 12px 0px 12px 12px;
@@ -11,7 +11,9 @@
 
 .navBarOuter{
     /* box-sizing: border-box; */
-    position: absolute;
-    top: 0;
+    /* position: absolute;
+    top: 0; */
+    position: fixed;
+    width: 100%;
     height: 100vh;
 }
