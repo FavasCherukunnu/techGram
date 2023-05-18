@@ -1,11 +1,11 @@
-import React, { useLayoutEffect } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import { BiHomeAlt, BiSearch,BiExpand} from 'react-icons/bi';
+import { BiHomeAlt, BiSearch,BiExpand,BiListUl} from 'react-icons/bi';
 import { MdOutlineNotificationsNone } from 'react-icons/md';
 import './navbar.css';
 import { Col, Row, Stack } from "react-bootstrap";
@@ -17,11 +17,25 @@ export default function HomeTemplate() {
     useLayoutEffect(() => {
         document.body.style.backgroundColor = "#E3F2DC"
     });
+    const [expanded,setExpanded] = useState(false);
+
+    function ReturnexpandedButton(){
+        if(expanded){
+            return (<BiListUl size={25} onClick={()=>{
+                setExpanded(!expanded)
+            }}/>);
+        }else{
+            return (<BiExpand onClick={()=>{
+                setExpanded(!expanded)
+            }} size={25}/>);
+        }
+    }
+
 
     return (
         <div className="navBarOuter p-2">
             <Row className=" p-0 m-0" style={{height:'100%'}}>
-                <Col xs={12} md={3} lg={3} xl={2} className="p-0 me-2">
+                <Col  className="p-0 me-2" style={{display:expanded?'none':'inline'}}>
                     {/* <div className=''> */}
                     <Stack className='sideNavBar'>
                         <Nav defaultActiveKey="/home" className="flex-column">
@@ -38,13 +52,14 @@ export default function HomeTemplate() {
 
                     </div> */}
                 </Col>
-                <Col className="p-0 " >
+                <Col className="p-0"  >
                     <div className="outerDiv">
                         <Navbar className="topNavBar" bg="light" expand="lg">
                             <Container fluid>
-                                <Navbar.Toggle aria-controls="sideNavBarScroll" />
+                                {/* <Navbar.Toggle aria-controls="sideNavBarScroll" /> */}
 
-                                <BiExpand size={25}/>
+                                {ReturnexpandedButton()}
+
 
                                 <Stack className="ms-auto" direction="horizontal" gap={3}>
                                     <Form >
