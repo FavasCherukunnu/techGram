@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -18,6 +18,7 @@ export default function HomeTemplate() {
         document.body.style.backgroundColor = "#E3F2DC"
     });
     const [expanded,setExpanded] = useState(false);
+    const [smallScreen,setSmallScreen] = useState(false);
 
     function ReturnexpandedButton(){
         if(expanded){
@@ -30,13 +31,28 @@ export default function HomeTemplate() {
             }} size={25}/>);
         }
     }
+    function handleWindowResize(){
+        if(window.innerWidth < 800){
+            if(smallScreen===false)
+                setExpanded(true);
+            setSmallScreen(true)
+        }else{
+            setSmallScreen(false);
+        }
+    }
 
+    useEffect(()=>{
+        handleWindowResize();
+        window.addEventListener('resize', handleWindowResize);
+        return () => {
+            window.removeEventListener('resize', handleWindowResize);
+        };
+    },)
 
     return (
-        <div className="navBarOuter p-2">
-            <Row className=" p-0 m-0" style={{height:'100%'}}>
-                <Col  className="p-0 me-2" style={{display:expanded?'none':'inline'}}>
-                    {/* <div className=''> */}
+        <div className="navBarOuter">
+            <div className="flex_container">
+                <div  className="sideNavBarOuter" style={expanded?{width:'0px',padding:'0px'}:{width:'250px',paddingRight:'10px'}}>
                     <Stack className='sideNavBar'>
                         <Nav defaultActiveKey="/home" className="flex-column">
                             <Nav.Link href="/home">Active</Nav.Link>
@@ -47,12 +63,8 @@ export default function HomeTemplate() {
                             </Nav.Link>
                         </Nav>
                     </Stack>
-                    {/* </div> */}
-                    {/* <div style={{backgroundColor:'white',height:'500px'}}>
-
-                    </div> */}
-                </Col>
-                <Col className="p-0"  >
+                </div>
+                <div className="rightFlexItem"  >
                     <div className="outerDiv">
                         <Navbar className="topNavBar" bg="light" expand="lg">
                             <Container fluid>
@@ -63,12 +75,12 @@ export default function HomeTemplate() {
 
                                 <Stack className="ms-auto" direction="horizontal" gap={3}>
                                     <Form >
-                                        <Stack direction="horizontal">
+                                        <Stack direction="horizontal" >
                                             <Form.Control
                                                 type="search"
                                                 placeholder="Search"
-                                                className="me-2"
                                                 aria-label="Search"
+                                                style={{display:smallScreen?'none':'inline'}}
                                             />
                                             <BiSearch size={25} />
                                         </Stack>
@@ -78,16 +90,16 @@ export default function HomeTemplate() {
                                 </Stack>
                             </Container>
                         </Navbar>
-                        <div className="contentDiv pt-2">
-                            <div className="contentInnerDiv p-4">njh</div>
+                        <div className="contentDiv">
+                            <div className="contentInnerDiv p-4"><h1>content Here</h1></div>
                         </div>
                     </div>
 
                     {/* <div style={{backgroundColor:'white',height:'500px'}}>
 
                     </div> */}
-                </Col>
-            </Row>
+                </div>
+            </div>
         </div>
     );
 
