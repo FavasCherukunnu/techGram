@@ -22,9 +22,9 @@ export function HomePage() {
                     <p className='titleSideText'>Know Your Village</p>
                 </div>
                 <div className='buttonDiv'>
-                    <RectangleButton width='170px'>LOGIN</RectangleButton>
+                    <RectangleButton width='170px' path='/login'>LOGIN</RectangleButton>
                     <div style={{width:'30px',height:'30px'}}></div>
-                    <RectangleButton width='170px'>SIGNUP</RectangleButton>
+                    <RectangleButton width='170px' path='/signUp'>SIGNUP</RectangleButton>
                 </div>
                 
             </div>
