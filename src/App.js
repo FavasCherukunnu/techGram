@@ -8,6 +8,7 @@ function App() {
   return (
     <div>
       <RouterHandler/>
+      {/* <SignupPage/> */}
     </div>
   );
 }
