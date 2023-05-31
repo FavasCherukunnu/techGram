@@ -20,10 +20,11 @@ export function TopNavLink(props) {
     )
 }
 
-export function UserWardInfoTopNavBar() {
+export function UserPanchayathInfoTopNavBar() {
 
     const navigate = useNavigate();
-    const [windowWidth, setWindowWidth] = useState();
+
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [path,setPath] = useState('ward')
 
     useEffect(
@@ -39,7 +40,7 @@ export function UserWardInfoTopNavBar() {
 
     const onChangeDropDown= (event)=>{
         navigate(event.target.value);
-        setPath(event.target.value)
+        setPath(event.target.value);
     }
 
     const isMobile = windowWidth <= 1280;
@@ -47,15 +48,14 @@ export function UserWardInfoTopNavBar() {
     if (isMobile) {
         return (
             // <div className='user_wardinfo_TopNavouterDiv'>
-                <select className='user_wardinfo_TopNavouterDiv' value={path} onChange={onChangeDropDown}>
-                    <option value="ward">Ward Info</option>
+                <select className='user_wardinfo_TopNavouterDiv' value ={path} onChange={onChangeDropDown}>
+                    <option value="panchayath">Panchayath Info</option>
                     <option value="discussion">Discussion</option>
                     <option value="project">Project</option>
                     <option value="announcement">Announcement</option>
                     <option value="complaint">Complaint</option>
-                    <option value="gramSabha">Gram Sabha</option>
+                    <option value="survay">Survay</option>
                     <option value="institutes">Institutes</option>
-                    <option value="users">Users</option>
                 </select>
             // </div>
         );
@@ -63,14 +63,13 @@ export function UserWardInfoTopNavBar() {
         return (
             <div className='user_wardinfo_TopNavouterDiv'>
                 <Nav>
-                    <TopNavLink path={'ward'}>Ward Info</TopNavLink>
+                    <TopNavLink path={'panchayath'}>Panchayath Info</TopNavLink>
                     <TopNavLink path={'discussion'}>Discussion</TopNavLink>
                     <TopNavLink path={'project'}>Project</TopNavLink>
                     <TopNavLink path={'announcement'}>Announcement</TopNavLink>
                     <TopNavLink path={'complaint'}>Complaint</TopNavLink>
-                    <TopNavLink path={'gramSabha'}>Gram Sabha</TopNavLink>
+                    <TopNavLink path={'survay'}>Survay</TopNavLink>
                     <TopNavLink path={'institutes'}>Institutes</TopNavLink>
-                    <TopNavLink path={'users'}>Users</TopNavLink>
                 </Nav>
             </div>
         );

@@ -103,7 +103,7 @@ export default function UserHomePage() {
                                 </Stack>
                             </Container>
                         </Navbar>
-                        <div className="contentDiv">
+                        <div className="contentDiv" id="contentDiv">
                             <div className="contentInnerDiv">
                                 <Outlet/>
                             </div>

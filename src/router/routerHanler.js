@@ -10,7 +10,7 @@ import WardInfoPage from "../pages/user/pages/wardInfoPage/wardInfoPage";
 import PanchayathInfoPage from "../pages/user/pages/panchayathInfoPage/panchayathInfoPage";
 import LocatePage from "../pages/user/pages/LocatePage/locatePage";
 import SurvayPage from "../pages/user/pages/survayPage/survayPage";
-import {UserHomePage as HomeUser} from "../pages/user/pages/homePage/HomePage";
+import { UserHomePage as HomeUser } from "../pages/user/pages/homePage/HomePage";
 import { UserWardInfoPageHome } from "../pages/user/pages/wardInfoPage/pages/wardInfoPage/WardInfoPageHome";
 import { UserDiscussionPage } from "../pages/user/pages/wardInfoPage/pages/discussionPage/UserDiscussionPage";
 import { UserProjectPage } from "../pages/user/pages/wardInfoPage/pages/projectPage/UserProjectPage";
@@ -20,6 +20,14 @@ import { UserGramSabhaPage } from "../pages/user/pages/wardInfoPage/pages/gramSa
 import { UserInstitutePage } from "../pages/user/pages/wardInfoPage/pages/institutesPage/UserInstitutePage";
 import { UserUsersPage } from "../pages/user/pages/wardInfoPage/pages/usersPage/UserPage";
 import { UserWardInfoPageRoot } from "../pages/user/pages/wardInfoPage/pages/home/UserWardInfoPageRoot";
+import { UserPanchayathInfoPageRoot } from "../pages/user/pages/panchayathInfoPage/pages/home/UserPanchayathInfoPageRoot";
+import { UserPanchayathInfoPageHome } from "../pages/user/pages/panchayathInfoPage/pages/PanchayathInfoPage/PanchayathInfoPage";
+import { UserPanchayathDiscussionPage } from "../pages/user/pages/panchayathInfoPage/pages/PanchayathDiscussionPage/UserPanchayathDiscussionPage";
+import { UserPanchayathProjectPage } from "../pages/user/pages/panchayathInfoPage/pages/PanchayathProjectPage/UserPanchayathProjectPage";
+import { UserPanchayathAnnoucementPage } from "../pages/user/pages/panchayathInfoPage/pages/PanchayathAnnoucementPage/UserPanchayathAnnoucementPage";
+import { UserPanchayathComplaintPage } from "../pages/user/pages/panchayathInfoPage/pages/PanchayathComplaintPage/UserPanchayathComplaintPage";
+import { UserPanchayathSurvayPage } from "../pages/user/pages/panchayathInfoPage/pages/PanchayathSurvayPage/UserPanchayathSurvayPage";
+import { UserPanchayathInstitutePage } from "../pages/user/pages/panchayathInfoPage/pages/PanchayathInstitutesPage/UserPanchayathInstitutePage";
 
 
 
@@ -37,7 +45,7 @@ export function RouterHandler() {
                     <Route path="home" element={<UserHomePage />}>
                         <Route path="" element={<HomeUser />} />
                         <Route path="wardInfo" element={<WardInfoPage />}>
-                            <Route path="" element={<UserWardInfoPageRoot/>}/>
+                            <Route path="" element={<UserWardInfoPageRoot />} />
                             <Route path="ward" element={<UserWardInfoPageHome />} />
                             <Route path="discussion" element={<UserDiscussionPage />} />
                             <Route path="project" element={<UserProjectPage />} />
@@ -45,9 +53,18 @@ export function RouterHandler() {
                             <Route path="complaint" element={<UserComplaintPage />} />
                             <Route path="gramSabha" element={<UserGramSabhaPage />} />
                             <Route path="institutes" element={<UserInstitutePage />} />
-                            <Route path="users" element={<UserUsersPage />} />                            
+                            <Route path="users" element={<UserUsersPage />} />
                         </Route>
-                        <Route path="panchayathInfo" element={<PanchayathInfoPage />} />
+                        <Route path="panchayathInfo" element={<PanchayathInfoPage />} >
+                            <Route path="" element={<UserPanchayathInfoPageRoot />} />
+                            <Route path="panchayath" element={<UserPanchayathInfoPageHome />} />
+                            <Route path="discussion" element={<UserPanchayathDiscussionPage />} />
+                            <Route path="project" element={<UserPanchayathProjectPage />} />
+                            <Route path="announcement" element={<UserPanchayathAnnoucementPage />} />
+                            <Route path="complaint" element={<UserPanchayathComplaintPage />} />
+                            <Route path="survay" element={<UserPanchayathSurvayPage />} />
+                            <Route path="institutes" element={<UserPanchayathInstitutePage />} />
+                        </Route>
                         <Route path="locate" element={<LocatePage />} />
                         <Route path="survay" element={<SurvayPage />} />
                     </Route>
