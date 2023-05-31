@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './SignupPage.css';
 import { FormInput } from './component';
 import { RectangleButton } from '../../components/buttonRectangle';
+import { Link } from 'react-router-dom';
 
 const SignupPage = () => {
   const [formData, setFormData] = useState({
@@ -18,7 +19,8 @@ const SignupPage = () => {
     pinCode: '',
     dob: { day: '', month: '', year: '' },
     adharNo: '',
-    dataTimeNow: ''
+    dataTimeNow: '',
+    image:''
   });
 
   const handleOnChange = (event) => {
@@ -80,7 +82,11 @@ const SignupPage = () => {
                 </div>
               </div>
               <FormInput inputTitle='Adhar No' width='100%' onChange={handleOnChange} name='adharNo' value={formData.adharNo} placeholder="Adhar No" />
-              <div style={{ width: '100%', display: 'flex', justifyContent: 'end', paddingTop: '22px' }}>
+              <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', paddingTop: '22px' }}>
+              <div style={{height:'60px',lineHeight:'0.6'}}>
+                    
+                    <Link to={'/login'}><p className='linkText'>Already User? Login</p></Link>
+                </div>
                 <RectangleButton width='150px'>SIGNUP</RectangleButton>
               </div>
             </div>

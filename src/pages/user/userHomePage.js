@@ -7,14 +7,31 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { BiHomeAlt, BiSearch,BiExpand,BiListUl} from 'react-icons/bi';
 import { MdOutlineNotificationsNone } from 'react-icons/md';
-import './navbar.css';
+import './userHomePage.css';
 import { Col, Row, Stack } from "react-bootstrap";
-import './sideNavigation.css'
-import './contentDiv.css'
-import BasicExample from "./nav";
 import ProfileComponent from "./profile";
+import SideNavigationBar from "./sideNavigationBar";
+import { Outlet } from "react-router-dom";
 
-export default function HomeTemplate() {
+export default function UserHomePage() {
+
+    const userData = {
+        fullName: 'Mohammed Favas P',
+        address: '',
+        phoneNo: '',
+        email: '',
+        fatherName: '',
+        motherName: '',
+        district: '',
+        taluk: '',
+        panchayath: '',
+        wardNo: '',
+        pinCode: '',
+        dob: { day: '', month: '', year: '' },
+        adharNo: '',
+        dataTimeNow: '',
+        image:'https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small/default-avatar-profile-icon-of-social-media-user-vector.jpg'
+      }
 
     useLayoutEffect(() => {
         document.body.style.backgroundColor = "#E3F2DC"
@@ -56,16 +73,8 @@ export default function HomeTemplate() {
             <div className="flex_container">
                 <div  className="sideNavBarOuter" style={expanded?{width:'0px',padding:'0px'}:{width:'250px',paddingRight:'10px'}}>
                     <Stack className='sideNavBar'>
-                        <ProfileComponent/>
-                        <Nav defaultActiveKey="/home" className="flex-column">
-                            <Nav.Link href="/home">Active</Nav.Link>
-                            <Nav.Link eventKey="link-1">Link</Nav.Link>
-                            <Nav.Link eventKey="link-2">Link</Nav.Link>
-                            <Nav.Link eventKey="disabled" disabled className='mt-auto'>
-                                Disabled
-                            </Nav.Link>
-                        </Nav>
-                        
+                        <ProfileComponent userData={userData}/>
+                        <SideNavigationBar/>
                     </Stack>
                 </div>
                 <div className="rightFlexItem"  >
@@ -95,8 +104,8 @@ export default function HomeTemplate() {
                             </Container>
                         </Navbar>
                         <div className="contentDiv">
-                            <div className="contentInnerDiv p-4">
-                                <BasicExample/>
+                            <div className="contentInnerDiv">
+                                <Outlet/>
                             </div>
                         </div>
                     </div>
