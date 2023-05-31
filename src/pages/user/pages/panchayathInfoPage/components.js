@@ -11,7 +11,7 @@ export function TopNavLink(props) {
 
     return (
         <NavLink end={props.end} to={props.path} style={{ textDecoration: 'none' }}>
-            <div className='user_topNavLink'>
+            <div className='user_topNavLink' onClick={props.onClick ? () => props.onClick(props.path) : null}>
                 <span className='user_topNavText'>
                     {props.children}
                 </span>
@@ -42,6 +42,9 @@ export function UserPanchayathInfoTopNavBar() {
         navigate(event.target.value);
         setPath(event.target.value);
     }
+    const onTopNavPress = (e) => {
+        setPath(e);
+    }
 
     const isMobile = windowWidth <= 1280;
 
@@ -63,13 +66,13 @@ export function UserPanchayathInfoTopNavBar() {
         return (
             <div className='user_wardinfo_TopNavouterDiv'>
                 <Nav>
-                    <TopNavLink path={'panchayath'}>Panchayath Info</TopNavLink>
-                    <TopNavLink path={'discussion'}>Discussion</TopNavLink>
-                    <TopNavLink path={'project'}>Project</TopNavLink>
-                    <TopNavLink path={'announcement'}>Announcement</TopNavLink>
-                    <TopNavLink path={'complaint'}>Complaint</TopNavLink>
-                    <TopNavLink path={'survay'}>Survay</TopNavLink>
-                    <TopNavLink path={'institutes'}>Institutes</TopNavLink>
+                    <TopNavLink path={'panchayath'} onClick={onTopNavPress}>Panchayath Info</TopNavLink>
+                    <TopNavLink path={'discussion'}onClick={onTopNavPress}>Discussion</TopNavLink>
+                    <TopNavLink path={'project'}onClick={onTopNavPress}>Project</TopNavLink>
+                    <TopNavLink path={'announcement'}onClick={onTopNavPress}>Announcement</TopNavLink>
+                    <TopNavLink path={'complaint'}onClick={onTopNavPress}>Complaint</TopNavLink>
+                    <TopNavLink path={'survay'}onClick={onTopNavPress}>Survay</TopNavLink>
+                    <TopNavLink path={'institutes'}onClick={onTopNavPress}>Institutes</TopNavLink>
                 </Nav>
             </div>
         );
