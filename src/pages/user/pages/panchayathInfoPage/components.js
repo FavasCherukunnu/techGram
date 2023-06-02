@@ -50,17 +50,17 @@ export function UserPanchayathInfoTopNavBar() {
 
     if (isMobile) {
         return (
-            // <div className='user_wardinfo_TopNavouterDiv'>
-                <select className='user_wardinfo_TopNavouterDiv' value ={path} onChange={onChangeDropDown}>
-                    <option value="panchayath">Panchayath Info</option>
-                    <option value="discussion">Discussion</option>
-                    <option value="project">Project</option>
-                    <option value="announcement">Announcement</option>
-                    <option value="complaint">Complaint</option>
-                    <option value="survay">Survay</option>
-                    <option value="institutes">Institutes</option>
+            <div className='user_panchayathInfo_TopDropDownDiv'>
+                <select className='user_panchayathInfo_TopDropDown' value ={path} onChange={onChangeDropDown}>
+                    <option value="panchayath" className='user_panchayathInfo_drownText'>Panchayath Info</option>
+                    <option value="discussion"className='user_panchayathInfo_drownText'>Discussion</option>
+                    <option value="project"className='user_panchayathInfo_drownText'>Project</option>
+                    <option value="announcement"className='user_panchayathInfo_drownText'>Announcement</option>
+                    <option value="complaint"className='user_panchayathInfo_drownText'>Complaint</option>
+                    <option value="survay"className='user_panchayathInfo_drownText'>Survay</option>
+                    <option value="institutes"className='user_panchayathInfo_drownText'>Institutes</option>
                 </select>
-            // </div>
+            </div>
         );
     } else {
         return (

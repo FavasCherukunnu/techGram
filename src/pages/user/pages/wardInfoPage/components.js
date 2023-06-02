@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import './component.css'
 import { NavLink, useNavigate } from 'react-router-dom';
 import Nav from 'react-bootstrap/Nav';
+import { AiFillCaretDown} from 'react-icons/ai';
 
 
 export function TopNavLink(props) {
@@ -34,7 +35,7 @@ export function UserWardInfoTopNavBar() {
     )
     useEffect(
         () => {
-            const handleResize = () => {console.log(path); setWindowWidth(window.innerWidth) }
+            const handleResize = () => { console.log(path); setWindowWidth(window.innerWidth) }
             window.addEventListener('resize', handleResize);
             return () => {
                 window.removeEventListener('resize', handleResize);
@@ -56,18 +57,18 @@ export function UserWardInfoTopNavBar() {
 
     if (isMobile) {
         return (
-            // <div className='user_wardinfo_TopNavouterDiv'>
-            <select className='user_wardinfo_TopNavouterDiv' value={path} onChange={onChangeDropDown}>
-                <option value="ward">Ward Info</option>
-                <option value="discussion">Discussion</option>
-                <option value="project">Project</option>
-                <option value="announcement">Announcement</option>
-                <option value="complaint">Complaint</option>
-                <option value="gramSabha">Gram Sabha</option>
-                <option value="institutes">Institutes</option>
-                <option value="users">Users</option>
-            </select>
-            // </div>
+            <div className='user_wardinfo_TopDropDownDiv'>                    
+                <select className='user_wardinfo_TopDropDown' value={path} onChange={onChangeDropDown}>
+                    <option value="ward" className='user_wardInfo_drownText'>Ward Info</option>
+                    <option value="discussion" className='user_wardInfo_drownText'>Discussion</option>
+                    <option value="project" className='user_wardInfo_drownText'>Project</option>
+                    <option value="announcement" className='user_wardInfo_drownText'>Announcement</option>
+                    <option value="complaint" className='user_wardInfo_drownText'>Complaint</option>
+                    <option value="gramSabha" className='user_wardInfo_drownText'>Gram Sabha</option>
+                    <option value="institutes" className='user_wardInfo_drownText'>Institutes</option>
+                    <option value="users" className='user_wardInfo_drownText'>Users</option>
+                </select>
+            </div>
         );
     } else {
         return (
