@@ -28,6 +28,7 @@ import { UserPanchayathAnnoucementPage } from "../pages/user/pages/panchayathInf
 import { UserPanchayathComplaintPage } from "../pages/user/pages/panchayathInfoPage/pages/PanchayathComplaintPage/UserPanchayathComplaintPage";
 import { UserPanchayathSurvayPage } from "../pages/user/pages/panchayathInfoPage/pages/PanchayathSurvayPage/UserPanchayathSurvayPage";
 import { UserPanchayathInstitutePage } from "../pages/user/pages/panchayathInfoPage/pages/PanchayathInstitutesPage/UserPanchayathInstitutePage";
+import { EditUserPage } from "../pages/user/pages/editUserPage/EditUserPage";
 
 
 
@@ -42,6 +43,7 @@ export function RouterHandler() {
                     <Route path="signUp" element={<SignupPage />} />
                     <Route path="login" element={<LoginPage />} />
                     {/* <Route path="template" element={<HomeTemplate />} /> */}
+                    <Route path="editUser" element={<EditUserPage/>}/>
                     <Route path="home" element={<UserHomePage />}>
                         <Route path="" element={<HomeUser />} />
                         <Route path="wardInfo" element={<WardInfoPage />}>
