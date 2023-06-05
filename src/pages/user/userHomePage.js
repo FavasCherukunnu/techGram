@@ -12,10 +12,16 @@ import { Col, Row, Stack } from "react-bootstrap";
 import ProfileComponent from "./profile";
 import SideNavigationBar from "./sideNavigationBar";
 import { Outlet } from "react-router-dom";
+import axios from "axios";
 
 export default function UserHomePage() {
 
-    const userData = {
+    useLayoutEffect(() => {
+        document.body.style.backgroundColor = "#E3F2DC"
+    });
+    const [expanded,setExpanded] = useState(false);
+    const [smallScreen,setSmallScreen] = useState(false);
+    const [userData,setUserData] = useState({
         fullName: 'Mohammed Favas P',
         address: '',
         phoneNo: '',
@@ -30,14 +36,8 @@ export default function UserHomePage() {
         dob: { day: '', month: '', year: '' },
         adharNo: '',
         dataTimeNow: '',
-        image:'https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small/default-avatar-profile-icon-of-social-media-user-vector.jpg'
-      }
-
-    useLayoutEffect(() => {
-        document.body.style.backgroundColor = "#E3F2DC"
-    });
-    const [expanded,setExpanded] = useState(false);
-    const [smallScreen,setSmallScreen] = useState(false);
+        image:{data:{data:''},contentType:''}
+      });
 
     function ReturnexpandedButton(){
         if(expanded){
@@ -68,6 +68,19 @@ export default function UserHomePage() {
         };
     },)
 
+    useEffect(
+        ()=>{
+            const token = localStorage.getItem('auth-token');
+            axios.get('http://localhost:3002/api/getUserInfo',{headers:{'x-auth-token':token}}).then((res)=>{
+                // console.log(res.data.user.image.data.data);
+                const dat = {...res.data.user};
+                console.log(dat);
+                setUserData(dat);
+            }).catch((err)=>{
+                console.log(err);
+            })
+        },[]
+    )
     return (
         <div className="navBarOuter">
             <div className="flex_container">

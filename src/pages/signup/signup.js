@@ -76,13 +76,13 @@ const SignupPage = () => {
 
     // formData.dataTimeNow = 
     try {
-      axios.post('http://localhost:3002/api/register', form, { headers: localStorage.getItem('token') }).then((res) => {
+      await axios.post('http://localhost:3002/api/register', form, { headers: localStorage.getItem('token') }).then((res) => {
         localStorage.setItem('auth-token',res.data.token);
         navigate('/login');
       })
     } catch(err) {
       console.log(err);
-      console.log('Not logged in');
+      console.log('Not signed in');
     }
 
     // Perform signup logic here
