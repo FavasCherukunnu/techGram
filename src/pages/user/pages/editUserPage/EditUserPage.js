@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react'
 import './EditUserPage.css'
 import axios from 'axios';
 import { RectangleButton } from '../../../../components/buttonRectangle';
+import { useNavigate } from 'react-router-dom';
 
 export function EditUserPage() {
 
   const [userData, setUserData] = useState({
-    fullName: 'Mohammed Favas P',
+    fullName: '',
     address: '',
     phoneNo: '',
     email: '',
@@ -22,6 +23,7 @@ export function EditUserPage() {
     dataTimeNow: '',
     image: { data: { data: '' }, contentType: '' }
   });
+  const navigate = useNavigate();
   const uint8Array = new Uint8Array(userData.image.data.data);
   let base64img = btoa(new Uint8Array(uint8Array).reduce(function (data, byte) {
     return data + String.fromCharCode(byte);
@@ -107,8 +109,10 @@ export function EditUserPage() {
           </table>
           
         </div>
-        <div style={{ display: 'flex', justifyContent: 'end', width: '100%' }}>
-          <RectangleButton>Edit</RectangleButton>
+        <div style={{ display: 'flex', justifyContent: 'center', width: '100%',marginTop:'10px'}}>
+          <RectangleButton height='40px' onClick={()=>{navigate('/editProfile')}}>Edit</RectangleButton>
+          <div style={{width:'30px'}}></div>
+          <RectangleButton onClick={()=>{navigate('/home')}} height='40px'>Ok</RectangleButton>
         </div>
       </div>
     </div>

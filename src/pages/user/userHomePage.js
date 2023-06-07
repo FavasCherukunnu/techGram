@@ -11,11 +11,12 @@ import './userHomePage.css';
 import { Col, Row, Stack } from "react-bootstrap";
 import ProfileComponent from "./profile";
 import SideNavigationBar from "./sideNavigationBar";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { IconButton } from "../../components/iconButton";
 
 export default function UserHomePage() {
-
+    const navigate = useNavigate();
     useLayoutEffect(() => {
         document.body.style.backgroundColor = "#E3F2DC"
     });
@@ -91,7 +92,7 @@ export default function UserHomePage() {
                     </Stack>
                 </div>
                 <div className="rightFlexItem"  >
-                    <div className="outerDiv">
+                    <div className="userHomePage_outerDiv">
                         <Navbar className="topNavBar" bg="light" expand="lg">
                             <Container fluid>
                                 {/* <Navbar.Toggle aria-controls="sideNavBarScroll" /> */}
@@ -108,16 +109,18 @@ export default function UserHomePage() {
                                                 aria-label="Search"
                                                 style={{display:smallScreen?'none':'inline'}}
                                             />
+                                            <IconButton>
                                             <BiSearch size={25} />
+                                            </IconButton>
                                         </Stack>
                                     </Form>
-                                    <MdOutlineNotificationsNone size={25} />
-                                    <BiHomeAlt size={25} />
+                                    <IconButton><MdOutlineNotificationsNone size={25} /></IconButton>
+                                    <IconButton onClick={()=>navigate('/home')}><BiHomeAlt size={25} /></IconButton>
                                 </Stack>
                             </Container>
                         </Navbar>
-                        <div className="contentDiv" id="contentDiv">
-                            <div className="contentInnerDiv">
+                        <div className="userHomePage_contentDiv" id="contentDiv" style={{width:expanded?'calc(100vw - 20px)':smallScreen?'calc(100vw - 20px)':'calc(100vw - 270px)'}}>
+                            <div className="userHomePage_contentInnerDiv">
                                 <Outlet/>
                             </div>
                         </div>
