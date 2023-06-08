@@ -16,23 +16,23 @@ export function RoundedIconButton(props) {
 }
 
 
-export function PlaneButton1(props){
+export function PlaneButton1(props) {
 
   //props
   //width - width of button
   const [isHoverded, setHover] = useState(false);
-  const buttonStyle = {style:{background:isHoverded===false?'#ffffff':'rgba(232, 232, 232, 1)',padding:'10px',borderStyle:"none",minWidth:'100px',"width":props.width,fontFamily:"'Alumni Sans'",fontStyle:"normal",fontWeight:"400",fontSize:"21px",color:"#000000",textShadow:"6px 4px 8px rgba(0, 0, 0, 0.08)",lineHeight:'0.5',border:'1px solid rgba(0, 0, 0, 0.3)'}}
+  const buttonStyle = { style: { background: isHoverded === false ? '#ffffff' : 'rgba(232, 232, 232, 1)', padding: '10px', borderStyle: "none", minWidth: '100px', "width": props.width, fontFamily: "'Alumni Sans'", fontStyle: "normal", fontWeight: "400", fontSize: "21px", color: "#000000", textShadow: "6px 4px 8px rgba(0, 0, 0, 0.08)", lineHeight: '0.5', border: '1px solid rgba(0, 0, 0, 0.3)' } }
 
-  function mouseOverEvent(){
-      setHover(true);
+  function mouseOverEvent() {
+    setHover(true);
   }
 
-  function mouseLeaveEvent(){
-      setHover(false);
+  function mouseLeaveEvent() {
+    setHover(false);
   }
-  
+
   return (
-      <Button style={buttonStyle.style} onMouseEnter={mouseOverEvent} onMouseLeave={mouseLeaveEvent} onClick={props.onClick}>{props.children}</Button>
+    <Button style={buttonStyle.style} onMouseEnter={mouseOverEvent} onMouseLeave={mouseLeaveEvent} onClick={props.onClick}>{props.children}</Button>
   );
 }
 
@@ -45,14 +45,16 @@ export function PostTemplate(props) {
           <p>{props.value.owner}</p>
         </div>
         <div className='user_postTemplate_contenDiv'>
-          <div className='user_postTemplate_imageSpace'>
-            {props.value.images.map((image) => <div className='user_postTemplate_imageDiv'><img src={image} alt="" className='user_postTemplate_image' /></div>)}
-          </div>
+          {props.value.images?<div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+            <div className='user_postTemplate_imageSpace'>
+              {props.value.images.map((image) => <div className='user_postTemplate_imageDiv'><img src={image} alt="" className='user_postTemplate_image' /></div>)}
+            </div>
+          </div>:<div></div>}
           <p className='heading'>{props.value.title}</p>
           <p className='body'>{props.value.description}</p>
           <div className='intractionDiv'>
             <IconButton ><AiOutlineLike size={30} /></IconButton>
-            <div style={{width:'20px'}}></div>
+            <div style={{ width: '20px' }}></div>
             <PlaneButton1 width={'100px'}>Discussion</PlaneButton1>
           </div>
         </div>

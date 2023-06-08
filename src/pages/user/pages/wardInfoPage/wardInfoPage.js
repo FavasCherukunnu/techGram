@@ -6,11 +6,9 @@ import { UserWardInfoTopNavBar} from './components';
 
 function WardInfoPage() {
   return (
-    <div>
+    <div style={{height:'100%',width:'100%',overflow:'hidden'}}>
       <UserWardInfoTopNavBar/>
-      <div>
-        <Outlet/>
-      </div>
+      <Outlet/>
     </div>
   )
 }
