@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import './HomePage.css'
 import { PostTemplate, RoundedIconButton } from './component'
 import { AiOutlinePlus } from 'react-icons/ai';
+import { MyContext } from '../../userHomePage';
+
+
 
 export function UserHomePage() {
 
@@ -13,10 +16,39 @@ export function UserHomePage() {
     description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been theLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been theLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been theLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the"
   }
 
+  const callback = useContext(MyContext);
+
+
+  useEffect(() => {
+    let previousScrollPosition = 0;
+    let currentScrollPosition = 0;
+    let obj = document.getElementById('sample123');
+
+    obj.addEventListener('scroll', (e)=> {
+      // Get the new Value
+      currentScrollPosition = Math.round(obj.scrollTop);
+      // console.log(currentScrollPosition);
+      //Subtract the two and conclude
+      if (currentScrollPosition>previousScrollPosition) {
+        callback(true);
+      } else if(currentScrollPosition<previousScrollPosition){
+        callback(false);
+      }
+
+      // Update the previous value
+      if(previousScrollPosition!==currentScrollPosition){
+        previousScrollPosition = currentScrollPosition;
+      }
+    });
+  }, []);
+
+
+  // callback(true);
+
   return (
     <div className='user_homePage_outerDiv'>
       <div className='user_homePage_innerDiv'>
-        <div className='user_home_postDiv'>
+        <div id='sample123' className='user_home_postDiv'>
           <PostTemplate value={message} />
           <PostTemplate value={message} />
           <PostTemplate value={message} />

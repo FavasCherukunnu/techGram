@@ -2,6 +2,7 @@ import React from 'react'
 import { PostTemplate, RoundedIconButton } from '../../../homePage/component'
 import { AiOutlinePlus } from 'react-icons/ai'
 import './UserDiscussionPage.css'
+import { UnderNavigationOuterDiv } from '../../../../../../components/divisions'
 
 export function UserDiscussionPage() {
   const message = {
@@ -12,9 +13,8 @@ export function UserDiscussionPage() {
     description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been theLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been theLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been theLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the"
   }
   return (
-    <div className='user_discussionPage_outerDiv'>
-      <div className='user_discussionPage_innerDiv'>
-        <div className='user_discussionPage_postDiv'>
+    <UnderNavigationOuterDiv>
+      <div className='user_discussionPage_postDiv'>
           <PostTemplate value={message} />
           <PostTemplate value={message} />
           <PostTemplate value={message} />
@@ -22,7 +22,6 @@ export function UserDiscussionPage() {
         <div style={{ position: 'absolute', bottom: '15px', right: '15px' }}><RoundedIconButton><AiOutlinePlus size={25} /></RoundedIconButton></div>
 
         {/* <PostTemplate/> */}
-      </div>
-    </div>
+    </UnderNavigationOuterDiv>
   )
 }
