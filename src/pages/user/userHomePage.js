@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useMemo, useState } from "react";
 import Form from 'react-bootstrap/Form';
 import { BiHomeAlt, BiSearch, BiExpand, BiListUl } from 'react-icons/bi';
 import { MdOutlineNotificationsNone } from 'react-icons/md';
@@ -12,6 +12,7 @@ import { IconButton } from "../../components/iconButton";
 
 export const MyContext = React.createContext();
 
+
 export default function UserHomePage() {
     const navigate = useNavigate();
     useLayoutEffect(() => {
@@ -19,7 +20,7 @@ export default function UserHomePage() {
     });
     const [expanded, setExpanded] = useState(false);
     const [smallScreen, setSmallScreen] = useState(false);
-    const [topNavHide,setTopNavHide] = useState(false)
+    const [topNavHide, setTopNavHide] = useState(false)
     const [userData, setUserData] = useState({
         fullName: 'Mohammed Favas P',
         address: '',
@@ -37,7 +38,7 @@ export default function UserHomePage() {
         dataTimeNow: '',
         image: { data: { data: '' }, contentType: '' }
     });
-
+    const memoUserData = useMemo(() => userData)
     function ReturnexpandedButton() {
         if (expanded) {
             return (<IconButton onClick={() => {
@@ -86,14 +87,15 @@ export default function UserHomePage() {
             })
         }, []
     )
-    
-    const scrollCallback = (isScrolled)=>{
-            console.log(isScrolled ,topNavHide);
-            // if(topNavHide!==isScrolled){
-                setTopNavHide(isScrolled);
-            // }
-        
+
+    const scrollCallback = (isScrolled) => {
+        // if(topNavHide!==isScrolled){
+        setTopNavHide(isScrolled);
+        // }
+
     }
+
+    console.log('rebuilding userHomepage');
 
     return (
 
@@ -101,7 +103,7 @@ export default function UserHomePage() {
             <div className="flex_container">
                 <div className="sideNavBarOuter" style={expanded ? { width: '0px', padding: '0px' } : { width: '250px', paddingRight: '10px' }}>
                     <Stack className='sideNavBar'>
-                        <ProfileComponent userData={userData} />
+                        <ProfileComponent userData={memoUserData} />
                         <SideNavigationBar />
                     </Stack>
                 </div>
@@ -111,7 +113,7 @@ export default function UserHomePage() {
                         <div className="userHomePage_outerDiv">
 
 
-                            <div className="topNavBar" bg="light" expand="lg" style={{height:topNavHide?'0px':'60px'}}>
+                            <div className="topNavBar" bg="light" expand="lg" style={{ height: topNavHide ? '0px' : '60px' }}>
                                 {/* <Navbar.Toggle aria-controls="sideNavBarScroll" /> */}
 
                                 {ReturnexpandedButton()}
@@ -135,9 +137,9 @@ export default function UserHomePage() {
                                     <IconButton onClick={() => navigate('/home')}><BiHomeAlt size={25} /></IconButton>
                                 </Stack>
                             </div>
-                            <div className="userHomePage_contentDiv" id="contentDiv" style={{ width: expanded ? 'calc(100vw - 20px)' : smallScreen ? 'calc(100vw - 20px)' : 'calc(100vw - 270px)',paddingTop:topNavHide?'0px':'10px',height:topNavHide?'calc(100vh - 20px)':'calc(100vh - 80px)'}}>
-                                <div className="userHomePage_contentInnerDiv">
-                                    <Outlet />
+                            <div className="userHomePage_contentDiv" id="contentDiv" style={{ width: expanded ? 'calc(100vw - 20px)' : smallScreen ? 'calc(100vw - 20px)' : 'calc(100vw - 270px)', paddingTop: topNavHide ? '0px' : '10px', height: topNavHide ? 'calc(100vh - 20px)' : 'calc(100vh - 80px)', transition: 'all 0.2s' }}>
+                    <div className="userHomePage_contentInnerDiv">
+                                <Outlet/>
                                 </div>
                             </div>
                         </div>

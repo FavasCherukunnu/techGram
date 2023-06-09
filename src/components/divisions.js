@@ -22,3 +22,11 @@ export function UnderNavigationOuterDivScrollable(props) {
     </UnderNavigationOuterDiv>
 
 }
+
+
+export function DivScrollableWithGeasture(props){
+//width
+
+
+
+}

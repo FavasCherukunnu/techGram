@@ -28,5 +28,5 @@ const ProfileComponent = (props) => {
   );
 };
 
-export default ProfileComponent;
+export default React.memo(ProfileComponent);
 
