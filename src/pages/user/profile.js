@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 const ProfileComponent = (props) => {
   const userData = props.userData;
+  console.log('rebuilding profile component');
   const uint8Array = new Uint8Array(userData.image.data.data);
   const navigate = useNavigate();
   let base64img = btoa(new Uint8Array(uint8Array).reduce(function (data, byte) {

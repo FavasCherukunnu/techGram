@@ -1,13 +1,21 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
 
 import Nav from 'react-bootstrap/Nav';
 import './sideNavigationBar.css'
 import {SideNavLink} from './components';
+import { MyContext } from './userHomePage';
 
 function SideNavigationBar() {
+
+    const shrinkNavbar = useContext(MyContext)
+
+    const buildTopNav = ()=>{
+        shrinkNavbar(false)
+    }
+    
     return (
-        <div className='user_sideNavigationBar' style={{ width: '100%',paddingTop:'50px' }}>
+        <div className='user_sideNavigationBar' style={{ width: '100%',paddingTop:'50px' }} onClick={buildTopNav}>
             <SideNavLink path='wardInfo'>Ward Info</SideNavLink>
             <SideNavLink path='panchayathInfo'>Panchayath Info</SideNavLink>
             <SideNavLink path='locate'>Locate</SideNavLink>

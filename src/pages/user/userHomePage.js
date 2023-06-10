@@ -100,6 +100,7 @@ export default function UserHomePage() {
     return (
 
         <div className="navBarOuter">
+                    <MyContext.Provider value={scrollCallback}>
             <div className="flex_container">
                 <div className="sideNavBarOuter" style={expanded ? { width: '0px', padding: '0px' } : { width: '250px', paddingRight: '10px' }}>
                     <Stack className='sideNavBar'>
@@ -108,7 +109,6 @@ export default function UserHomePage() {
                     </Stack>
                 </div>
                 <div className="rightFlexItem"  >
-                    <MyContext.Provider value={scrollCallback}>
 
                         <div className="userHomePage_outerDiv">
 
@@ -138,18 +138,18 @@ export default function UserHomePage() {
                                 </Stack>
                             </div>
                             <div className="userHomePage_contentDiv" id="contentDiv" style={{ width: expanded ? 'calc(100vw - 20px)' : smallScreen ? 'calc(100vw - 20px)' : 'calc(100vw - 270px)', paddingTop: topNavHide ? '0px' : '10px', height: topNavHide ? 'calc(100vh - 20px)' : 'calc(100vh - 80px)', transition: 'all 0.2s' }}>
-                    <div className="userHomePage_contentInnerDiv">
-                                <Outlet/>
+                                <div className="userHomePage_contentInnerDiv">
+                                    <Outlet />
                                 </div>
                             </div>
                         </div>
-                    </MyContext.Provider>
 
                     {/* <div style={{backgroundColor:'white',height:'500px'}}>
 
-                    </div> */}
+</div> */}
                 </div>
             </div>
+</MyContext.Provider>
         </div>
     );
 

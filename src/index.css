@@ -13,6 +13,9 @@ code {
     monospace;
 }
 *{
-  font-family: 'Alumni Sans', sans-serif;
+  font-family: 'Alumni Sans';
+font-style: normal;
+font-weight: 500;
+font-size: 18px;
 /* font-family: 'Oswald', sans-serif; */
 }

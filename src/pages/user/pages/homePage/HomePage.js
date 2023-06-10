@@ -4,52 +4,30 @@ import { PostTemplate, RoundedIconButton } from './component'
 import { AiOutlinePlus } from 'react-icons/ai';
 import { MyContext } from '../../userHomePage';
 import ChatSection from './ChatSection';
+import { DivScrollableWithGeasture } from '../../../../components/divisions';
 
 
 
-export  function UserHomePage() {
+export function UserHomePage() {
 
 
-  const callback = useContext(MyContext);
 
-  useEffect(() => {
-    let previousScrollPosition = 0;
-    let currentScrollPosition = 0;
-    let obj = document.getElementById('sample123');
-    console.log('rebuilding homepage');
-
-    obj.addEventListener('scroll', (e)=> {
-      // Get the new Value
-      currentScrollPosition = Math.round(obj.scrollTop);
-      // console.log(currentScrollPosition);
-      //Subtract the two and conclude
-      if (currentScrollPosition>previousScrollPosition) {
-        callback(true);
-      } else if(currentScrollPosition<previousScrollPosition){
-        callback(false);
-      }
-
-      // Update the previous value
-      if(previousScrollPosition!==currentScrollPosition){
-        previousScrollPosition = currentScrollPosition;
-      }
-    });
-  }, []);
 
   // callback(true);
 
   return (
-    <div className='user_homePage_outerDiv'>
-      <div className='user_homePage_innerDiv'>
-        <div id='sample123' className='user_home_postDiv'>
-          
-          <ChatSection/>
 
-        </div>
-        <div style={{ position: 'absolute', bottom: '15px', right: '15px' }}><RoundedIconButton><AiOutlinePlus size={25} /></RoundedIconButton></div>
+    <div style={{width:'100%',height:'100%',position:"relative",padding:'15px'}}>
 
-        {/* <PostTemplate/> */}
-      </div>
+      <DivScrollableWithGeasture>
+
+        <ChatSection />
+      </DivScrollableWithGeasture>
+      <div style={{ position: 'absolute', bottom: '35px', right: '15px' }}><RoundedIconButton><AiOutlinePlus size={25} /></RoundedIconButton></div>
     </div>
+
+
+
+
   )
 }

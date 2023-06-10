@@ -50,14 +50,14 @@ export function RouterHandler() {
                         <Route path="" element={<HomeUser />} />
                         <Route path="wardInfo" element={<WardInfoPage />}>
                             <Route path="" element={<UserWardInfoPageRoot />} />
-                            <Route path="ward" element={<UserWardInfoPageHome />} />
-                            <Route path="discussion" element={<UserDiscussionPage />} />
-                            <Route path="project" element={<UserProjectPage />} />
-                            <Route path="announcement" element={<UserAnnoucementPage />} />
-                            <Route path="complaint" element={<UserComplaintPage />} />
-                            <Route path="gramSabha" element={<UserGramSabhaPage />} />
-                            <Route path="institutes" element={<UserInstitutePage />} />
-                            <Route path="users" element={<UserUsersPage />} />
+                            <Route path="Ward Info" element={<UserWardInfoPageHome />} />
+                            <Route path="Discussion" element={<UserDiscussionPage />} />
+                            <Route path="Project" element={<UserProjectPage />} />
+                            <Route path="Announcement" element={<UserAnnoucementPage />} />
+                            <Route path="Complaint" element={<UserComplaintPage />} />
+                            <Route path="Gram Sabha" element={<UserGramSabhaPage />} />
+                            <Route path="Institutes" element={<UserInstitutePage />} />
+                            <Route path="Users" element={<UserUsersPage />} />
                         </Route>
                         <Route path="panchayathInfo" element={<PanchayathInfoPage />} >
                             <Route path="" element={<UserPanchayathInfoPageRoot />} />

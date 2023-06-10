@@ -22,8 +22,10 @@ export function SideNavLink(props) {
     //     return navigate(props.path);
     // }
 
+
+
     return (
-        <NavLink to={props.path} style={{textDecoration:'none'}}>
+        <NavLink to={props.path} style={{textDecoration:'none'}} onClick={props.onClick}>
             <div className='user_sideNavLink'>
                 <span className='user_sideNavText'>
                     {props.children}

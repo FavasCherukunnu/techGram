@@ -18,7 +18,7 @@ function buildStart() {
 
 }
 
-export function PostTemplate(props) {
+export function ProjectTemplate(props) {
     return (
         <div className='user_userProjectPage_PostOuterDiv'>
             <div className='user_userProjectPage_PostInnerDiv'>

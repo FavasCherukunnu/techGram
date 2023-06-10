@@ -2,11 +2,10 @@ import React, { useEffect } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom';
 
 export function UserWardInfoPageRoot() {
-    console.log('in the function');
     const navigate = useNavigate();
     useEffect(
         () => {
-            navigate('ward');
+            navigate('Ward Info');
         }
     )
     return;

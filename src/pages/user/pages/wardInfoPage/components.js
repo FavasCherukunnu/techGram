@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react'
 import './component.css'
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom';
 import Nav from 'react-bootstrap/Nav';
 import { AiFillCaretDown } from 'react-icons/ai';
 import NavDropdown from 'react-bootstrap/NavDropdown';
@@ -41,10 +41,14 @@ export function MobileTopNavLink(props) {
 export function UserWardInfoTopNavBar() {
 
     const navigate = useNavigate();
+    const location = useLocation();
     const [windowWidth, setWindowWidth] = useState();
-    const [path, setPath] = useState('Ward Info')
-    const [childText, setchildText] = useState('Ward Info');
+    const [expanded, setExpanded] = useState(false);
+    let path = decodeURIComponent(location.pathname)
+    let childText1 = path.substring(path.lastIndexOf('/')+1)
 
+    // console.log(location.pathname.substring(location.pathname.lastIndexOf('/')+1));
+    
     useEffect(
         () => {
             setWindowWidth(window.innerWidth)
@@ -53,7 +57,7 @@ export function UserWardInfoTopNavBar() {
     )
     useEffect(
         () => {
-            const handleResize = () => { console.log(path); setWindowWidth(window.innerWidth) }
+            const handleResize = () => { setWindowWidth(window.innerWidth) }
             window.addEventListener('resize', handleResize);
             return () => {
                 window.removeEventListener('resize', handleResize);
@@ -64,31 +68,31 @@ export function UserWardInfoTopNavBar() {
 
 
     const onTopNavPress = (e,child) => {
-        setPath(e);
-        setchildText(child)
+        setExpanded(false)
     }
 
     const isMobile = windowWidth <= 1280;
 
     if (isMobile) {
         return (
-            <Navbar expand={false} className='user_wardinfo_TopDropDownDiv'>
-                <Container fluid>
-                    <Navbar.Brand href="#" className='user_topNavText' style={{color:'white'}} >{childText}</Navbar.Brand>
-                    <Navbar.Toggle aria-controls="navbarScroll" />
-                    <Navbar.Collapse id="navbarScroll">
+            <Navbar expand={false} expanded={expanded} className='user_wardinfo_TopDropDownDiv'>
+                <Container  fluid>
+                    <Navbar.Brand  href="#" className='user_topNavText' style={{color:'white',padding:0,margin:0}} >{childText1}</Navbar.Brand>
+                    <Navbar.Toggle  onClick={()=>{setExpanded(!expanded)}} aria-controls="navbarScroll" />
+                    <Navbar.Collapse  id="navbarScroll">
                         <Nav
                             className="me-auto my-1 my-lg-0"
                             navbarScroll
+                            
                         >
-                            <MobileTopNavLink path={'ward'} onClick={onTopNavPress}>Ward Info</MobileTopNavLink>
-                            <MobileTopNavLink path={'discussion'} onClick={onTopNavPress}>Discussion</MobileTopNavLink>
-                            <MobileTopNavLink path={'project'} onClick={onTopNavPress}>Project</MobileTopNavLink>
-                            <MobileTopNavLink path={'announcement'} onClick={onTopNavPress}>Announcement</MobileTopNavLink>
-                            <MobileTopNavLink path={'complaint'} onClick={onTopNavPress}>Complaint</MobileTopNavLink>
-                            <MobileTopNavLink path={'gramSabha'} onClick={onTopNavPress}>Gram Sabha</MobileTopNavLink>
-                            <MobileTopNavLink path={'institutes'} onClick={onTopNavPress}>Institutes</MobileTopNavLink>
-                            <MobileTopNavLink path={'users'} onClick={onTopNavPress}>Users</MobileTopNavLink>
+                            <MobileTopNavLink path={'Ward Info'} onClick={onTopNavPress}>Ward Info</MobileTopNavLink>
+                            <MobileTopNavLink path={'Discussion'} onClick={onTopNavPress}>Discussion</MobileTopNavLink>
+                            <MobileTopNavLink path={'Project'} onClick={onTopNavPress}>Project</MobileTopNavLink>
+                            <MobileTopNavLink path={'Announcement'} onClick={onTopNavPress}>Announcement</MobileTopNavLink>
+                            <MobileTopNavLink path={'Complaint'} onClick={onTopNavPress}>Complaint</MobileTopNavLink>
+                            <MobileTopNavLink path={'Gram Sabha'} onClick={onTopNavPress}>Gram Sabha</MobileTopNavLink>
+                            <MobileTopNavLink path={'Institutes'} onClick={onTopNavPress}>Institutes</MobileTopNavLink>
+                            <MobileTopNavLink path={'Users'} onClick={onTopNavPress}>Users</MobileTopNavLink>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
@@ -98,14 +102,14 @@ export function UserWardInfoTopNavBar() {
         return (
             <div className='user_wardinfo_TopNavouterDiv'>
                 <Nav>
-                    <TopNavLink path={'ward'} onClick={onTopNavPress}>Ward Info</TopNavLink>
-                    <TopNavLink path={'discussion'} onClick={onTopNavPress}>Discussion</TopNavLink>
-                    <TopNavLink path={'project'} onClick={onTopNavPress}>Project</TopNavLink>
-                    <TopNavLink path={'announcement'} onClick={onTopNavPress}>Announcement</TopNavLink>
-                    <TopNavLink path={'complaint'} onClick={onTopNavPress}>Complaint</TopNavLink>
-                    <TopNavLink path={'gramSabha'} onClick={onTopNavPress}>Gram Sabha</TopNavLink>
-                    <TopNavLink path={'institutes'} onClick={onTopNavPress}>Institutes</TopNavLink>
-                    <TopNavLink path={'users'} onClick={onTopNavPress}>Users</TopNavLink>
+                    <TopNavLink path={'Ward Info'} onClick={onTopNavPress}>Ward Info</TopNavLink>
+                    <TopNavLink path={'Discussion'} onClick={onTopNavPress}>Discussion</TopNavLink>
+                    <TopNavLink path={'Project'} onClick={onTopNavPress}>Project</TopNavLink>
+                    <TopNavLink path={'Announcement'} onClick={onTopNavPress}>Announcement</TopNavLink>
+                    <TopNavLink path={'Complaint'} onClick={onTopNavPress}>Complaint</TopNavLink>
+                    <TopNavLink path={'Gram Sabha'} onClick={onTopNavPress}>Gram Sabha</TopNavLink>
+                    <TopNavLink path={'Institutes'} onClick={onTopNavPress}>Institutes</TopNavLink>
+                    <TopNavLink path={'Users'} onClick={onTopNavPress}>Users</TopNavLink>
                 </Nav>
             </div>
         );
