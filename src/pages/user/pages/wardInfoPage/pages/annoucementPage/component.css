@@ -15,7 +15,8 @@
 
 .user_AnnouncementTemplate_outerDiv {
     width: 100%;
-    padding: 20px;
+    padding-top: 10px;
+    padding-bottom: 50px;
 }
 
 .user_AnnouncementTemplate_innerDiv {
@@ -117,9 +118,11 @@
 }
 
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1000px) {
     .user_AnnouncementTemplate_outerDiv {
-        padding:10px ;
+        padding:0px ;
+        padding-top: 20px;
+        padding-bottom: 40px;
 
     }
 

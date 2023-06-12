@@ -15,7 +15,9 @@
 
 .user_userProjectPage_PostOuterDiv {
     width: 100%;
-    padding: 20px;
+    /* padding: 20px; */
+    padding-bottom: 50px;
+    padding-top: 10px;
 }
 
 .user_userProjectPage_PostInnerDiv {
@@ -128,9 +130,11 @@
     font-size: 20px;
 }
 
-@media screen and (max-width: 800px) {
-    .user_userProjectPage_outerDiv {
-        padding:10px ;
+@media screen and (max-width: 1000px) {
+    .user_userProjectPage_PostOuterDiv {
+        padding:0px ;
+        padding-top: 20px;
+        padding-bottom: 40px;
 
     }
 

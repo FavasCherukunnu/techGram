@@ -4,7 +4,7 @@ import { PostTemplate, RoundedIconButton } from './component'
 import { AiOutlinePlus } from 'react-icons/ai';
 import { MyContext } from '../../userHomePage';
 import ChatSection from './ChatSection';
-import { DivScrollableWithGeasture } from '../../../../components/divisions';
+import { DivScrollableWithGeasture, UnderNavigationOuterDiv } from '../../../../components/divisions';
 
 
 
@@ -17,13 +17,15 @@ export function UserHomePage() {
 
   return (
 
-    <div style={{width:'100%',height:'100%',position:"relative",padding:'15px'}}>
+    <div style={{width:'100%',height:'100%',position:"relative"}}>
 
+      <UnderNavigationOuterDiv height='100%'>
       <DivScrollableWithGeasture>
 
         <ChatSection />
       </DivScrollableWithGeasture>
       <div style={{ position: 'absolute', bottom: '35px', right: '15px' }}><RoundedIconButton><AiOutlinePlus size={25} /></RoundedIconButton></div>
+      </UnderNavigationOuterDiv>
     </div>
 
 

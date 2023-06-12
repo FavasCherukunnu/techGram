@@ -15,7 +15,8 @@
 
 .user_ComplaintTemplate_outerDiv {
     width: 100%;
-    padding: 20px;
+    padding-top: 10px;
+    padding-bottom: 50px;
 }
 
 .user_ComplaintTemplate_innerDiv {
@@ -98,9 +99,11 @@
 }
 
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1000px) {
     .user_ComplaintTemplate_outerDiv {
-        padding:10px ;
+        padding:0px ;
+        padding-top:20px ;
+        padding-bottom: 50px;
 
     }
 

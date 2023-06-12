@@ -86,7 +86,14 @@
         padding-bottom: 80px;
 
     }
-    .userHomePage_contentDiv{
+
+    .userHomePage_contentDiv {
         width: calc(100vw);
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .userHomePage_contentInnerDiv {
+        background-color: transparent;
     }
 }

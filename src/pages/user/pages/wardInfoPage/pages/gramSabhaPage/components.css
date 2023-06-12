@@ -1,6 +1,7 @@
 .user_GramSabhaTemplate_outerDiv {
     width: 100%;
-    padding: 20px;
+    padding-top: 10px;
+    padding-bottom: 50px;
 }
 .user_GramSabhaTemplate_innerDiv {
     /* width: 800px; */
@@ -110,6 +111,11 @@
 }
 
 @media screen and (max-width: 1000px){
+    .user_GramSabhaTemplate_outerDiv{
+        padding: 0px;
+        padding-top: 20px;
+        padding-bottom: 40px;
+    }
     .user_GramSabhaTemplate_contenDiv{
         flex-direction: column;
         flex-flow: column-reverse;
