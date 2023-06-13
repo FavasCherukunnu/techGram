@@ -1,17 +1,24 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './HomePage.css'
 import { PostTemplate, RoundedIconButton } from './component'
 import { AiOutlinePlus } from 'react-icons/ai';
 import { MyContext } from '../../userHomePage';
 import ChatSection from './ChatSection';
 import { DivScrollableWithGeasture, UnderNavigationOuterDiv } from '../../../../components/divisions';
+import {ShowFormmodel} from './Model';
 
 
 
 export function UserHomePage() {
 
+  const [showFormModel , setShowFormModel] = useState(false);
 
-
+    function showFormModelFun(){
+      setShowFormModel(true);
+    }
+    function closeFormModelFun(){
+      setShowFormModel(false)
+    }
 
   // callback(true);
 
@@ -24,7 +31,8 @@ export function UserHomePage() {
 
         <ChatSection />
       </DivScrollableWithGeasture>
-      <div style={{ position: 'absolute', bottom: '35px', right: '15px' }}><RoundedIconButton><AiOutlinePlus size={25} /></RoundedIconButton></div>
+      <div style={{ position: 'absolute', bottom: '35px', right: '15px' }}><RoundedIconButton onClick={showFormModelFun}><AiOutlinePlus size={25} /></RoundedIconButton></div>
+      <ShowFormmodel show={showFormModel} onClose={closeFormModelFun}/>
       </UnderNavigationOuterDiv>
     </div>
 

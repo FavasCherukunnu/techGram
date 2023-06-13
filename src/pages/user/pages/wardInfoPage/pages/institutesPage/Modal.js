@@ -27,7 +27,7 @@ function ShowModal(props) {
 
     return (
         <>
-            <Modal show={props.show} onHide={props.onClose} aria-labelledby="example-custom-modal-styling-title" centered>
+            <Modal size='lg' show={props.show} onHide={props.onClose} aria-labelledby="example-custom-modal-styling-title" centered>
                 <Modal.Header closeButton>
                     <Modal.Title>{dat}</Modal.Title>
                 </Modal.Header>

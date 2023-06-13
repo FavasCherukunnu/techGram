@@ -1,7 +1,8 @@
 import React from 'react'
 import { AnnouncementTemplate } from './component'
 
- function AnoucementDiv() {
+export function AnnoucementSection() {
+
     const message = {
         owner: 'Mohammed Favas',
         id: '12345',
@@ -19,4 +20,4 @@ import { AnnouncementTemplate } from './component'
     )
 }
 
-export const AnnoucementSection = React.memo(AnoucementDiv)
+// export const AnnoucementSection = React.memo(AnoucementDiv)

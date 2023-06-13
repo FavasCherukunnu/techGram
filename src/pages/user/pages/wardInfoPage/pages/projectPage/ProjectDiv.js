@@ -2,7 +2,7 @@ import React from "react";
 import { ProjectTemplate } from "./component";
 
 
-function ProjectDiv() {
+export function ProjectSection() {
     const message = {
         owner: 'Member Name',
         id: '12345',
@@ -25,4 +25,4 @@ function ProjectDiv() {
 }
 
 
-export const ProjectSection = React.memo(ProjectDiv)
+// export const ProjectSection = React.memo(ProjectDiv)

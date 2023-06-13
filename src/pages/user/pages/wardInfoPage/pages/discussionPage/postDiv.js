@@ -1,7 +1,7 @@
 import React from 'react'
 import { PostTemplate } from '../../../homePage/component'
 
-function PostDiv() {
+export function PostSection() {
     const message = {
         owner: 'Mohammed Favas',
         id: '12345',
@@ -18,4 +18,4 @@ function PostDiv() {
     )
 }
 
-export const PostSection = React.memo(PostDiv);
+// export const PostSection = React.memo(PostDiv);

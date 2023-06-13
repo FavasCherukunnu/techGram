@@ -1,7 +1,7 @@
 import React from 'react'
 import { ComplaintTemplate } from './component'
 
-function ComplaintDiv() {
+export function ComplaintSection() {
     const message = [
         {
             owner: 'Mohammed Favas',
@@ -28,4 +28,4 @@ function ComplaintDiv() {
 }
 
 
-export const ComplaintSection = React.memo(ComplaintDiv)
+// export const ComplaintSection = React.memo(ComplaintDiv)

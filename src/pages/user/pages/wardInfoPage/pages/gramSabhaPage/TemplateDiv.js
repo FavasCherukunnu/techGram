@@ -2,7 +2,7 @@ import React from 'react'
 import { PostTemplate } from '../../../homePage/component'
 import { GramSabhaTemplate } from './components'
 
-function TemplateDiv() {
+export function GramSabhaTemplateSection() {
     const message = {
         owner: 'Mohammed Favas',
         id: '12345',
@@ -19,4 +19,4 @@ function TemplateDiv() {
   )
 }
 
-export const GramSabhaTemplateSection = React.memo(TemplateDiv)
+// export const GramSabhaTemplateSection = React.memo(TemplateDiv)

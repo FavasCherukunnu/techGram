@@ -9,7 +9,7 @@ import { IconButton } from '../../../../components/iconButton';
 
 export function RoundedIconButton(props) {
   return (
-    <div className='RoundedIconBUtton_outer'>
+    <div {...props} className='RoundedIconBUtton_outer'>
       {props.children}
     </div>
   )

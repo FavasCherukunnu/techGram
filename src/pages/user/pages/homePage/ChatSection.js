@@ -1,7 +1,8 @@
 import React from "react";
 import { PostTemplate } from "./component";
 
-function PostSection() {
+export default function PostSection() {
+
     
     const message = {
         owner: 'Mohammed Favas',
@@ -19,4 +20,4 @@ function PostSection() {
     </div>
 }
 
-export default React.memo(PostSection);
+// export default React.memo(PostSection);

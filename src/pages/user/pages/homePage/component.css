@@ -12,6 +12,11 @@
     justify-content: center;
     color: white;
 }
+.RoundedIconBUtton_outer:hover{
+    background: #7ae349;
+    cursor: pointer;
+    box-shadow: 6px 6px 8px -2px rgba(0, 0, 0, 0.379);
+}
 
 .user_postTemplate_outerDiv {
     width: 100%;
