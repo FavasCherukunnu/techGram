@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react'
 import './component.css'
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
 
@@ -14,7 +14,7 @@ export function TopNavLink(props) {
 
     return (
         <NavLink end={props.end} to={props.path} style={{ textDecoration: 'none' }}>
-            <div className='user_topNavLink' onClick={props.onClick ? () => props.onClick(props.path,props.children) : null}>
+            <div className='user_topNavLink' onClick={props.onClick ? () => props.onClick(props.path, props.children) : null}>
                 <span className='user_topNavText'>
                     {props.children}
                 </span>
@@ -41,11 +41,20 @@ export function MobileTopNavLink(props) {
 export function UserPanchayathInfoTopNavBar() {
 
     const navigate = useNavigate();
-
+    const location = useLocation();
+    const [expanded, setExpanded] = useState(false);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-    const [path, setPath] = useState('panchayath')
+    // const [path, setPath] = useState('panchayath')
     const [childText, setchildText] = useState('Panchayath Info');
+    let path = decodeURIComponent(location.pathname)
+    let childText1 = path.substring(path.lastIndexOf('/') + 1)
 
+    useEffect(
+        () => {
+            setWindowWidth(window.innerWidth)
+        }
+        , []
+    )
     useEffect(
         () => {
             const handleResize = () => { setWindowWidth(window.innerWidth) }
@@ -58,30 +67,31 @@ export function UserPanchayathInfoTopNavBar() {
     );
 
     const onTopNavPress = (e, child) => {
-        setchildText(child);
-        setPath(e);
+        setExpanded(false)
+        // setchildText(child);
+        // setPath(e);
     }
 
     const isMobile = windowWidth <= 1280;
 
     if (isMobile) {
         return (
-            <Navbar expand={false} className='user_panchayathInfo_TopDropDownDiv'>
+            <Navbar expand={false} expanded={expanded} className='user_panchayathInfo_TopDropDownDiv'>
                 <Container fluid>
-                    <Navbar.Brand href="#" className='user_topNavText' style={{ color: 'white' }} >{childText}</Navbar.Brand>
-                    <Navbar.Toggle aria-controls="navbarScroll" />
+                    <Navbar.Brand href="#" className='user_topNavText' style={{ color: 'white' }} >{childText1}</Navbar.Brand>
+                    <Navbar.Toggle aria-controls="navbarScroll" onClick={()=>{setExpanded(!expanded)}}/>
                     <Navbar.Collapse id="navbarScroll">
                         <Nav
                             className="me-auto my-1 my-lg-0"
                             navbarScroll
                         >
-                            <TopNavLink path={'panchayath'} onClick={onTopNavPress}>Panchayath Info</TopNavLink>
-                            <TopNavLink path={'discussion'} onClick={onTopNavPress}>Discussion</TopNavLink>
-                            <TopNavLink path={'project'} onClick={onTopNavPress}>Project</TopNavLink>
-                            <TopNavLink path={'announcement'} onClick={onTopNavPress}>Announcement</TopNavLink>
-                            <TopNavLink path={'complaint'} onClick={onTopNavPress}>Complaint</TopNavLink>
-                            <TopNavLink path={'survay'} onClick={onTopNavPress}>Survay</TopNavLink>
-                            <TopNavLink path={'institutes'} onClick={onTopNavPress}>Institutes</TopNavLink>
+                            <TopNavLink path={'Panchayath Info'} onClick={onTopNavPress}>Panchayath Info</TopNavLink>
+                            <TopNavLink path={'Discussion'} onClick={onTopNavPress}>Discussion</TopNavLink>
+                            <TopNavLink path={'Project'} onClick={onTopNavPress}>Project</TopNavLink>
+                            <TopNavLink path={'Announcement'} onClick={onTopNavPress}>Announcement</TopNavLink>
+                            <TopNavLink path={'Complaint'} onClick={onTopNavPress}>Complaint</TopNavLink>
+                            <TopNavLink path={'Survay'} onClick={onTopNavPress}>Survay</TopNavLink>
+                            <TopNavLink path={'Institutes'} onClick={onTopNavPress}>Institutes</TopNavLink>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
@@ -91,13 +101,13 @@ export function UserPanchayathInfoTopNavBar() {
         return (
             <div className='user_wardinfo_TopNavouterDiv'>
                 <Nav>
-                    <TopNavLink path={'panchayath'} onClick={onTopNavPress}>Panchayath Info</TopNavLink>
-                    <TopNavLink path={'discussion'} onClick={onTopNavPress}>Discussion</TopNavLink>
-                    <TopNavLink path={'project'} onClick={onTopNavPress}>Project</TopNavLink>
-                    <TopNavLink path={'announcement'} onClick={onTopNavPress}>Announcement</TopNavLink>
-                    <TopNavLink path={'complaint'} onClick={onTopNavPress}>Complaint</TopNavLink>
-                    <TopNavLink path={'survay'} onClick={onTopNavPress}>Survay</TopNavLink>
-                    <TopNavLink path={'institutes'} onClick={onTopNavPress}>Institutes</TopNavLink>
+                    <TopNavLink path={'Panchayath Info'} onClick={onTopNavPress}>Panchayath Info</TopNavLink>
+                    <TopNavLink path={'Discussion'} onClick={onTopNavPress}>Discussion</TopNavLink>
+                    <TopNavLink path={'Project'} onClick={onTopNavPress}>Project</TopNavLink>
+                    <TopNavLink path={'Announcement'} onClick={onTopNavPress}>Announcement</TopNavLink>
+                    <TopNavLink path={'Complaint'} onClick={onTopNavPress}>Complaint</TopNavLink>
+                    <TopNavLink path={'Survay'} onClick={onTopNavPress}>Survay</TopNavLink>
+                    <TopNavLink path={'Institutes'} onClick={onTopNavPress}>Institutes</TopNavLink>
                 </Nav>
             </div>
         );

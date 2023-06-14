@@ -1,14 +1,15 @@
 import React from 'react'
 import { DivScrollableWithGeasture, UnderNavigationOuterDiv } from '../../../../../../components/divisions'
-import { ComplaintTemplate } from './component'
 import { ComplaintSection } from './ComplaintDiv'
+import { DropdownTop } from './component'
 
 export function UserComplaintPage() {
-  
+
   return (
     <UnderNavigationOuterDiv>
+      <DropdownTop/>
       <DivScrollableWithGeasture>
-        <ComplaintSection/>
+        <ComplaintSection />
       </DivScrollableWithGeasture>
     </UnderNavigationOuterDiv>
   )

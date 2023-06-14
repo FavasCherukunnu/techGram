@@ -3,7 +3,7 @@ import { useState } from "react";
 
 export function RoundedIconButton(props) {
     return (
-        <div className='RoundedIconBUtton_outer'>
+        <div className='RoundedIconBUtton_outer' {...props}>
             {props.children}
         </div>
     )

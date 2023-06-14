@@ -9,35 +9,44 @@ import { Route, Routes } from 'react-router-dom'
 import { DivScrollableWithGeasture, DivScrollableWithGeasture2, UnderNavigationOuterDiv } from '../../../../../../components/divisions'
 import { ChatSection } from './ChatDiv'
 import { NotificationSection } from './NotificationDiv'
+import { ShowFormmodel } from './Model'
 
 
 
 function ChatDiv(props) {
   const smallScreen = props.smallScreen;
-  const style = { "width": smallScreen ? '100%' : "60%", "height": smallScreen ? "calc(100% - 100px)" : "100%","position": "relative", "overflow": "hidden" }
+  const style = { "width": smallScreen ? '100%' : "60%", "height": smallScreen ? "calc(100% - 100px)" : "100%", "position": "relative", "overflow": "hidden" }
+  const [showFormModel, setShowFormModel] = useState(false);
+
+  function showFormModelFun() {
+    setShowFormModel(true);
+  }
+  function closeFormModelFun() {
+    setShowFormModel(false)
+  }
 
   return (
     <div style={style}>
       <DivScrollableWithGeasture isNotStyleChangable={false}>
-        <ChatSection/>
+        <ChatSection />
       </DivScrollableWithGeasture>
       {/* <div className='user_home_postDiv'>
           
       </div> */}
-      <div style={{ position: 'absolute', bottom: '20px', right: '15px' }}><RoundedIconButton><AiOutlinePlus size={25} /></RoundedIconButton></div>
+      <div style={{ position: 'absolute', bottom: '20px', right: '15px' }}><RoundedIconButton onClick={showFormModelFun}><AiOutlinePlus size={25} /></RoundedIconButton></div>
+      <ShowFormmodel show={showFormModel} onClose={closeFormModelFun}/>
     </div>
   );
 }
 
 function NotificationDiv(props) {
-
   const smallScreen = props.smallScreen;
   const user_wardInfo_RightOuter = { "paddingLeft": smallScreen ? '' : "15px", "width": smallScreen ? '100%' : "40%", "height": smallScreen ? 'calc(100% - 65px)' : "100%", "overflow": "hidden" }
   return (
     <div style={user_wardInfo_RightOuter}>
       {/* <div className='user_wardInfo_innerDiv2'> */}
       <DivScrollableWithGeasture id={'sample2'} isNotStyleChangable={true}>
-        <NotificationSection/>        
+        <NotificationSection />
       </DivScrollableWithGeasture>
       {/* </div> */}
     </div>
@@ -64,7 +73,7 @@ export function UserWardInfoPageHome() {
 
 
   const [smallScreen, setSmallScreen] = useState(false);
-  const style = {height:'100%', "width": "100%", "overflow": "hidden", "display": smallScreen ? ' ' : "flex" }
+  const style = { height: '100%', "width": "100%", "overflow": "hidden", "display": smallScreen ? ' ' : "flex" }
   const [val, SetVal] = useState(1)
 
   function handleWindowResize() {
@@ -113,10 +122,10 @@ export function UserWardInfoPageHome() {
   } else {
     return (
       <UnderNavigationOuterDiv>
-      <div style={style}>
-        <ChatDiv smallScreen={smallScreen} />
-        <NotificationDiv smallScreen={smallScreen} />
-      </div>
+        <div style={style}>
+          <ChatDiv smallScreen={smallScreen} />
+          <NotificationDiv smallScreen={smallScreen} />
+        </div>
       </UnderNavigationOuterDiv>
     )
   }

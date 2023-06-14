@@ -1,10 +1,11 @@
 import './component.css'
 import { AiOutlineLike } from 'react-icons/ai'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import React from 'react'
 import { Button } from 'react-bootstrap';
 import { IconButton } from '../../../../components/iconButton';
+import { ShowDiscussionmodel } from './Model';
 
 
 export function RoundedIconButton(props) {
@@ -14,7 +15,28 @@ export function RoundedIconButton(props) {
     </div>
   )
 }
+export function DiscussionTemplate() {
+  return (
+    <div className='user_homePage_discussion_template'>
+      <div className='user_homePage_discussion_template_userName' >
+        UserName
+      </div>
+      <div className='user_homePage_discussion_template_text'>
+        here notification displays. notification is controlled by admin of institutions
+        here notification displays. notification is controlled by admin of institutions
+        here notification displays. notification is controlled by admin of institutions
+        here notification displays. notification is controlled by admin of institutions
+        here notification displays. notification is controlled by admin of institutions
+        here notification displays. notification is controlled by admin of institutions
+        user types Discussion here so that others can also participate. this is very important section in the world famouse hystory of the logica illussion. 
+      </div>
+      <div className='user_homePage_discussion_template_time'>
+        00:00
+      </div>
 
+    </div>
+  )
+}
 
 export function PlaneButton1(props) {
 
@@ -38,6 +60,15 @@ export function PlaneButton1(props) {
 
 
 export function PostTemplate(props) {
+
+  const [showDiscussionModel, setShowDiscussionModel] = useState(false);
+  function showDiscussionModelfunc() {
+    setShowDiscussionModel(true);
+  }
+  function closeDiscussionModelfunc() {
+    setShowDiscussionModel(false)
+  }
+
   return (
     <div className='user_postTemplate_outerDiv'>
       <div className='user_postTemplate_innerDiv'>
@@ -45,20 +76,21 @@ export function PostTemplate(props) {
           <p>{props.value.owner}</p>
         </div>
         <div className='user_postTemplate_contenDiv'>
-          {props.value.images?<div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+          {props.value.images ? <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
             <div className='user_postTemplate_imageSpace'>
               {props.value.images.map((image) => <div className='user_postTemplate_imageDiv'><img src={image} alt="" className='user_postTemplate_image' /></div>)}
             </div>
-          </div>:<div></div>}
+          </div> : <div></div>}
           <p className='heading'>{props.value.title}</p>
           <p className='body'>{props.value.description}</p>
           <div className='intractionDiv'>
             <IconButton ><AiOutlineLike size={30} /></IconButton>
             <div style={{ width: '20px' }}></div>
-            <PlaneButton1 width={'100px'}>Discussion</PlaneButton1>
+            <PlaneButton1 width={'100px'} onClick={showDiscussionModelfunc}>Discussion</PlaneButton1>
           </div>
         </div>
       </div>
+      <ShowDiscussionmodel show={showDiscussionModel} onClose={closeDiscussionModelfunc} />
     </div>
   )
 }

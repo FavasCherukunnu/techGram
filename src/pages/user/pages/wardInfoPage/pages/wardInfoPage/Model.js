@@ -1,8 +1,11 @@
-import { Modal } from "react-bootstrap";
-import { PitInputLabelled, PitTextAreaLabelled } from "../../../../../../components/inputs";
-import { RectangleButton } from "../../../../../../components/buttonRectangle";
+import React from 'react'
+import { Modal } from 'react-bootstrap';
+import './Model.css'
+import { PitTextAreaLabelled,PitInputLabelled } from '../../../../../../components/inputs';
+import { RectangleButton } from '../../../../../../components/buttonRectangle';
 
-export function ShowDiscussionModel(props) {
+
+export function ShowFormmodel(props) {
 
 
 
@@ -10,7 +13,7 @@ export function ShowDiscussionModel(props) {
         <>
             <Modal fullscreen show={props.show} onHide={props.onClose} aria-labelledby="example-custom-modal-styling-title" centered>
                 <Modal.Header closeButton>
-                    <Modal.Title>Post a Discussion</Modal.Title>
+                    <Modal.Title>Post To Ward Gallary</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <PitTextAreaLabelled rows={4} inputTitle='Description' placeholder='Enter Description'/>

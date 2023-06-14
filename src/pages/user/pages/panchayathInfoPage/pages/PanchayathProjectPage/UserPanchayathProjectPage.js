@@ -1,7 +1,13 @@
 import React from 'react'
+import { DivScrollableWithGeasture, UnderNavigationOuterDiv } from '../../../../../../components/divisions'
+import { ProjectSection } from './ProjectDiv'
 
 export function UserPanchayathProjectPage() {
   return (
-    <div>PanchayathProjectPage</div>
+    <UnderNavigationOuterDiv>
+      <DivScrollableWithGeasture>
+        <ProjectSection/>
+      </DivScrollableWithGeasture>
+    </UnderNavigationOuterDiv>
   )
 }

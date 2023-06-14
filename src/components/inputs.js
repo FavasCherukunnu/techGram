@@ -20,7 +20,7 @@ export function PitInputLabelled(props){
 
 export function PitTextAreaLabelled(props){
   return(
-    <div style={{paddingTop:'20px',width:props.width?props.width:'100%',paddingBottom:'5px'}}>
+    <div style={{paddingTop:props.padding?'':'20px',width:props.width?props.width:'100%',paddingBottom:'5px'}}>
         <p className="inputTitleFont">{props.inputTitle}</p>
         <textarea style={{height:props.height?props.height:''}} className='component_pitInput' placeholder={props.placeholder} rows={props.rows}></textarea>
     </div>

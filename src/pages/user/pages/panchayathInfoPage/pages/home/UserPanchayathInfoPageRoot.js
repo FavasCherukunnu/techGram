@@ -6,7 +6,7 @@ export function UserPanchayathInfoPageRoot() {
     const navigate = useNavigate();
     useEffect(
         () => {
-            navigate('panchayath');
+            navigate('Panchayath Info');
         }
     )
     return;

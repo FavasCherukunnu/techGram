@@ -15,6 +15,9 @@
 .DivScrollableWithGeasture_InnerInnerDiv {
     padding: 35px;
 }
+.DivScrollableWithGeasture_InnerInnerDivP0{
+    padding: 0px 0px 0px 0px;
+}
 
 @media screen and (max-width: 1000px) {
     .UnderNavigationOuterDiv_mainouter {
@@ -30,5 +33,8 @@
 
     .DivScrollableWithGeasture_InnerInnerDiv {
         padding: 5px;
+    }
+    .DivScrollableWithGeasture_InnerInnerDivPt0{
+        padding: 0px 0px 0px 0px;
     }
 }

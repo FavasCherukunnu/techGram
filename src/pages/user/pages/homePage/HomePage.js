@@ -28,7 +28,6 @@ export function UserHomePage() {
 
       <UnderNavigationOuterDiv height='100%'>
       <DivScrollableWithGeasture>
-
         <ChatSection />
       </DivScrollableWithGeasture>
       <div style={{ position: 'absolute', bottom: '35px', right: '15px' }}><RoundedIconButton onClick={showFormModelFun}><AiOutlinePlus size={25} /></RoundedIconButton></div>

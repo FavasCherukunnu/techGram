@@ -61,13 +61,13 @@ export function RouterHandler() {
                         </Route>
                         <Route path="panchayathInfo" element={<PanchayathInfoPage />} >
                             <Route path="" element={<UserPanchayathInfoPageRoot />} />
-                            <Route path="panchayath" element={<UserPanchayathInfoPageHome />} />
-                            <Route path="discussion" element={<UserPanchayathDiscussionPage />} />
-                            <Route path="project" element={<UserPanchayathProjectPage />} />
-                            <Route path="announcement" element={<UserPanchayathAnnoucementPage />} />
-                            <Route path="complaint" element={<UserPanchayathComplaintPage />} />
-                            <Route path="survay" element={<UserPanchayathSurvayPage />} />
-                            <Route path="institutes" element={<UserPanchayathInstitutePage />} />
+                            <Route path="Panchayath Info" element={<UserPanchayathInfoPageHome />} />
+                            <Route path="Discussion" element={<UserPanchayathDiscussionPage />} />
+                            <Route path="Project" element={<UserPanchayathProjectPage />} />
+                            <Route path="Announcement" element={<UserPanchayathAnnoucementPage />} />
+                            <Route path="Complaint" element={<UserPanchayathComplaintPage />} />
+                            <Route path="Survay" element={<UserPanchayathSurvayPage />} />
+                            <Route path="Institutes" element={<UserPanchayathInstitutePage />} />
                         </Route>
                         <Route path="locate" element={<LocatePage />} />
                         <Route path="survay" element={<SurvayPage />} />
