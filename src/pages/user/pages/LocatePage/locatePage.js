@@ -6,7 +6,7 @@ import { AiOutlineSearch } from 'react-icons/ai'
 import { IconButton } from '../../../../components/iconButton'
 import { Dropdown, DropdownButton } from 'react-bootstrap'
 import { SurvayList } from './component'
-function LocatePage() {
+export function UserLocatePage() {
   return (
     <UnderNavigationOuterDiv height='100%'>
       <div className='user_locatePage_TopSection'>
@@ -29,4 +29,3 @@ function LocatePage() {
   )
 }
 
-export default LocatePage

@@ -5,7 +5,7 @@ import { NavLink, Outlet } from 'react-router-dom';
 import { UserPanchayathInfoTopNavBar} from './components';
 import { SwipeGeastureDiv } from '../../../../components/divisions';
 
-function WardInfoPage() {
+function UserPanchayathInfo() {
   return (
     <div style={{height:'100%',width:'100%',overflow:'hidden'}}>
       <SwipeGeastureDiv><UserPanchayathInfoTopNavBar/></SwipeGeastureDiv>
@@ -14,4 +14,4 @@ function WardInfoPage() {
   )
 }
 
-export default WardInfoPage
+export default UserPanchayathInfo

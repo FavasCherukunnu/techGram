@@ -1,9 +1,8 @@
 import React from 'react'
 
-function SurvayPage() {
+export function UserSurvayPage() {
   return (
     <div>SurvayPage</div>
   )
 }
 
-export default SurvayPage

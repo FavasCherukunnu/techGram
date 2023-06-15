@@ -5,7 +5,7 @@ import { NavLink, Outlet } from 'react-router-dom';
 import { UserWardInfoTopNavBar} from './components';
 import { SwipeGeastureDiv } from '../../../../components/divisions';
 
-function WardInfoPage() {
+function UserWardInfoPage() {
   return (
     <div style={{height:'100%',width:'100%',overflow:'hidden'}}>
       <SwipeGeastureDiv><UserWardInfoTopNavBar/></SwipeGeastureDiv>
@@ -14,4 +14,4 @@ function WardInfoPage() {
   )
 }
 
-export default WardInfoPage
+export default UserWardInfoPage

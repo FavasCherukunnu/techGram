@@ -141,7 +141,7 @@ export default function UserHomePage() {
                                         </Stack>
                                     </Form>
                                     <IconButton><MdOutlineNotificationsNone size={25} /></IconButton>
-                                    <IconButton onClick={() => navigate('/home')}><BiHomeAlt size={25} /></IconButton>
+                                    <IconButton onClick={() => navigate('../home')}><BiHomeAlt size={25} /></IconButton>
                                 </Stack>
                             </div>
                             <div className="userHomePage_contentDiv" id="contentDiv" style={{ width: expanded ? 'calc(100vw - 20px)' : smallScreen ? 'calc(100vw - 20px)' : 'calc(100vw - 270px)', paddingTop: topNavHide ? '0px' : '10px', height: topNavHide ? 'calc(100vh - 20px)' : 'calc(100vh - 80px)', transition: 'all 0.2s' }}>
