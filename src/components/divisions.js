@@ -8,7 +8,7 @@ export function UnderNavigationOuterDiv(props) {
 
     return (
         <div style={style} className="UnderNavigationOuterDiv_mainouter">
-            <div style={{ "width": "100%", "height": "100%", "position": "relative", "overflow": "hidden" }} >
+            <div style={{ "width": "100%", "height": "100%", "position": "relative", "overflow": "hidden",backgroundColor:props.isNotStyleChangable?'#ffffff':''}} >
                 {props.children}
             </div>
         </div>);

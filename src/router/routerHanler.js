@@ -53,6 +53,7 @@ import { MemberPanchayathInstitutePage } from "../pages/member/pages/panchayathI
 import { MemberLocatePage } from "../pages/member/pages/LocatePage/locatePage";
 import { MemberSurvayPage } from "../pages/member/pages/survayPage/survayPage";
 import { MemberOnlyComplaintPage } from "../pages/member/pages/ComplaintPage/UserPanchayathComplaintPage";
+import { MemberUserRegistration } from "../pages/member/pages/userRegistration/memberUserRegistration";
 
 
 
@@ -124,6 +125,7 @@ export function RouterHandler() {
                             <Route path="locate" element={<MemberLocatePage />} />
                             <Route path="survay" element={<MemberSurvayPage />} />
                             <Route path="complaints" element={<MemberOnlyComplaintPage />} />
+                            <Route path="User Registration" element={<MemberUserRegistration />} />
                         </Route>
                     </Route>
                 </Route>
