@@ -6,7 +6,7 @@ import './sideNavigationBar.css'
 import {SideNavLink} from './components';
 import { MyContext } from './userHomePage';
 
-function SideNavigationBar() {
+function SideNavigationBar(props) {
 
     const shrinkNavbar = useContext(MyContext)
 
@@ -16,11 +16,11 @@ function SideNavigationBar() {
     
     return (
         <div className='user_sideNavigationBar' style={{ width: '100%',paddingTop:'50px' }} onClick={buildTopNav}>
-            <SideNavLink path='wardInfo'>Ward Info</SideNavLink>
-            <SideNavLink path='panchayathInfo'>Panchayath Info</SideNavLink>
-            <SideNavLink path='locate'>Locate</SideNavLink>
-            <SideNavLink path='survay'>Survey</SideNavLink>
-            <SideNavLink path='/login'>Logout</SideNavLink>
+            <SideNavLink onClick={props.onClick} path='wardInfo'>Ward Info</SideNavLink>
+            <SideNavLink onClick={props.onClick} path='panchayathInfo'>Panchayath Info</SideNavLink>
+            <SideNavLink onClick={props.onClick} path='locate'>Locate</SideNavLink>
+            <SideNavLink onClick={props.onClick} path='survay'>Survey</SideNavLink>
+            <SideNavLink onClick={props.onClick} path='/login'>Logout</SideNavLink>
         </div>
     )
 }

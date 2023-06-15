@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { HomePage } from "../pages/homePage/homePage";
 import SignupPage from "../pages/signup/signup";
 import { ForNotFor } from "../pages/ForNotFor/ForNotFor";
-import HomeTemplate from "../components/homeTemplate";
 import LoginPage from "../pages/loginPage/LoginPage";
 import UserHomePage from "../pages/user/userHomePage";
 import WardInfoPage from "../pages/user/pages/wardInfoPage/wardInfoPage";

@@ -66,6 +66,13 @@ export default function UserHomePage() {
         }
     }
 
+    const autoCloseSideNavOnClickInSmallScreen = ()=>{
+        if(smallScreen){
+            console.log('smallScreen');
+            setExpanded(true)
+        }
+    }
+
     useEffect(() => {
         handleWindowResize();
         window.addEventListener('resize', handleWindowResize);
@@ -105,7 +112,7 @@ export default function UserHomePage() {
                 <div className="sideNavBarOuter" style={expanded ? { width: '0px', padding: '0px' } : { width: '250px', paddingRight: '10px' }}>
                     <Stack className='sideNavBar'>
                         <ProfileComponent userData={memoUserData} />
-                        <SideNavigationBar />
+                        <SideNavigationBar onClick={autoCloseSideNavOnClickInSmallScreen} />
                     </Stack>
                 </div>
                 <div className="rightFlexItem"  >
