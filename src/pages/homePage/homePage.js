@@ -10,7 +10,7 @@ export function HomePage() {
         <div className="root base">
             <Nav className="justify-content-end" activeKey="/home">
                 <Nav.Item>
-                    <NavText link=''>Admin</NavText>
+                    <NavText link='/Admin'>Admin</NavText>
                 </Nav.Item>
                 <Nav.Item>
                     <NavText link=''>About</NavText>

@@ -54,6 +54,34 @@ import { MemberLocatePage } from "../pages/member/pages/LocatePage/locatePage";
 import { MemberSurvayPage } from "../pages/member/pages/survayPage/survayPage";
 import { MemberOnlyComplaintPage } from "../pages/member/pages/ComplaintPage/UserPanchayathComplaintPage";
 import { MemberUserRegistration } from "../pages/member/pages/userRegistration/memberUserRegistration";
+import { PresidentHomePage } from "../pages/President/presidentHomePage";
+import { HomePresident } from "../pages/President/pages/homePage/HomePage";
+import { PresidentWardInfoPage } from "../pages/President/pages/wardInfoPage/wardInfoPage";
+import { PresidentWardInfoPageRoot } from "../pages/President/pages/wardInfoPage/pages/home/UserWardInfoPageRoot";
+import { PresidentWardInfoPageHome } from "../pages/President/pages/wardInfoPage/pages/wardInfoPage/WardInfoPageHome";
+import { PresidentDiscussionPage } from "../pages/President/pages/wardInfoPage/pages/discussionPage/UserDiscussionPage";
+import { PresidentProjectPage } from "../pages/President/pages/wardInfoPage/pages/projectPage/MemberProjectPage";
+import { PresidentAnnoucementPage } from "../pages/President/pages/wardInfoPage/pages/annoucementPage/MemberAnnoucementPage";
+import { PresidentComplaintPage } from "../pages/President/pages/wardInfoPage/pages/complaintPage/UserComplaintPage";
+import { PresidentGramSabhaPage } from "../pages/President/pages/wardInfoPage/pages/gramSabhaPage/MemberGramSabhaPage";
+import { PresidentInstitutePage } from "../pages/President/pages/wardInfoPage/pages/institutesPage/UserInstitutePage";
+import { PresidentUsersPage } from "../pages/President/pages/wardInfoPage/pages/usersPage/UserPage";
+import { PresidentPanchayathInfo } from "../pages/President/pages/panchayathInfoPage/panchayathInfoPage";
+import { PresidentPanchayathInfoPageRoot } from "../pages/President/pages/panchayathInfoPage/pages/home/UserPanchayathInfoPageRoot";
+import { PresidentPanchayathInfoPageHome } from "../pages/President/pages/panchayathInfoPage/pages/PanchayathInfoPage/PanchayathInfoPage";
+import { PresidentPanchayathDiscussionPage } from "../pages/President/pages/panchayathInfoPage/pages/PanchayathDiscussionPage/UserPanchayathDiscussionPage";
+import { PresidentPanchayathProjectPage } from "../pages/President/pages/panchayathInfoPage/pages/PanchayathProjectPage/UserPanchayathProjectPage";
+import { PresidentPanchayathAnnoucementPage } from "../pages/President/pages/panchayathInfoPage/pages/PanchayathAnnoucementPage/UserPanchayathAnnoucementPage";
+import { PresidentPanchayathComplaintPage } from "../pages/President/pages/panchayathInfoPage/pages/PanchayathComplaintPage/UserPanchayathComplaintPage";
+import { PresidentPanchayathSurvayPage } from "../pages/President/pages/panchayathInfoPage/pages/PanchayathSurvayPage/UserPanchayathSurvayPage";
+import { PresidentPanchayathInstitutePage } from "../pages/President/pages/panchayathInfoPage/pages/PanchayathInstitutesPage/UserPanchayathInstitutePage";
+import { PresidentLocatePage } from "../pages/President/pages/LocatePage/locatePage";
+import { PresidentSurvayPage } from "../pages/President/pages/survayPage/survayPage";
+import { PresidentOnlyComplaintPage } from "../pages/President/pages/ComplaintPage/UserPanchayathComplaintPage";
+import { PresidentMemberRegistration } from "../pages/President/pages/userRegistration/memberUserRegistration";
+import { AdminPage } from "../pages/AdminPage/AdminPage";
+import { AdminHomePage } from "../pages/AdminPage/pages/homePage/HomePage";
+import { CreatePanchayath } from "../pages/AdminPage/pages/createPanchayath/CreatePanchayath";
 
 
 
@@ -70,6 +98,11 @@ export function RouterHandler() {
                     {/* <Route path="template" element={<HomeTemplate />} /> */}
                     <Route path="editUser" element={<EditUserPage />} />
                     <Route path="editProfile" element={<Editpage2 />} />
+                    <Route path="Admin">
+                        <Route index element={<AdminPage />} />
+                        <Route path="home" element={<AdminHomePage/>}/>
+                        <Route path="createPanchayath" element={<CreatePanchayath/>}/>
+                    </Route>
                     <Route path="user">
                         <Route path="home" element={<UserHomePage />}>
                             <Route path="" element={<HomeUser />} />
@@ -100,7 +133,7 @@ export function RouterHandler() {
                     </Route>
                     <Route path="member">
                         <Route path="home" element={<MemberHomePage />}>
-                            <Route path="" element={<HomeMember/>} />
+                            <Route path="" element={<HomeMember />} />
                             <Route path="wardInfo" element={<MemberWardInfoPage />}>
                                 <Route path="" element={<MemberWardInfoPageRoot />} />
                                 <Route path="Ward Info" element={<MemberWardInfoPageHome />} />
@@ -128,8 +161,38 @@ export function RouterHandler() {
                             <Route path="User Registration" element={<MemberUserRegistration />} />
                         </Route>
                     </Route>
+                    <Route path="president">
+                        <Route path="home" element={<PresidentHomePage />}>
+                            <Route path="" element={<HomePresident />} />
+                            <Route path="wardInfo" element={<PresidentWardInfoPage />}>
+                                <Route path="" element={<PresidentWardInfoPageRoot />} />
+                                <Route path="Ward Info" element={<PresidentWardInfoPageHome />} />
+                                <Route path="Discussion" element={<PresidentDiscussionPage />} />
+                                <Route path="Project" element={<PresidentProjectPage />} />
+                                <Route path="Announcement" element={<PresidentAnnoucementPage />} />
+                                <Route path="Complaint" element={<PresidentComplaintPage />} />
+                                <Route path="Gram Sabha" element={<PresidentGramSabhaPage />} />
+                                <Route path="Institutes" element={<PresidentInstitutePage />} />
+                                <Route path="Users" element={<PresidentUsersPage />} />
+                            </Route>
+                            <Route path="panchayathInfo" element={<PresidentPanchayathInfo />} >
+                                <Route path="" element={<PresidentPanchayathInfoPageRoot />} />
+                                <Route path="Panchayath Info" element={<PresidentPanchayathInfoPageHome />} />
+                                <Route path="Discussion" element={<PresidentPanchayathDiscussionPage />} />
+                                <Route path="Project" element={<PresidentPanchayathProjectPage />} />
+                                <Route path="Announcement" element={<PresidentPanchayathAnnoucementPage />} />
+                                <Route path="Complaint" element={<PresidentPanchayathComplaintPage />} />
+                                <Route path="Survay" element={<PresidentPanchayathSurvayPage />} />
+                                <Route path="Institutes" element={<PresidentPanchayathInstitutePage />} />
+                            </Route>
+                            <Route path="locate" element={<PresidentLocatePage />} />
+                            <Route path="survay" element={<PresidentSurvayPage />} />
+                            <Route path="complaints" element={<PresidentOnlyComplaintPage />} />
+                            <Route path="Member Registration" element={<PresidentMemberRegistration />} />
+                        </Route>
+                    </Route>
                 </Route>
-                <Route path="*" element={ForNotFor()} />
+                <Route path="*" element={<ForNotFor />} />
             </Routes>
         </BrowserRouter>
     );
