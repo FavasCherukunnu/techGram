@@ -77,7 +77,7 @@ const SignupPage = () => {
     // formData.dataTimeNow = 
     try {
       await axios.post('http://localhost:3002/api/register', form, { headers: localStorage.getItem('token') }).then((res) => {
-        localStorage.setItem('auth-token',res.data.token);
+        localStorage.setItem('x-auth-token',res.data.token);
         navigate('/login');
       })
     } catch(err) {

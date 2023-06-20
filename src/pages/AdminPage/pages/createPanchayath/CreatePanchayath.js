@@ -2,22 +2,109 @@ import React, { useEffect, useState } from 'react'
 import './CreatePanchayath.css'
 import './component.css'
 import { FormInput } from './component';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { RectangleButton } from '../../../../components/buttonRectangle';
 import data from '../../../../staticFiles/districts.json'
+import axios from 'axios';
+import { SERVER_ADDRESS } from '../../../../staticFiles/constants';
+import { isLogedIn } from '../../../../staticFiles/functions';
 
 export function CreatePanchayath() {
-  const [districtId, setDistrictId] = useState();
-
-  useEffect(
-    () => {
-      // fetchDropdownData();
-      console.log(data.districts[7]);
-    }, []
-  );
-
-  const onClickDistrict = (event) => {
+  const [districtId, setDistrictId] = useState(-1);
+  const [blockId, setBlockId] = useState(-1);
+  const [panchayathId, setPanchayathId] = useState(-1);
+  const [title, setTitle] = useState('');
+  const [loginFailedMessage, setLoginFailedMessage] = useState(null);
+  const navigate = useNavigate();
+  const onChangeDistrict = (event) => {
     setDistrictId(event.target.value)
+    setBlockId(-1)
+    setPanchayathId(-1)
+  }
+
+  const onChangeBlock = (event) => {
+    setBlockId(event.target.value)
+    setPanchayathId(-1)
+  }
+  const onChangePanchayath = (event) => {
+    setPanchayathId(event.target.value)
+  }
+
+  const buildDistrict = () => {
+    return data.districts.map(
+      (element) => {
+        return (<option key={element.id} value={element.id} >{element.name}</option>)
+      }
+    )
+  }
+
+  const builBlock = () => {
+    var arr = [];
+    arr.push(<option key={-1} value={-1}>select</option>)
+    if (districtId > 0) {
+      const district = data.districts[districtId - 1];
+      if (district.block_panchayats) {
+
+        arr.push(district.block_panchayats.map(
+          (block) => {
+            return (<option key={block.id} value={block.id} >{block.name}</option>)
+          }
+        ))
+      }
+    }
+    return arr
+  }
+
+  const builPanchayath = () => {
+    var arr = [];
+    arr.push(<option key={-1} value={-1}>select</option>)
+    if (blockId > 0 && districtId > 0) {
+      const block = data.districts[districtId - 1].block_panchayats[blockId - 1];
+      if (block.panchayats) {
+
+        arr.push(block.panchayats.map(
+          (panchayath) => {
+            return (<option key={panchayath.id} value={panchayath.id} >{panchayath.name}</option>)
+          }
+        ));
+      }
+    }
+    return arr;
+  }
+
+  const handleOnSubmit = async () => {
+    if (districtId > 0 && blockId > 0 && panchayathId > 0 && title !== '') {
+      let res = {
+        title: title,
+        district: data.districts[districtId - 1].name,
+        block: data.districts[districtId - 1].block_panchayats[blockId - 1].name,
+        panchayath: data.districts[districtId - 1].block_panchayats[blockId - 1].panchayats[panchayathId - 1].name,
+        id: `${districtId}${blockId}${panchayathId}`
+      }
+      try {
+        const token = localStorage.getItem('x-auth-token');
+        await axios.post(`${SERVER_ADDRESS}/admin/createPanchayath`, { panchayath: res }, { headers: { 'x-auth-token': token } })
+        navigate('../home')
+      } catch (err) {
+
+        console.log(err);
+        let loggedIn = isLogedIn(err);
+        if(loggedIn===true){
+          setLoginFailedMessage(err.response.data.message);
+        }else if(loggedIn===null){
+          setLoginFailedMessage('Somthing Went Wrong');
+        }else{
+          navigate('/Admin')
+          //navigate to login page
+        }
+      }
+    } else {
+      console.log('please select value');
+    }
+  }
+
+  const handleTitleInput = (event) => {
+    setTitle(event.target.value);
   }
 
 
@@ -29,62 +116,44 @@ export function CreatePanchayath() {
           <form>
             <div className="gridDiv">
               <div className='gridItem'>
-                <FormInput inputTitle='Panchayath Name' width='100%' name='fullName' placeholder="Panchayath Name" />
-                <div className='DropDownOutDiv'>
-                  <p className="DropDowninputTitleFont">Select District</p>
-                  <select value={districtId} onChange={onClickDistrict}>
-                    {data.districts.map(
-                      (element) => {
-                        return (<option value={element.id} >{element.name}</option>)
-                      }
-                    )}
-                  </select>
-                </div>
-                <div className='DropDownOutDiv'>
-                  <p className="DropDowninputTitleFont">Select District</p>
-                  <select>
-                    {districtId != null ? data.districts[districtId - 1].block_panchayats ? data.districts[districtId - 1].block_panchayats.map(
-                      (element) => {
-                        return (<option value={element.id} >{element.name}</option>)
-                      }
-                    ) : <option >select</option> : <option >select</option>}
-                  </select>
-                </div>
-                <FormInput inputTitle='Father Name' width='100%' name='fatherName' placeholder="Father Name" />
-                <FormInput inputTitle='Mother Name' width='100%' name='motherName' placeholder="Mother Name" />
-                <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
-                  <FormInput inputTitle='Phone No' width='48%' name='phoneNo' placeholder="Phone No" />
-                  <FormInput inputTitle='Email' width='48%' name='email' placeholder="Email" />
-                </div>
-                <FormInput inputTitle='Profile image' type='file' name='profileImage' />
-              </div>
-              <div className='gridItem'>
-                <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
-                  <FormInput inputTitle='District' width='48%' name='district' placeholder="District" />
-                  <FormInput inputTitle='Taluk' width='48%' name='taluk' placeholder="Taluk" />
-                </div>
-                <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
-                  <FormInput inputTitle='Panchayath' width='48%' name='panchayath' placeholder="Panchayath" />
-                  <FormInput inputTitle='Ward No' width='48%' name='wardNo' placeholder="Ward No" />
-                </div>
-                <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
-                  <FormInput inputTitle='Pin Code' width='48%' name='pinCode' placeholder="Pin Code" />
-                  <div style={{ width: '48%', display: 'flex', justifyContent: 'space-between' }}>
-                    <FormInput inputTitle='Day' width='30%' name='dob.day' placeholder="Day" />
-                    <FormInput inputTitle='Month' width='30%' name='dob.month' placeholder="Month" />
-                    <FormInput inputTitle='Year' width='30%' name='dob.year' placeholder="Year" />
-                  </div>
-                </div>
-                <FormInput inputTitle='Adhar No' width='100%' name='adharNo' placeholder="Adhar No" />
-                <FormInput inputTitle='Password' width='100%' name='password' placeholder="Password" />
-                <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', paddingTop: '22px' }}>
-                  <div style={{ height: '60px', lineHeight: '0.6' }}>
+                <FormInput onChange={handleTitleInput} inputTitle='Panchayath Title Name' width='100%' name='title' placeholder="Panchayath Name" value={title} />
 
-                    <Link to={'/login'}><p className='linkText'>Already User? Login</p></Link>
-                  </div>
-                  <RectangleButton width='150px' >SIGNUP</RectangleButton>
+                <div className='DropDownOutDiv'>
+                  <p className="DropDowninputTitleFont">Select District</p>
+                  <select value={districtId} onChange={onChangeDistrict} className='admin_customDropDownToggle'>
+                    <option key={-1} value={-1} >select</option>
+                    {
+                      buildDistrict()
+                    }
+                  </select>
                 </div>
+
+                <div className='DropDownOutDiv'>
+                  <p className="DropDowninputTitleFont">Select block</p>
+                  <select className='admin_customDropDownToggle' onChange={onChangeBlock}>
+                    {
+                      builBlock()
+                    }
+                  </select>
+                </div>
+
+                <div className='DropDownOutDiv'>
+                  <p className="DropDowninputTitleFont">Select Panchayath</p>
+                  <select className='admin_customDropDownToggle' onChange={onChangePanchayath}>
+                    {builPanchayath()}
+                  </select>
+                </div>
+                <div className='admin_createPanchayath_buttonDiv'>
+                  <div>
+                    <div className='admin_createPanchayath_err_text'>
+                      {loginFailedMessage?`${loginFailedMessage}!!!`:''}
+                    </div>
+                  </div>
+                  <RectangleButton onClick={handleOnSubmit}>Create</RectangleButton>
+                </div>
+
               </div>
+
             </div>
 
           </form>

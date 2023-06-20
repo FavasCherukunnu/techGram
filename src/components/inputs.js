@@ -4,7 +4,7 @@ import './inputs.css'
 export  function PitInput(props) {
   return (
     <div style={{width:props.width?props.width:'100%'}}>
-        <input style={{height:props.height?props.height:''}} className='component_pitInput' placeholder={props.placeholder}></input>
+        <input style={{height:props.height?props.height:''}} className='component_pitInput' placeholder={props.placeholder} onChange={(e)=>{props.onChange(e)}}></input>
     </div>
   )
 }

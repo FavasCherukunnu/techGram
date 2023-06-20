@@ -79,9 +79,10 @@ import { PresidentLocatePage } from "../pages/President/pages/LocatePage/locateP
 import { PresidentSurvayPage } from "../pages/President/pages/survayPage/survayPage";
 import { PresidentOnlyComplaintPage } from "../pages/President/pages/ComplaintPage/UserPanchayathComplaintPage";
 import { PresidentMemberRegistration } from "../pages/President/pages/userRegistration/memberUserRegistration";
-import { AdminPage } from "../pages/AdminPage/AdminPage";
+import { AdminPage } from "../pages/AdminPage/loginPage";
 import { AdminHomePage } from "../pages/AdminPage/pages/homePage/HomePage";
 import { CreatePanchayath } from "../pages/AdminPage/pages/createPanchayath/CreatePanchayath";
+import { ViewPanchayath } from "../pages/AdminPage/pages/viewPanchayath/ViewPanchayath";
 
 
 
@@ -102,6 +103,7 @@ export function RouterHandler() {
                         <Route index element={<AdminPage />} />
                         <Route path="home" element={<AdminHomePage/>}/>
                         <Route path="createPanchayath" element={<CreatePanchayath/>}/>
+                        <Route path="viewPanchayath" element={<ViewPanchayath/>}/>
                     </Route>
                     <Route path="user">
                         <Route path="home" element={<UserHomePage />}>

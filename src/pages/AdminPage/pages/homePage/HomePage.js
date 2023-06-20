@@ -10,10 +10,14 @@ export  function AdminHomePage() {
     function onClickCreatePanchayath(){
         navigate('../createPanchayath')
     }
-
+    function onClickViewPanchayath(){
+      navigate('../viewPanchayath')
+  }
   return (
     <div className='admin_base'>
         <RectangleButton width='200px' onClick={onClickCreatePanchayath}>Create Panchayath</RectangleButton>
+        <div style={{height:'10px'}}></div>
+        <RectangleButton width='200px' onClick={onClickViewPanchayath}>View Panchayath</RectangleButton>
     </div>
   )
 }

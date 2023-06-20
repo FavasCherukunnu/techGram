@@ -3,14 +3,17 @@ import './loginPage.css';
 import { FormInput } from './component';
 import { RectangleButton } from '../../components/buttonRectangle';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { SERVER_ADDRESS } from '../../staticFiles/constants';
 
 
 export const AdminPage = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    email: 'mhdfavascheru@gmail.com',
+    userName: 'favas',
     password: '1234',
   });
+  const [loginFailedMessage,setLoginFailedMessage] = useState(null);
 
   const handleOnChange = (event) => {
     const name = event.target['name'];
@@ -22,11 +25,16 @@ export const AdminPage = () => {
 
   const handleSubmit = async(event) => {
     event.preventDefault();
-    console.log(formData);
     try {
-        navigate('home')
+        let res = await axios.post(`${SERVER_ADDRESS}/admin/login`,formData)
+        let token = res.headers['x-auth-token'];
+        localStorage.setItem("x-auth-token", token);
+        if(res.data.message==='ok'){
+          navigate('home')
+        }
     } catch (err) {
-      console.log(err.response);
+      setLoginFailedMessage(err.response?err.response.data.message:'Somthing Went Wrong')
+      console.log(err);
     }
     // navigate('/home');
     // Perform signup logic here
@@ -36,20 +44,18 @@ export const AdminPage = () => {
   };
 
   return (
-    <div className=" signup-page rootDiv">
+    <div className="rootDiv">
       <div className='topFlexiv'>
         <div style={{ overflowY: 'auto', padding: '20px' }}>
           <h1 className="hero_title">LOGIN</h1>
           <form>
             <div className="gridDiv">
               <div className='loginPage_gridItem'>
-                <FormInput inputTitle='Email' onChange={handleOnChange} width='100%' name='email' value={formData.email} placeholder="Email" />
+                <FormInput inputTitle='Email' onChange={handleOnChange} width='100%' name='userName' value={formData.userName} placeholder="Email" />
                 <FormInput inputTitle='Password' width='100%' onChange={handleOnChange} name='password' value={formData.password} placeholder="Password" />
-                <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', paddingTop: '22px' }}>
-                  <div style={{ height: '60px', lineHeight: '0.6' }}>
-
-                    <Link ><p className='linkText'>Forget Password?</p></Link>
-                    <Link to={'/signUp'}><p className='linkText'>New User? Sign Up</p></Link>
+                <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', paddingTop: '22px',alignItems:'center' }}>
+                  <div style={{ maxWidth:'200px',color:'#F14D4D',}}>
+                    <div style={{fontWeight:'700',fontSize:'21px'}}>{loginFailedMessage?`${loginFailedMessage}!!!`:''}</div>
                   </div>
                   <RectangleButton width='150px' onClick={handleSubmit}>LOGIN</RectangleButton>
                 </div>
