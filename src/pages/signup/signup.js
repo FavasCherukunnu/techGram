@@ -5,143 +5,209 @@ import { RectangleButton } from '../../components/buttonRectangle';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { FormProvider, useForm } from 'react-hook-form';
+import data from '../../staticFiles/districts.json'
+import _ from 'lodash';
+import { getUserToken } from '../../staticFiles/functions';
+import { SERVER_ADDRESS } from '../../staticFiles/constants';
 
 const SignupPage = () => {
-  // const [formData, setFormData] = useState({
-  //   fullName: '',
-  //   address: '',
-  //   phoneNo: '',
-  //   email: '',
-  //   fatherName: '',
-  //   motherName: '',
-  //   district: '',
-  //   taluk: '',
-  //   panchayath: '',
-  //   wardNo: '',
-  //   pinCode: '',
-  //   dob: { day: '', month: '', year: '' },
-  //   adharNo: '',
-  //   dataTimeNow: '',
-  //   image:'',
-  //   isApproved:false
-  // });
 
   let navigate = useNavigate();
-
-  const [formData, setFormData] = useState({
-    fullName: 'favas mohammed',
-    address: 'pothanooran',
-    phoneNo: '7994020923',
-    email: 'mhdfavascheru@gmail.com',
-    fatherName: 'abdul majeed',
-    motherName: 'maimoona',
-    district: 'malappuram',
-    taluk: 'tirur',
-    panchayath: 'othukkungal',
-    wardNo: '11',
-    pinCode: '676528',
-    dob: { day: '28', month: '05', year: '2000' },
-    adharNo: '9990234566789',
-    password: '1234',
-    dateTimeNow: 'null',
-    image: '',
-    isApproved: false
-  });
-
-
-  const handleOnChange = (event) => {
-    const name = event.target['name'];
-    if (name === 'dob.day') {
-      formData['dob']['day'] = event.target.value;
-    } else if (name === 'dob.month') {
-      formData['dob']['month'] = event.target.value;
-    } else if (name === 'dob.year') {
-      formData['dob']['year'] = event.target.value;
-    } else if (name === 'profileImage') {
-      // console.log(event.target.files[0]);
-      formData['image'] = event.target.files[0];
-
+  const methods = useForm();
+  const errors = methods.formState.errors;
+  const [districtId, setDistrictId] = useState();
+  const [blockId, setBlockId] = useState();
+  const [panchayathId, setPanchayathId] = useState();
+  const [errorMsg, setErrorMsg] = useState('');
+  const selectValidateFn = (value) => {
+    if (value > 0) {
+      return true;
     } else {
-      formData[name] = event.target.value;
+      return "Select Value"
     }
-    setFormData({ ...formData });
-  };
+  }
+  const registerDistrict = methods.register('districtId', { validate: { required: selectValidateFn } })
+  const registerBlock = methods.register('blockId', { validate: { required: selectValidateFn } })
+  const registerPanchayath = methods.register('panchayathId', { validate: { required: selectValidateFn } })
+  const districtOnChange = (event) => {
+    registerDistrict.onChange(event)
+    setDistrictId(event.target.value);
+  }
+  const blockOnChange = (event) => {
+    registerBlock.onChange(event)
+    setBlockId(event.target.value);
+  }
+  const panchayathOnChange = (event) => {
+    registerPanchayath.onChange(event)
+    setPanchayathId(event.target.value);
+  }
 
+  const onSubmit = async (data1) => {
 
-  const handleSubmit = async (event) => {
+    const district = data.districts[data1.districtId - 1];
+
     const form = new FormData();
-    event.preventDefault();
-    form.append('data1', JSON.stringify(formData))
-    form.append('image', formData.image);
+    form.append('data1', JSON.stringify(
+      {
+        ...data1,
+        district: district.name,
+        block: district.block_panchayats[data1.blockId - 1].name,
+        panchayath: district.block_panchayats[data1.blockId - 1].panchayats[data1.panchayathId - 1].name,
+      }
+    ))
+    form.append('image', data1.image[0]);
 
     // formData.dataTimeNow = 
     try {
-      await axios.post('http://localhost:3002/api/register', form, { headers: localStorage.getItem('token') }).then((res) => {
-        localStorage.setItem('x-auth-token',res.data.token);
-        navigate('/login');
+      await axios.post(`${SERVER_ADDRESS}/user/register`, form).then((res) => {
+        localStorage.setItem('u-auth-token', res.data.token);
+        // navigate('/login');
+        console.log('successfullllll');
       })
-    } catch(err) {
+    } catch (err) {
       console.log(err);
-      console.log('Not signed in');
+      if (err.response?.status === 409) {
+        return setErrorMsg('User Already Registered. Please Login or wait for approve your requist by admin')
+      }
+      setErrorMsg('something went wrong');
     }
 
-    // Perform signup logic here
-    // For example, you can make an API request to register the user
+  }
 
-    // Reset form inputs
-  };
+  const buildDistrict = () => {
+    return data.districts.map(
+      (element) => {
+        return (<option key={element.id} value={element.id} >{element.name}</option>)
+      }
+    )
+  }
+
+  const builBlock = () => {
+    var arr = [];
+    if (districtId > 0) {
+      const district = data.districts[districtId - 1];
+      if (district.block_panchayats !== undefined) {
+
+        arr.push(district.block_panchayats.map(
+          (block) => {
+            return (<option key={block.id} value={block.id} >{block.name}</option>)
+          }
+        ))
+      } else {
+        methods.setValue('blockId', -1)
+      }
+    }
+    return arr
+  }
+
+  const builPanchayath = () => {
+    var arr = [];
+    if (districtId > 0 && blockId > 0) {
+      const district = data.districts[districtId - 1];
+      if (district.block_panchayats !== undefined && district.block_panchayats[blockId - 1] !== undefined) {
+        const block = data.districts[districtId - 1].block_panchayats[blockId - 1];
+        if (block.panchayats !== undefined) {
+
+          arr.push(block.panchayats.map(
+            (panchayath) => {
+              return (<option key={panchayath.id} value={panchayath.id} >{panchayath.name}</option>)
+            }
+          ));
+        }
+      } else {
+        methods.setValue('panchayathId', -1)
+      }
+    }
+    return arr;
+  }
 
   return (
-    <div className=" signup-page rootDiv">
-      <div className='topFlexiv'>
-        <div style={{ overflowY: 'auto', padding: '20px' }}>
-          <h1 className="hero_title">SIGN UP</h1>
-          <form>
-            <div className="gridDiv">
-              <div className='gridItem'>
-                <FormInput inputTitle='Full Name' onChange={handleOnChange} width='100%' name='fullName' value={formData.fullName} placeholder="Full Name" />
-                <FormInput inputTitle='Address' width='100%' onChange={handleOnChange} name='address' value={formData.address} placeholder="Address" />
-                <FormInput inputTitle='Father Name' width='100%' onChange={handleOnChange} name='fatherName' value={formData.fatherName} placeholder="Father Name" />
-                <FormInput inputTitle='Mother Name' width='100%' onChange={handleOnChange} name='motherName' value={formData.motherName} placeholder="Mother Name" />
-                <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
-                  <FormInput inputTitle='Phone No' width='48%' onChange={handleOnChange} name='phoneNo' value={formData.phoneNo} placeholder="Phone No" />
-                  <FormInput inputTitle='Email' width='48%' onChange={handleOnChange} name='email' value={formData.email} placeholder="Email" />
+    <FormProvider {...methods}>
+      <div className=" signup-page rootDiv">
+        <div className='topFlexiv'>
+          <div style={{ overflowY: 'auto', padding: '20px' }}>
+            <h1 className="hero_title">SIGN UP</h1>
+            <form onSubmit={(e) => e.preventDefault()}>
+              <div className="gridDiv">
+                <div className='gridItem'>
+                  <FormInput inputTitle='Full Name' width='100%' name='fullName' placeholder="Full Name" />
+                  <FormInput inputTitle='Address' width='100%' name='address' placeholder="Address" />
+                  <FormInput inputTitle='Father Name' width='100%' name='fatherName' placeholder="Father Name" />
+                  <FormInput inputTitle='Mother Name' width='100%' name='motherName' placeholder="Mother Name" />
+                  <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
+                    <FormInput inputTitle='Phone No' width='48%' name='phoneNo' placeholder="Phone No" />
+                    <FormInput inputTitle='Email' width='48%' name='email' placeholder="Email" />
+                  </div>
+                  <FormInput inputTitle='Profile image' type='file' name='image' />
                 </div>
-                <FormInput inputTitle='Profile image' type='file' name='profileImage' onChange={handleOnChange} />
-              </div>
-              <div className='gridItem'>
-                <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
-                  <FormInput inputTitle='District' width='48%' onChange={handleOnChange} name='district' value={formData.district} placeholder="District" />
-                  <FormInput inputTitle='Taluk' width='48%' onChange={handleOnChange} name='taluk' value={formData.taluk} placeholder="Taluk" />
-                </div>
-                <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
-                  <FormInput inputTitle='Panchayath' width='48%' onChange={handleOnChange} name='panchayath' value={formData.panchayath} placeholder="Panchayath" />
-                  <FormInput inputTitle='Ward No' width='48%' onChange={handleOnChange} name='wardNo' value={formData.wardNo} placeholder="Ward No" />
-                </div>
-                <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
-                  <FormInput inputTitle='Pin Code' width='48%' onChange={handleOnChange} name='pinCode' value={formData.pinCode} placeholder="Pin Code" />
-                  <div style={{ width: '48%', display: 'flex', justifyContent: 'space-between' }}>
-                    <FormInput inputTitle='Day' width='30%' onChange={handleOnChange} name='dob.day' value={formData.dob.day} placeholder="Day" />
-                    <FormInput inputTitle='Month' width='30%' onChange={handleOnChange} name='dob.month' value={formData.dob.month} placeholder="Month" />
-                    <FormInput inputTitle='Year' width='30%' onChange={handleOnChange} name='dob.year' value={formData.dob.year} placeholder="Year" />
+                <div className='gridItem'>
+                  <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
+                    <div className='user_signUp_DropDownOutDiv' style={{ width: '48%' }}>
+                      <p className="user_signUp_DropDowninputTitleFont">Select District</p>
+                      <select name='districtId' className='user_signUp_customDropDownToggle' ref={registerDistrict.ref} onChange={districtOnChange} >
+                        <option key={-1} value={-1} >select</option>
+                        {
+                          buildDistrict()
+                        }
+                      </select>
+                      <p className="user_signupPage_form_errorText">{_.get(errors, 'districtId')?.message}</p>
+                    </div>
+                    <div className='user_signUp_DropDownOutDiv' style={{ width: '48%' }}>
+                      <p className="user_signUp_DropDowninputTitleFont">Select Block</p>
+                      <select name='blockId' className='user_signUp_customDropDownToggle' ref={registerBlock.ref} onChange={blockOnChange} >
+                        <option key={-1} value={-1} >select</option>
+                        {
+                          builBlock()
+                        }
+                      </select>
+                      <p className="user_signupPage_form_errorText">{_.get(errors, 'blockId')?.message}</p>
+                    </div>
+
+                  </div>
+                  <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
+                    <div className='user_signUp_DropDownOutDiv' style={{ width: '48%' }}>
+                      <p className="user_signUp_DropDowninputTitleFont">Select Panchayath</p>
+                      <select name='panchayathId' className='user_signUp_customDropDownToggle' ref={registerPanchayath.ref} onChange={panchayathOnChange} >
+                        <option key={-1} value={-1} >select</option>
+                        {
+                          builPanchayath()
+                        }
+                      </select>
+                      <p className="user_signupPage_form_errorText">{_.get(errors, 'panchayathId')?.message}</p>
+                    </div>
+                    <FormInput inputTitle='Ward No' width='48%' name='wardNo' placeholder="Ward No" />
+                  </div>
+                  <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
+                    <FormInput inputTitle='Pin Code' width='48%' name='pinCode' placeholder="Pin Code" />
+                    <div style={{ width: '48%', display: 'flex', justifyContent: 'space-between' }}>
+                      <FormInput type='number' inputTitle='Day' width='30%' name='dob.day' placeholder="Day" />
+                      <FormInput type='number' inputTitle='Month' width='30%' name='dob.month' placeholder="Month" />
+                      <FormInput type='number' inputTitle='Year' width='30%' name='dob.year' placeholder="Year" />
+                    </div>
+                  </div>
+                  <FormInput inputTitle='Adhar No' width='100%' name='adharNo' placeholder="Adhar No" />
+                  <FormInput inputTitle='Password' width='100%' name='password' placeholder="Password" type='password' />
+                  <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', paddingTop: '22px' }}>
+                    <div style={{ height: '60px', lineHeight: '0.6' }}>
+
+                      <Link to={'/login'}><p className='linkText'>Already User? Login</p></Link>
+                    </div>
+                    <RectangleButton width='150px' onClick={methods.handleSubmit(onSubmit)}>SIGNUP</RectangleButton>
                   </div>
                 </div>
-                <FormInput inputTitle='Adhar No' width='100%' onChange={handleOnChange} name='adharNo' value={formData.adharNo} placeholder="Adhar No" />
-                <FormInput inputTitle='Password' width='100%' onChange={handleOnChange} name='password' value={formData.password} placeholder="Password" />
-                <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', paddingTop: '22px' }}>
-                  <div style={{ height: '60px', lineHeight: '0.6' }}>
-
-                    <Link to={'/login'}><p className='linkText'>Already User? Login</p></Link>
-                  </div>
-                  <RectangleButton width='150px' onClick={handleSubmit}>SIGNUP</RectangleButton>
+              </div>
+              <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                <div className='user_signUp_errormsgDiv'>
+                  {`${errorMsg}!!!`}
                 </div>
               </div>
-            </div>
 
-          </form>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </FormProvider>
   );
 };
 

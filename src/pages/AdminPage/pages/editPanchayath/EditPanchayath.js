@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import './CreatePanchayath.css'
+import './EditPanchayath.css'
 import './component.css'
 import { FormInput } from './component';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { RectangleButton } from '../../../../components/buttonRectangle';
 import data from '../../../../staticFiles/districts.json'
 import axios from 'axios';
 import { SERVER_ADDRESS } from '../../../../staticFiles/constants';
-import { isLogedIn } from '../../../../staticFiles/functions';
-import { IconButton } from '../../../../components/iconButton';
-import { IoMdArrowRoundBack } from 'react-icons/io';
+import { getAdminToken, isLogedIn } from '../../../../staticFiles/functions';
+import { Button, Modal } from 'react-bootstrap';
+import { IconButton, IconButtonWIthText } from '../../../../components/iconButton';
+import {IoMdArrowRoundBack} from 'react-icons/io'
 
-export function CreatePanchayath() {
+export function EditPanchayath() {
   const [panchayahtDetails, setPanchayathDetails] = useState(
     {
       title: '',
@@ -22,6 +23,8 @@ export function CreatePanchayath() {
   );
   const [loginFailedMessage, setLoginFailedMessage] = useState(null);
   const navigate = useNavigate();
+  const params = useParams();
+  const [showModel, setShowModel] = useState(false)
 
   const handleOnchange = (event) => {
     panchayahtDetails[event.target.name] = event.target.value;
@@ -30,6 +33,16 @@ export function CreatePanchayath() {
         ...panchayahtDetails,
       }
     )
+  }
+
+  const modelHandleOnClose = () => {
+    setShowModel(false)
+  }
+  const modelHandleOnOpen = () => {
+    const {districtId,blockId,panchayathId,title} = panchayahtDetails;
+    if (districtId > 0 && blockId > 0 && panchayathId > 0 && title !== '') {
+      setShowModel(true)
+    }
   }
 
   const buildDistrict = () => {
@@ -86,10 +99,10 @@ export function CreatePanchayath() {
     return arr;
   }
 
-  const handleOnSubmit = async () => {
-    let { districtId, blockId, panchayathId, title } = panchayahtDetails;
+  const handleOnSave = async () => {
+    let { districtId, blockId, panchayathId } = panchayahtDetails;
 
-    if (districtId > 0 && blockId > 0 && panchayathId > 0 && title !== '') {
+    
       let res = {
         district: data.districts[districtId - 1].name,
         block: data.districts[districtId - 1].block_panchayats[blockId - 1].name,
@@ -99,8 +112,10 @@ export function CreatePanchayath() {
       }
       try {
         const token = localStorage.getItem('x-auth-token');
-        await axios.post(`${SERVER_ADDRESS}/admin/createPanchayath`, { panchayath: res }, { headers: { 'x-auth-token': token } })
-        navigate('../home')
+        await axios.post(`${SERVER_ADDRESS}/admin/updatePanchayath/${panchayahtDetails._id}`, { panchayath: res }, { headers: { 'x-auth-token': token } })
+        modelHandleOnClose();
+        return navigate(-1);
+    
       } catch (err) {
 
         console.log(err);
@@ -114,21 +129,37 @@ export function CreatePanchayath() {
           //navigate to login page
         }
       }
-    } else {
-      console.log('please select value');
-    }
+      modelHandleOnClose();
+    
   }
 
+  useEffect(
+    () => {
 
+      const loadPanchayath = async () => {
+        try {
+          let panchayathId = params.id;
+          let res = await axios.get(`${SERVER_ADDRESS}/admin/getPanchayathById/${panchayathId}`, { headers: { 'x-auth-token': getAdminToken() } });
+          let panchayath = res.data.panchayath;
+          setPanchayathDetails(panchayath)
+        } catch (err) {
+          if (isLogedIn(err) === false) {
+            navigate('/login')
+          }
+        }
+      }
+      loadPanchayath();
+    }, []
+  )
 
   return (
-    <div className="createPanchayath_rootDiv">
-      <div className='createPanchayath_backButtonDiv'>
-        <IconButton onClick={() => { navigate('../') }}><IoMdArrowRoundBack size={28} /></IconButton>
+    <div className="editPanchayath_rootDiv">
+      <div className='editPanchayath_backButtonDiv'>
+        <IconButton onClick={()=>{navigate('../viewPanchayath')}}><IoMdArrowRoundBack size={28}/></IconButton>
       </div>
       <div className='topFlexiv'>
         <div style={{ overflowY: 'auto', padding: '20px' }}>
-          <h1 className="hero_title">CREATE PANCHAAYTH</h1>
+          <h1 className="hero_title">EDIT PANCHAAYTH</h1>
           <form>
             <div className="gridDiv">
               <div className='gridItem'>
@@ -159,13 +190,13 @@ export function CreatePanchayath() {
                     {builPanchayath()}
                   </select>
                 </div>
-                <div className='admin_createPanchayath_buttonDiv'>
+                <div className='admin_editPanchayath_buttonDiv'>
                   <div>
-                    <div className='admin_createPanchayath_err_text'>
+                    <div className='admin_editPanchayath_err_text'>
                       {loginFailedMessage ? `${loginFailedMessage}!!!` : ''}
                     </div>
                   </div>
-                  <RectangleButton onClick={handleOnSubmit}>Create</RectangleButton>
+                  <RectangleButton height='40px' onClick={modelHandleOnOpen}>Save</RectangleButton>
                 </div>
 
               </div>
@@ -175,6 +206,16 @@ export function CreatePanchayath() {
           </form>
         </div>
       </div>
+      <Modal show={showModel} onHide={modelHandleOnClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm?</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Do You want to Edit Panchayath Details?</Modal.Body>
+        <Modal.Footer>
+          <RectangleButton height='45px' danger onClick={modelHandleOnClose}>No</RectangleButton>
+          <RectangleButton height='45px' onClick={handleOnSave}>Yes</RectangleButton>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }

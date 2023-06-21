@@ -83,6 +83,8 @@ import { AdminPage } from "../pages/AdminPage/loginPage";
 import { AdminHomePage } from "../pages/AdminPage/pages/homePage/HomePage";
 import { CreatePanchayath } from "../pages/AdminPage/pages/createPanchayath/CreatePanchayath";
 import { ViewPanchayath } from "../pages/AdminPage/pages/viewPanchayath/ViewPanchayath";
+import { EditPanchayath } from "../pages/AdminPage/pages/editPanchayath/EditPanchayath";
+import { AdminHomePageRoot } from "../pages/AdminPage/pages/homePage/Home";
 
 
 
@@ -101,9 +103,12 @@ export function RouterHandler() {
                     <Route path="editProfile" element={<Editpage2 />} />
                     <Route path="Admin">
                         <Route index element={<AdminPage />} />
-                        <Route path="home" element={<AdminHomePage/>}/>
-                        <Route path="createPanchayath" element={<CreatePanchayath/>}/>
-                        <Route path="viewPanchayath" element={<ViewPanchayath/>}/>
+                        <Route path="home" element={<AdminHomePage />}>
+                            <Route path="" element={<AdminHomePageRoot/>}/>
+                            <Route path="createPanchayath" element={<CreatePanchayath />} />
+                            <Route path="viewPanchayath" element={<ViewPanchayath />} />
+                            <Route path="editPanchayath/:id" element={<EditPanchayath />} />
+                        </Route>
                     </Route>
                     <Route path="user">
                         <Route path="home" element={<UserHomePage />}>

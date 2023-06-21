@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './loginPage.css';
 import { FormInput } from './component';
 import { RectangleButton } from '../../components/buttonRectangle';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { SERVER_ADDRESS } from '../../staticFiles/constants';
+import { getAdminToken } from '../../staticFiles/functions';
+import { IconButton } from '../../components/iconButton';
+import { HiOutlineHome } from 'react-icons/hi';
 
 
 export const AdminPage = () => {
@@ -22,6 +25,13 @@ export const AdminPage = () => {
     setFormData({ ...formData });
   };
 
+  useEffect(
+    ()=>{
+      if(getAdminToken()){
+        navigate('home')
+      }
+    },[]
+  )
 
   const handleSubmit = async(event) => {
     event.preventDefault();
@@ -45,6 +55,12 @@ export const AdminPage = () => {
 
   return (
     <div className="rootDiv">
+      <div className='admin_loginPage_topBar'>
+        <div></div>
+        <div style={{ display: 'flex' }}>
+          <IconButton onClick={()=>navigate('/')}><HiOutlineHome size={28} /></IconButton>
+        </div>
+      </div>
       <div className='topFlexiv'>
         <div style={{ overflowY: 'auto', padding: '20px' }}>
           <h1 className="hero_title">LOGIN</h1>

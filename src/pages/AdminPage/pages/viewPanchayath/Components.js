@@ -3,7 +3,7 @@ import './Components.css'
 export  function PanchayathListTemplate(props) {
     const panchayath = props.panchayath
   return (
-    <div className='viewPanchayath_PanchayathListTemplate_outerDiv'>
+    <div className='viewPanchayath_PanchayathListTemplate_outerDiv' onClick={()=>{props.onClick(panchayath._id)}}>
         <table className='viewPanchayath_PanchayathListTemplate_table'>
             <tbody>
             <tr>

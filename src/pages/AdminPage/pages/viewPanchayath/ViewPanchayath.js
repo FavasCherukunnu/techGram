@@ -2,20 +2,22 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { SERVER_ADDRESS } from '../../../../staticFiles/constants'
 import { useNavigate } from 'react-router-dom'
-import { isLogedIn } from '../../../../staticFiles/functions';
+import { getAdminToken, isLogedIn } from '../../../../staticFiles/functions';
 import './ViewPanchayath.css'
 import { PanchayathListTemplate } from './Components';
 import { PitInput } from '../../../../components/inputs';
 import { BiSearch } from 'react-icons/bi'
 import { IconButton } from '../../../../components/iconButton';
 import data from '../../../../staticFiles/districts.json'
+import { Button, Modal } from 'react-bootstrap';
+import { IoMdArrowRoundBack } from 'react-icons/io';
 
 export function ViewPanchayath() {
     const navigate = useNavigate();
     const [loginFailedMessage, setLoginFailedMessage] = useState(null);
     const [panchayaths, setPanchayaths] = useState([]);
     const [searchString, setSearchString] = useState('');
-    const [districtId, setDistrictId] = useState('-1')
+    const [districtId, setDistrictId] = useState('-1');
     const buildDistrict = () => {
         return data.districts.map(
             (element) => {
@@ -42,14 +44,18 @@ export function ViewPanchayath() {
         }
     }
 
+    const onPanchaythTemplateClick = (id) => {
+        navigate(`../editPanchayath/${id}`);
+    }
+
     useEffect(
         () => {
 
             let searchPanchayath = async () => {
 
-                const district = districtId === '-1' ? '' : data.districts[districtId-1].name;
+                const district = districtId === '-1' ? '' : data.districts[districtId - 1].name;
                 try {
-                    const token = localStorage.getItem('x-auth-token')
+                    // const token = localStorage.getItem('x-auth-token')
                     // if (searchString === '') {
                     //     let res = await axios.get(`${SERVER_ADDRESS}/admin/listPanchayath`, { headers: { 'x-auth-token': token } });
                     //     setPanchayaths(res.data.panchayaths)
@@ -59,7 +65,7 @@ export function ViewPanchayath() {
                     //     let panchayaths = res.data.panchayaths
                     //     setPanchayaths(panchayaths)
                     // }
-                    let res = await axios.get(`${SERVER_ADDRESS}/admin/searchPanchayath`, { headers: { 'x-auth-token': token }, params: { key: searchString, district: district } })
+                    let res = await axios.get(`${SERVER_ADDRESS}/admin/searchPanchayath`, { headers: { 'x-auth-token': getAdminToken() }, params: { key: searchString, district: district } })
                     let panchayaths = res.data.panchayaths
                     setPanchayaths(panchayaths)
                 }
@@ -71,6 +77,7 @@ export function ViewPanchayath() {
                     } else if (loggedIn === null) {
                         setLoginFailedMessage('Somthing Went Wrong');
                     } else {
+                        console.log('nont logged in');
                         navigate('/Admin')
                         //navigate to login page
                     }
@@ -85,6 +92,9 @@ export function ViewPanchayath() {
 
     return (
         <div className='viewPanchayath_rootDiv'>
+            <div className='viewPanchayath_backButtonDiv'>
+                <IconButton onClick={() => { navigate('../') }}><IoMdArrowRoundBack size={28} /></IconButton>
+            </div>
             <div className='viewPanchayath_TopDiv'>
                 <div className='viewPanchayath_searchDiv'>
                     <PitInput placeholder="Search your Panchayath" height='40px' onChange={(e) => { setSearchString(e.target.value) }} />
@@ -98,10 +108,11 @@ export function ViewPanchayath() {
             <div className='viewPanchayath_listDiv'>
                 {panchayaths.map(
                     (panchayath, index) => {
-                        return <PanchayathListTemplate key={index} panchayath={panchayath} index={index} />
+                        return <PanchayathListTemplate key={index} panchayath={panchayath} index={index} onClick={onPanchaythTemplateClick} />
                     }
                 )}
             </div>
+
         </div>
     )
 }
