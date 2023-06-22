@@ -1,8 +1,11 @@
 
 export function isLogedIn(err){
+    if(getAdminToken()===undefined){
+        return false;   //not logged in
+    }
     if(err.response){
         if(err.response.status===401){
-            
+            console.log('not logged in');
             return false        //not logged in
         }else{
             return true;

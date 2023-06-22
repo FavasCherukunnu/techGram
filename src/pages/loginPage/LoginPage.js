@@ -4,6 +4,8 @@ import { FormInput } from './component';
 import { RectangleButton } from '../../components/buttonRectangle';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { IconButton } from '../../components/iconButton';
+import { HiOutlineHome } from 'react-icons/hi';
 
 
 const LoginPage = () => {
@@ -21,7 +23,7 @@ const LoginPage = () => {
   };
 
 
-  const handleSubmit = async(event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(formData);
     try {
@@ -40,27 +42,36 @@ const LoginPage = () => {
   };
 
   return (
-    <div className=" signup-page rootDiv">
-      <div className='topFlexiv'>
-        <div style={{ overflowY: 'auto', padding: '20px' }}>
-          <h1 className="hero_title">LOGIN</h1>
-          <form>
-            <div className="gridDiv">
-              <div className='loginPage_gridItem'>
-                <FormInput inputTitle='Email' onChange={handleOnChange} width='100%' name='email' value={formData.email} placeholder="Email" />
-                <FormInput inputTitle='Password' width='100%' onChange={handleOnChange} name='password' value={formData.password} placeholder="Password" />
-                <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', paddingTop: '22px' }}>
-                  <div style={{ height: '60px', lineHeight: '0.6' }}>
+    <div className='user_loginPage_base'>
 
-                    <Link ><p className='linkText'>Forget Password?</p></Link>
-                    <Link to={'/signUp'}><p className='linkText'>New User? Sign Up</p></Link>
+      <div className='topBarFixed'>
+        <div></div>
+        <div style={{ display: 'flex' }}>
+          <IconButton onClick={() => navigate('/')}><HiOutlineHome size={28} /></IconButton>
+        </div>
+      </div>
+      <div className="rootDiv">
+        <div className='topFlexiv'>
+          <div style={{ overflowY: 'auto', padding: '20px' }}>
+            <h1 className="hero_title">LOGIN</h1>
+            <form>
+              <div className="gridDiv">
+                <div className='loginPage_gridItem'>
+                  <FormInput inputTitle='Email' onChange={handleOnChange} width='100%' name='email' value={formData.email} placeholder="Email" />
+                  <FormInput inputTitle='Password' width='100%' onChange={handleOnChange} name='password' value={formData.password} placeholder="Password" />
+                  <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', paddingTop: '22px' }}>
+                    <div style={{ height: '60px', lineHeight: '0.6' }}>
+
+                      <Link ><p className='linkText'>Forget Password?</p></Link>
+                      <Link to={'/signUp'}><p className='linkText'>New User? Sign Up</p></Link>
+                    </div>
+                    <RectangleButton width='150px' onClick={handleSubmit}>LOGIN</RectangleButton>
                   </div>
-                  <RectangleButton width='150px' onClick={handleSubmit}>LOGIN</RectangleButton>
                 </div>
               </div>
-            </div>
 
-          </form>
+            </form>
+          </div>
         </div>
       </div>
     </div>

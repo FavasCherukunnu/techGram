@@ -7,9 +7,11 @@ import { RectangleButton } from '../../../../components/buttonRectangle';
 import data from '../../../../staticFiles/districts.json'
 import axios from 'axios';
 import { SERVER_ADDRESS } from '../../../../staticFiles/constants';
-import { isLogedIn } from '../../../../staticFiles/functions';
-import { IconButton } from '../../../../components/iconButton';
+import { isLogedIn, logoutAdmin } from '../../../../staticFiles/functions';
+import { IconButton, IconButtonWIthText } from '../../../../components/iconButton';
 import { IoMdArrowRoundBack } from 'react-icons/io';
+import { ModelSelectPresidentPage } from './pages/Model';
+import { PresidentSelectedSection } from './pages/Components';
 
 export function CreatePanchayath() {
   const [panchayahtDetails, setPanchayathDetails] = useState(
@@ -18,10 +20,12 @@ export function CreatePanchayath() {
       districtId: -1,
       blockId: -1,
       panchayathId: -1,
+      president: null
     }
   );
   const [loginFailedMessage, setLoginFailedMessage] = useState(null);
   const navigate = useNavigate();
+  const [showModel, setShowModel] = useState(false)
 
   const handleOnchange = (event) => {
     panchayahtDetails[event.target.name] = event.target.value;
@@ -30,6 +34,16 @@ export function CreatePanchayath() {
         ...panchayahtDetails,
       }
     )
+  }
+
+  const onPresidentSelect = (e) => {
+    panchayahtDetails.president = e;
+    setPanchayathDetails({ ...panchayahtDetails });
+    setShowModel(false)
+  }
+  const onPresidentDeselect = ()=>{
+    panchayahtDetails.president=null;
+    setPanchayathDetails({...panchayahtDetails})
   }
 
   const buildDistrict = () => {
@@ -57,6 +71,10 @@ export function CreatePanchayath() {
             return (<option key={block.id} value={block.id} >{block.name}</option>)
           }
         ))
+      } else if (panchayahtDetails.blockId > 0) {
+        panchayahtDetails.blockId = -1;
+        panchayahtDetails.panchayathId = -1;
+        setPanchayathDetails({ ...panchayahtDetails })
       }
     }
     return arr
@@ -78,9 +96,15 @@ export function CreatePanchayath() {
               return (<option key={panchayath.id} value={panchayath.id} >{panchayath.name}</option>)
             }
           ));
+        } else {
+          panchayahtDetails.blockId = -1;
+          panchayahtDetails.panchayathId = -1;
+          setPanchayathDetails({ ...panchayahtDetails })
         }
-      } else {
-        console.log(blockId);
+      } else if (panchayahtDetails.panchayathId > 0) {
+        panchayahtDetails.blockId = -1;
+        panchayahtDetails.panchayathId = -1;
+        setPanchayathDetails({ ...panchayahtDetails })
       }
     }
     return arr;
@@ -95,23 +119,25 @@ export function CreatePanchayath() {
         block: data.districts[districtId - 1].block_panchayats[blockId - 1].name,
         panchayath: data.districts[districtId - 1].block_panchayats[blockId - 1].panchayats[panchayathId - 1].name,
         id: `${districtId}${blockId}${panchayathId}`,
-        ...panchayahtDetails
+        ...panchayahtDetails,
+        president:panchayahtDetails.president?._id,
       }
       try {
         const token = localStorage.getItem('x-auth-token');
         await axios.post(`${SERVER_ADDRESS}/admin/createPanchayath`, { panchayath: res }, { headers: { 'x-auth-token': token } })
-        navigate('../home')
+        navigate('../')
       } catch (err) {
 
         console.log(err);
         let loggedIn = isLogedIn(err);
-        if (loggedIn === true) {
-          setLoginFailedMessage(err.response.data.message);
+        if (loggedIn === false) {
+          logoutAdmin();
+          navigate('/Admin')
+          //navigate to login page
         } else if (loggedIn === null) {
           setLoginFailedMessage('Somthing Went Wrong');
         } else {
-          navigate('/Admin')
-          //navigate to login page
+          setLoginFailedMessage(err.response.data.message);
         }
       }
     } else {
@@ -159,6 +185,19 @@ export function CreatePanchayath() {
                     {builPanchayath()}
                   </select>
                 </div>
+
+                {panchayahtDetails.president?<PresidentSelectedSection user={panchayahtDetails.president}/>:null}
+
+                <div style={{ padding: '10px' }}>
+                  <IconButtonWIthText text='Select President' onClick={
+                    () => {
+                      if (panchayahtDetails.panchayathId > 0) {
+                        setShowModel(true);
+                      }
+                    }
+                  } />
+                </div>
+
                 <div className='admin_createPanchayath_buttonDiv'>
                   <div>
                     <div className='admin_createPanchayath_err_text'>
@@ -175,6 +214,7 @@ export function CreatePanchayath() {
           </form>
         </div>
       </div>
+      <ModelSelectPresidentPage onUnsetButtonClick={onPresidentDeselect} selectedPresident={panchayahtDetails.president} onSet={onPresidentSelect} show={showModel} onHide={() => setShowModel(false)} panchayathOId={`${panchayahtDetails.districtId}${panchayahtDetails.blockId}${panchayahtDetails.panchayathId}`} />
     </div>
   );
 }

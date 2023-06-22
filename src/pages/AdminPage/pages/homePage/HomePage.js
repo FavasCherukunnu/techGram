@@ -19,10 +19,11 @@ export function AdminHomePage() {
         await axios.get(`${SERVER_ADDRESS}/admin/auth`, { headers: { 'x-auth-token': getAdminToken() } })
       } catch (err) {
         console.log(err);
-        if (isLogedIn(err)) {
+        if (isLogedIn(err)===false) {
+          logoutAdmin();
+          navigate('/Admin',{replace:true})
+        } else{
           return;
-        } else {
-          navigate('/Admin')
         }
       }
     }

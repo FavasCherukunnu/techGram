@@ -85,6 +85,7 @@ import { CreatePanchayath } from "../pages/AdminPage/pages/createPanchayath/Crea
 import { ViewPanchayath } from "../pages/AdminPage/pages/viewPanchayath/ViewPanchayath";
 import { EditPanchayath } from "../pages/AdminPage/pages/editPanchayath/EditPanchayath";
 import { AdminHomePageRoot } from "../pages/AdminPage/pages/homePage/Home";
+import { SelectPresidentPage } from "../pages/AdminPage/pages/createPanchayath/pages/SelectPresidentPage";
 
 
 
@@ -105,7 +106,10 @@ export function RouterHandler() {
                         <Route index element={<AdminPage />} />
                         <Route path="home" element={<AdminHomePage />}>
                             <Route path="" element={<AdminHomePageRoot/>}/>
-                            <Route path="createPanchayath" element={<CreatePanchayath />} />
+                            <Route path="createPanchayath">
+                                <Route path="" element={<CreatePanchayath />}/>
+                                <Route path="selectPresident/:panchayathId" element={<SelectPresidentPage/>}/>
+                            </Route>
                             <Route path="viewPanchayath" element={<ViewPanchayath />} />
                             <Route path="editPanchayath/:id" element={<EditPanchayath />} />
                         </Route>

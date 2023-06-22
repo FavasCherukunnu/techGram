@@ -7,10 +7,12 @@ import { RectangleButton } from '../../../../components/buttonRectangle';
 import data from '../../../../staticFiles/districts.json'
 import axios from 'axios';
 import { SERVER_ADDRESS } from '../../../../staticFiles/constants';
-import { getAdminToken, isLogedIn } from '../../../../staticFiles/functions';
+import { getAdminToken, isLogedIn, logoutAdmin } from '../../../../staticFiles/functions';
 import { Button, Modal } from 'react-bootstrap';
 import { IconButton, IconButtonWIthText } from '../../../../components/iconButton';
 import {IoMdArrowRoundBack} from 'react-icons/io'
+import { PresidentSelectedSection } from '../createPanchayath/pages/Components';
+import { ModelSelectPresidentPage } from '../createPanchayath/pages/Model';
 
 export function EditPanchayath() {
   const [panchayahtDetails, setPanchayathDetails] = useState(
@@ -25,6 +27,8 @@ export function EditPanchayath() {
   const navigate = useNavigate();
   const params = useParams();
   const [showModel, setShowModel] = useState(false)
+  const [showModelPresidentList, setShowModelPresidentList] = useState(false)
+
 
   const handleOnchange = (event) => {
     panchayahtDetails[event.target.name] = event.target.value;
@@ -33,6 +37,16 @@ export function EditPanchayath() {
         ...panchayahtDetails,
       }
     )
+  }
+
+  const onPresidentSelect = (e) => {
+    panchayahtDetails.president = e;
+    setPanchayathDetails({ ...panchayahtDetails });
+    setShowModelPresidentList(false)
+  }
+  const onPresidentDeselect = ()=>{
+    panchayahtDetails.president=null;
+    setPanchayathDetails({...panchayahtDetails})
   }
 
   const modelHandleOnClose = () => {
@@ -144,7 +158,8 @@ export function EditPanchayath() {
           setPanchayathDetails(panchayath)
         } catch (err) {
           if (isLogedIn(err) === false) {
-            navigate('/login')
+            logoutAdmin();
+            navigate('/Admin')
           }
         }
       }
@@ -190,6 +205,18 @@ export function EditPanchayath() {
                     {builPanchayath()}
                   </select>
                 </div>
+                {panchayahtDetails.president?<PresidentSelectedSection user={panchayahtDetails.president}/>:null}
+                
+                <div style={{ padding: '10px' }}>
+                  <IconButtonWIthText text='Select President' onClick={
+                    () => {
+                      if (panchayahtDetails.panchayathId > 0) {
+                        setShowModelPresidentList(true);
+                      }
+                    }
+                  } />
+                </div>
+
                 <div className='admin_editPanchayath_buttonDiv'>
                   <div>
                     <div className='admin_editPanchayath_err_text'>
@@ -216,6 +243,9 @@ export function EditPanchayath() {
           <RectangleButton height='45px' onClick={handleOnSave}>Yes</RectangleButton>
         </Modal.Footer>
       </Modal>
+
+      <ModelSelectPresidentPage onUnsetButtonClick={onPresidentDeselect} selectedPresident={panchayahtDetails.president} onSet={onPresidentSelect} show={showModelPresidentList} onHide={() => setShowModelPresidentList(false)} panchayathOId={`${panchayahtDetails.districtId}${panchayahtDetails.blockId}${panchayahtDetails.panchayathId}`} />
+
     </div>
   );
 }

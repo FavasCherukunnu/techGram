@@ -137,6 +137,13 @@
     font-size: 21px;
 }
 
+.create_panchayath_selectedPresidentDiv{
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0px 10px 0px;
+}
+
 @media screen and (max-width: 1400px) {
     .gridItem {
         width: 400px;
