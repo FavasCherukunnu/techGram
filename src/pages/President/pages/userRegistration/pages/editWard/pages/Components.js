@@ -1,4 +1,4 @@
-import { RectangleButton } from '../../../../../components/buttonRectangle';
+import { RectangleButton } from '../../../../../../../components/buttonRectangle';
 import './Components.css'
 
 import React from 'react'

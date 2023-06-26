@@ -13,7 +13,7 @@ export function PitInputLabelled(props){
   return(
     <div style={{paddingTop:'20px',width:props.width?props.width:'100%',paddingBottom:'5px'}}>
         <p className="inputTitleFont">{props.inputTitle}</p>
-        <input style={{height:props.height?props.height:''}} className='component_pitInput' placeholder={props.placeholder} type={props.type}></input>
+        <input name={props.name} onChange={(e)=>props.onChange(e)} style={{height:props.height?props.height:''}} className='component_pitInput' placeholder={props.placeholder} type={props.type} value={props.value}></input>
     </div>
 );
 }

@@ -5,6 +5,7 @@ import { RectangleButton } from '../../../../components/buttonRectangle';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { SERVER_ADDRESS } from '../../../../staticFiles/constants';
 
 const Editpage2 = (props) => {
 
@@ -33,7 +34,7 @@ const Editpage2 = (props) => {
     useEffect(
       () => {
         const token = localStorage.getItem('auth-token');
-        axios.get('http://localhost:3002/api/getUserInfo', { headers: { 'x-auth-token': token } }).then((res) => {
+        axios.get(`${SERVER_ADDRESS}/user/getUserInfo`, { headers: { 'x-auth-token': token } }).then((res) => {
           let userData = res.data.user;
           setFormData({
             ...userData,

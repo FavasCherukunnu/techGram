@@ -5,8 +5,9 @@ import { RectangleButton } from '../../../../components/buttonRectangle';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { SERVER_ADDRESS } from '../../../../staticFiles/constants';
 
-const Editpage2 = (props) => {
+const EditPresidentpage2 = (props) => {
 
   let navigate = useNavigate();
 
@@ -33,11 +34,11 @@ const Editpage2 = (props) => {
     useEffect(
       () => {
         const token = localStorage.getItem('auth-token');
-        axios.get('http://localhost:3002/api/getUserInfo', { headers: { 'x-auth-token': token } }).then((res) => {
+        axios.get(`${SERVER_ADDRESS}/user/getUserInfo`, { headers: { 'x-auth-token': token } }).then((res) => {
           let userData = res.data.user;
           setFormData({
             ...userData,
-            dob:{day:new Date(userData.dob).getDate(),month:new Date(userData.dob).getMonth(),year:new Date(userData.dob).getFullYear()}
+            dob:{day:new Date(userData.dob).getDate(),month:new Date(userData.dob).getMonth()+1,year:new Date(userData.dob).getFullYear()}
           });
         }).catch((err) => {
           console.log(err);
@@ -108,7 +109,7 @@ const Editpage2 = (props) => {
               <div className='gridItem'>
                 <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
                   <FormInput inputTitle='District' width='48%' onChange={handleOnChange} name='district' value={formData.district} placeholder="District" />
-                  <FormInput inputTitle='Taluk' width='48%' onChange={handleOnChange} name='taluk' value={formData.taluk} placeholder="Taluk" />
+                  <FormInput inputTitle='Block' width='48%' onChange={handleOnChange} name='block' value={formData.block} placeholder="Taluk" />
                 </div>
                 <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
                   <FormInput inputTitle='Panchayath' width='48%' onChange={handleOnChange} name='panchayath' value={formData.panchayath} placeholder="Panchayath" />
@@ -136,4 +137,4 @@ const Editpage2 = (props) => {
   );
 };
 
-export {Editpage2};
+export {EditPresidentpage2};

@@ -9,7 +9,9 @@ import SideNavigationBar from "./sideNavigationBar";
 import { Outlet, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { IconButton } from "../../components/iconButton";
-import { MyContext } from "../user/userHomePage";
+import { MyContext, UserContext } from "../user/userHomePage";
+import { SERVER_ADDRESS } from "../../staticFiles/constants";
+import { checkLoggedIn, getUserToken, isLogedIn } from "../../staticFiles/functions";
 
 // export const MyContext = React.createContext();
 
@@ -23,7 +25,7 @@ export function PresidentHomePage() {
     const [smallScreen, setSmallScreen] = useState(false);
     const [topNavHide, setTopNavHide] = useState(false)
     const [userData, setUserData] = useState({
-        fullName: 'Mohammed Favas P',
+        fullName: '',
         address: '',
         phoneNo: '',
         email: '',
@@ -84,14 +86,13 @@ export function PresidentHomePage() {
 
     useEffect(
         () => {
-            const token = localStorage.getItem('auth-token');
-            axios.get('http://localhost:3002/api/getUserInfo', { headers: { 'x-auth-token': token } }).then((res) => {
+            
+            axios.get(`${SERVER_ADDRESS}/user/getUserInfo`, { headers: { 'u-auth-token': getUserToken() } }).then((res) => {
                 // console.log(res.data.user.image.data.data);
                 const dat = { ...res.data.user };
-                console.log(dat);
                 setUserData(dat);
             }).catch((err) => {
-                console.log(err);
+                checkLoggedIn(err);
             })
         }, []
     )
@@ -109,6 +110,7 @@ export function PresidentHomePage() {
 
         <div className="navBarOuter">
             <MyContext.Provider value={scrollCallback}>
+            <UserContext.Provider value={{ user: {userId:userData._id,panchayathOId:userData.panchayathOId}}}>
                 <div className="flex_container">
                     <div className="sideNavBarOuter" style={expanded ? { width: '0px', padding: '0px' } : { width: '250px', paddingRight: '10px' }}>
                         <Stack className='sideNavBar'>
@@ -157,6 +159,7 @@ export function PresidentHomePage() {
 </div> */}
                     </div>
                 </div>
+                </UserContext.Provider>
             </MyContext.Provider>
         </div>
     );

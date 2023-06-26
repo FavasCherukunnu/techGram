@@ -3,6 +3,7 @@ import './EditUserPage.css'
 import axios from 'axios';
 import { RectangleButton } from '../../../../components/buttonRectangle';
 import { useNavigate } from 'react-router-dom';
+import { SERVER_ADDRESS } from '../../../../staticFiles/constants';
 
 export function EditUserPage() {
 
@@ -31,7 +32,7 @@ export function EditUserPage() {
   useEffect(
     () => {
       const token = localStorage.getItem('auth-token');
-      axios.get('http://localhost:3002/api/getUserInfo', { headers: { 'x-auth-token': token } }).then((res) => {
+      axios.get(`${SERVER_ADDRESS}/user/getUserInfo`, { headers: { 'x-auth-token': token } }).then((res) => {
         // console.log(res.data.user.image.data.data);
         const dat = { ...res.data.user };
         setUserData(dat);
@@ -110,7 +111,7 @@ export function EditUserPage() {
           
         </div>
         <div style={{ display: 'flex', justifyContent: 'center', width: '100%',marginTop:'10px'}}>
-          <RectangleButton height='40px' onClick={()=>{navigate('/editProfile')}}>Edit</RectangleButton>
+          <RectangleButton height='40px' onClick={()=>{navigate('../editProfile')}}>Edit</RectangleButton>
           <div style={{width:'30px'}}></div>
           <RectangleButton onClick={()=>{navigate('/home')}} height='40px'>Ok</RectangleButton>
         </div>

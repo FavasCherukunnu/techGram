@@ -81,11 +81,15 @@ import { PresidentOnlyComplaintPage } from "../pages/President/pages/ComplaintPa
 import { PresidentMemberRegistration } from "../pages/President/pages/userRegistration/memberUserRegistration";
 import { AdminPage } from "../pages/AdminPage/loginPage";
 import { AdminHomePage } from "../pages/AdminPage/pages/homePage/HomePage";
-import { CreatePanchayath } from "../pages/AdminPage/pages/createPanchayath/CreatePanchayath";
 import { ViewPanchayath } from "../pages/AdminPage/pages/viewPanchayath/ViewPanchayath";
 import { EditPanchayath } from "../pages/AdminPage/pages/editPanchayath/EditPanchayath";
 import { AdminHomePageRoot } from "../pages/AdminPage/pages/homePage/Home";
 import { SelectPresidentPage } from "../pages/AdminPage/pages/createPanchayath/pages/SelectPresidentPage";
+import { EditAdminPage, EditPresidentPage } from "../pages/President/pages/editUserPage/EditUserPage";
+import { EditPresidentpage2 } from "../pages/President/pages/editUserPage/editPage2";
+import { CreateWard } from "../pages/President/pages/userRegistration/pages/createWard/CreatePanchayath";
+import { CreatePanchayath } from "../pages/AdminPage/pages/createPanchayath/CreatePanchayath";
+import { EditWard } from "../pages/President/pages/userRegistration/pages/editWard/editWard";
 
 
 
@@ -199,8 +203,14 @@ export function RouterHandler() {
                             <Route path="locate" element={<PresidentLocatePage />} />
                             <Route path="survay" element={<PresidentSurvayPage />} />
                             <Route path="complaints" element={<PresidentOnlyComplaintPage />} />
-                            <Route path="Member Registration" element={<PresidentMemberRegistration />} />
+                            <Route path="Member Registration" >
+                                <Route path="" element={<PresidentMemberRegistration />} />
+                                <Route path="createWard" element={<CreateWard />} />
+                                <Route path="editWard/:id" element={<EditWard/>} />
+                            </Route>
                         </Route>
+                        <Route path="editProfile" element={<EditPresidentpage2 />} />
+                        <Route path="editUser" element={<EditPresidentPage />} />
                     </Route>
                 </Route>
                 <Route path="*" element={<ForNotFor />} />

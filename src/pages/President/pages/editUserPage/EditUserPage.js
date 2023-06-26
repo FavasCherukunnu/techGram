@@ -3,8 +3,9 @@ import './EditUserPage.css'
 import axios from 'axios';
 import { RectangleButton } from '../../../../components/buttonRectangle';
 import { useNavigate } from 'react-router-dom';
+import { SERVER_ADDRESS } from '../../../../staticFiles/constants';
 
-export function EditUserPage() {
+export function EditPresidentPage() {
 
   const [userData, setUserData] = useState({
     fullName: '',
@@ -14,7 +15,7 @@ export function EditUserPage() {
     fatherName: '',
     motherName: '',
     district: '',
-    taluk: '',
+    block:'',
     panchayath: '',
     wardNo: '',
     pinCode: '',
@@ -31,7 +32,7 @@ export function EditUserPage() {
   useEffect(
     () => {
       const token = localStorage.getItem('auth-token');
-      axios.get('http://localhost:3002/api/getUserInfo', { headers: { 'x-auth-token': token } }).then((res) => {
+      axios.get(`${SERVER_ADDRESS}/user/getUserInfo`, { headers: { 'x-auth-token': token } }).then((res) => {
         // console.log(res.data.user.image.data.data);
         const dat = { ...res.data.user };
         setUserData(dat);
@@ -83,8 +84,8 @@ export function EditUserPage() {
               <td className='second_element'>{userData.district}</td>
             </tr>
             <tr>
-              <td className='first_element'>Taluk</td>
-              <td className='second_element'>{userData.taluk}</td>
+              <td className='first_element'>Block</td>
+              <td className='second_element'>{userData.block}</td>
             </tr>
             <tr>
               <td className='first_element'>Panchayath</td>
@@ -100,7 +101,7 @@ export function EditUserPage() {
             </tr>
             <tr>
               <td className='first_element'>Date of Birth</td>
-              <td className='second_element'>{`${new Date(userData.dob).getDate()}-${new Date(userData.dob).getMonth()}-${new Date(userData.dob).getFullYear()}`}</td>
+              <td className='second_element'>{`${new Date(userData.dob).getDate()}-${new Date(userData.dob).getMonth()+1}-${new Date(userData.dob).getFullYear()}`}</td>
             </tr>
             <tr>
               <td className='first_element'>Adhar No</td>
@@ -110,9 +111,9 @@ export function EditUserPage() {
           
         </div>
         <div style={{ display: 'flex', justifyContent: 'center', width: '100%',marginTop:'10px'}}>
-          <RectangleButton height='40px' onClick={()=>{navigate('/editProfile')}}>Edit</RectangleButton>
+          <RectangleButton height='40px' onClick={()=>{navigate('../editProfile')}}>Edit</RectangleButton>
           <div style={{width:'30px'}}></div>
-          <RectangleButton onClick={()=>{navigate('/home')}} height='40px'>Ok</RectangleButton>
+          <RectangleButton onClick={()=>{navigate('../home')}} height='40px'>Ok</RectangleButton>
         </div>
       </div>
     </div>

@@ -4,14 +4,20 @@ import { AiOutlineSearch } from "react-icons/ai";
 import './component.css'
 import { UserRegistrationModel } from "./Model";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function SurvayTemplate(props) {
+    const navigate = useNavigate();
+    const { ward } = props;
+
     return (
         <tr className='member_userRegistration_usersList_template'>
-            <td className='first'>1</td>
-            <td className='second'>userName</td>
+            <td className='first'>{ward.wardNo}</td>
+            <td className='second'>{ward.member.fullName}</td>
             <td className='third'>
-            <RectangleButton primary width='80px' height='30px' onClick={props.onViewPress}>View</RectangleButton>
+                <RectangleButton primary width='80px' height='30px' onClick={() => navigate(`editWard/${ward._id}`)}>Edit</RectangleButton>
+                <div className="gap"></div>
+                <RectangleButton primary width='80px' danger height='30px' onClick={()=>props.onDeleteButtonClick(ward)}>Delete</RectangleButton>
             </td>
             {/* <td className='fourth'>
                 <RectangleButton width='50px' height='30px'><TiTick/></RectangleButton>
@@ -23,14 +29,14 @@ function SurvayTemplate(props) {
 }
 
 
-export function SurvayList() {
-    const [showUserRegistrationModel,setshowUserRegistrationModel] = useState(false);
-
-    function showUserRegistrationModelfn(){
+export function SurvayList(props) {
+    const [showUserRegistrationModel, setshowUserRegistrationModel] = useState(false);
+    const { wards } = props;
+    function showUserRegistrationModelfn() {
         setshowUserRegistrationModel(true)
     }
 
-    function closeshowUserRegistrationModelfn(){
+    function closeshowUserRegistrationModelfn() {
         setshowUserRegistrationModel(false);
     }
 
@@ -38,30 +44,20 @@ export function SurvayList() {
         <div className='member_userRegistration_usersList_outerDiv'>
             <table className='member_userRegistration_usersList_table'>
                 <tr>
-                    <th className='h_first'>No</th>
+                    <th className='h_first'>Ward No</th>
                     <th className='h_second'>Member Name</th>
                     <th className='h_third'></th>
                     {/* <th className='h_fourth'></th> */}
                 </tr>
-                <SurvayTemplate onViewPress={showUserRegistrationModelfn}/>
-                <SurvayTemplate onViewPress={showUserRegistrationModelfn}/>
-                <SurvayTemplate onViewPress={showUserRegistrationModelfn}/>
-                <SurvayTemplate onViewPress={showUserRegistrationModelfn}/>
-                <SurvayTemplate onViewPress={showUserRegistrationModelfn}/>
-                <SurvayTemplate onViewPress={showUserRegistrationModelfn}/>
-                <SurvayTemplate onViewPress={showUserRegistrationModelfn}/>
-                <SurvayTemplate onViewPress={showUserRegistrationModelfn}/>
-                <SurvayTemplate onViewPress={showUserRegistrationModelfn}/>
-                <SurvayTemplate onViewPress={showUserRegistrationModelfn}/>
-                <SurvayTemplate onViewPress={showUserRegistrationModelfn}/>
-                <SurvayTemplate onViewPress={showUserRegistrationModelfn}/>
-                <SurvayTemplate onViewPress={showUserRegistrationModelfn}/>
-                <SurvayTemplate onViewPress={showUserRegistrationModelfn}/>
-                <SurvayTemplate onViewPress={showUserRegistrationModelfn}/>
-                <SurvayTemplate onViewPress={showUserRegistrationModelfn}/>
-                <SurvayTemplate onViewPress={showUserRegistrationModelfn}/>
+                {
+                    wards.map(
+                        (ward) => {
+                            return <SurvayTemplate ward={ward} onDeleteButtonClick={props.onDeleteButtonClick} />
+                        }
+                    )
+                }
             </table>
-            <UserRegistrationModel show={showUserRegistrationModel} onClose={closeshowUserRegistrationModelfn}/>
+            <UserRegistrationModel show={showUserRegistrationModel} onClose={closeshowUserRegistrationModelfn} />
         </div>
 
     );

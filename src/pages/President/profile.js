@@ -13,7 +13,7 @@ const ProfileComponent = (props) => {
   }, ''));
 
   let handleOnClick = ()=>{
-    navigate('/editUser');
+    navigate('../editUser');
   }
 
   return (

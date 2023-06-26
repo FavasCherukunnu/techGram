@@ -32,6 +32,7 @@ export function EditPanchayath() {
 
   const handleOnchange = (event) => {
     panchayahtDetails[event.target.name] = event.target.value;
+    console.log(panchayahtDetails);
     setPanchayathDetails(
       {
         ...panchayahtDetails,
@@ -116,14 +117,16 @@ export function EditPanchayath() {
   const handleOnSave = async () => {
     let { districtId, blockId, panchayathId } = panchayahtDetails;
 
-    
       let res = {
+        ...panchayahtDetails,
         district: data.districts[districtId - 1].name,
         block: data.districts[districtId - 1].block_panchayats[blockId - 1].name,
         panchayath: data.districts[districtId - 1].block_panchayats[blockId - 1].panchayats[panchayathId - 1].name,
         id: `${districtId}${blockId}${panchayathId}`,
-        ...panchayahtDetails
+        president:panchayahtDetails.president?panchayahtDetails.president._id:null,
       }
+
+      console.log(res);
       try {
         const token = localStorage.getItem('x-auth-token');
         await axios.post(`${SERVER_ADDRESS}/admin/updatePanchayath/${panchayahtDetails._id}`, { panchayath: res }, { headers: { 'x-auth-token': token } })
@@ -205,7 +208,7 @@ export function EditPanchayath() {
                     {builPanchayath()}
                   </select>
                 </div>
-                {panchayahtDetails.president?<PresidentSelectedSection user={panchayahtDetails.president}/>:null}
+                {panchayahtDetails.president&&panchayahtDetails.president!==null?<PresidentSelectedSection user={panchayahtDetails.president}/>:null}
                 
                 <div style={{ padding: '10px' }}>
                   <IconButtonWIthText text='Select President' onClick={
