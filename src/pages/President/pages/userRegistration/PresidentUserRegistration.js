@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { DivScrollableWithGeasture, DivScrollableWithGeastureP0, UnderNavigationOuterDiv } from '../../../../components/divisions'
-import './MemberUserRegistration.css'
+import './PresidentUserRegistration.css'
 import { SurvayList } from './component'
 import { UserContext } from '../../../user/userHomePage'
 import axios from 'axios'
 import { SERVER_ADDRESS } from '../../../../staticFiles/constants'
 import { checkLoggedIn, getUserToken } from '../../../../staticFiles/functions'
 import { SimpleLoadingScreen } from '../../../../components/LoadingScreen'
-export function MemberUserRegistration() {
+export function PresidentUserRegistration() {
     const myContext = useContext(UserContext)
     const { wardOId } = myContext.user;
     const [ui, setUi] = useState(false);

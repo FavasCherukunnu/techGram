@@ -16,48 +16,25 @@ const LoginPage = () => {
   const methods = useForm();
   const [errorMsg, setErrorMsg] = useState('');
 
-  // const [formData, setFormData] = useState({
-  //   email: 'mhdfavascheru@gmail.com',
-  //   password: '1234',
-  // });
-
-
-  // const handleOnChange = (event) => {
-  //   const name = event.target['name'];
-  //   formData[name] = event.target.value;
-
-  //   setFormData({ ...formData });
-  // };
-
-
-  // const handleSubmit = async (event) => {
-  //   event.preventDefault();
-  //   console.log(formData);
-  //   try {
-  //     await axios.post(`${SERVER_ADDRESS}/user/login`, formData).then((res) => {
-  //       localStorage.setItem('auth-token', res.data.token);
-  //       navigate('/user/home', { replace: true })
-  //     })
-  //   } catch (err) {
-  //     console.log(err.response);
-  //   }
-  //   // navigate('/home');
-  //   // Perform signup logic here
-  //   // For example, you can make an API request to register the user
-
-  //   // Reset form inputs
-  // };
+  function handleNavigation(user){
+    if (user.isPresident === true) {
+      navigate('/president/home');
+    }else if(user.userType==='member'){
+      navigate('/member/home')
+    }else if(user.userType==='user' && user.isApproved===true){
+      navigate('/user/home');
+    }
+    else {
+      setErrorMsg('You are not Approved. Please contact your member')
+    }
+  }
 
   const onSubmit = async (data) => {
     try {
       await axios.post(`${SERVER_ADDRESS}/user/login`, data).then((res) => {
         loginUser(res.data.token)
         const user = res.data.user;
-        if (user.isPresident === true) {
-          navigate('/president/home');
-        } else {
-          setErrorMsg('You are user. not developed user paged. please wait')
-        }
+        handleNavigation(user)
         // navigate('/user/home', { replace: true })
       })
     } catch (err) {
@@ -76,9 +53,7 @@ const LoginPage = () => {
         try {
           const res = await axios.get(`${SERVER_ADDRESS}/user/auth`, { headers: { 'u-auth-token': getUserToken() } })
           const user = res.data.user;
-          if (user.isPresident === true) {
-            navigate('/president/home');
-          } 
+          handleNavigation(user);
         
         } catch (err) {
           console.log(err);

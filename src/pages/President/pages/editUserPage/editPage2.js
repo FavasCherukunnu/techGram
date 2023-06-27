@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { SERVER_ADDRESS } from '../../../../staticFiles/constants';
+import { getUserToken } from '../../../../staticFiles/functions';
 
 const EditPresidentpage2 = (props) => {
 
@@ -33,8 +34,7 @@ const EditPresidentpage2 = (props) => {
 
     useEffect(
       () => {
-        const token = localStorage.getItem('auth-token');
-        axios.get(`${SERVER_ADDRESS}/user/getUserInfo`, { headers: { 'x-auth-token': token } }).then((res) => {
+        axios.get(`${SERVER_ADDRESS}/user/getUserInfo`, { headers: { 'u-auth-token': getUserToken() } }).then((res) => {
           let userData = res.data.user;
           setFormData({
             ...userData,

@@ -4,6 +4,7 @@ import axios from 'axios';
 import { RectangleButton } from '../../../../components/buttonRectangle';
 import { useNavigate } from 'react-router-dom';
 import { SERVER_ADDRESS } from '../../../../staticFiles/constants';
+import { getUserToken } from '../../../../staticFiles/functions';
 
 export function EditPresidentPage() {
 
@@ -31,8 +32,7 @@ export function EditPresidentPage() {
   }, ''));
   useEffect(
     () => {
-      const token = localStorage.getItem('auth-token');
-      axios.get(`${SERVER_ADDRESS}/user/getUserInfo`, { headers: { 'x-auth-token': token } }).then((res) => {
+      axios.get(`${SERVER_ADDRESS}/user/getUserInfo`, { headers: { 'u-auth-token': getUserToken() } }).then((res) => {
         // console.log(res.data.user.image.data.data);
         const dat = { ...res.data.user };
         setUserData(dat);

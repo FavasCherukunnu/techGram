@@ -5,8 +5,10 @@ import { RectangleButton } from '../../../../components/buttonRectangle';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { SERVER_ADDRESS } from '../../../../staticFiles/constants';
+import { getUserToken } from '../../../../staticFiles/functions';
 
-const Editpage2 = (props) => {
+const EditMemberpage2 = (props) => {
 
   let navigate = useNavigate();
 
@@ -30,20 +32,19 @@ const Editpage2 = (props) => {
     isApproved: false
   });
 
-    useEffect(
-      () => {
-        const token = localStorage.getItem('auth-token');
-        axios.get('http://localhost:3002/api/getUserInfo', { headers: { 'x-auth-token': token } }).then((res) => {
-          let userData = res.data.user;
-          setFormData({
-            ...userData,
-            dob:{day:new Date(userData.dob).getDate(),month:new Date(userData.dob).getMonth(),year:new Date(userData.dob).getFullYear()}
-          });
-        }).catch((err) => {
-          console.log(err);
-        })
-      }, []
-    )
+  useEffect(
+    () => {
+      axios.get(`${SERVER_ADDRESS}/user/getUserInfo`, { headers: { 'u-auth-token': getUserToken() } }).then((res) => {
+        let userData = res.data.user;
+        setFormData({
+          ...userData,
+          dob:{day:new Date(userData.dob).getDate(),month:new Date(userData.dob).getMonth()+1,year:new Date(userData.dob).getFullYear()}
+        });
+      }).catch((err) => {
+        console.log(err);
+      })
+    }, []
+  )
 
   const handleOnChange = (event) => {
     const name = event.target['name'];
@@ -136,4 +137,4 @@ const Editpage2 = (props) => {
   );
 };
 
-export {Editpage2};
+export {EditMemberpage2};

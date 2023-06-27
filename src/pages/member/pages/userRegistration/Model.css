@@ -4,20 +4,27 @@
 
 .member_userRegistration_userDetails_model_Table .first{
     width: 120px;
+    font-weight: 700;
+    vertical-align: top;
 }
 
 .member_userRegistration_userDetails_model_AvatarOuter{
     min-height: 200px;
     max-height: 200px;
     max-width: 200px;
+    min-width: 200px;
     overflow: hidden;
     border-radius: 50%;
     margin-bottom: 30px;
+    
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .member_userRegistration_userDetails_model_AvatarOuter img{
     object-fit: cover;
-    height: 200px;
+    /* height: 200px; */
+    width: 200px;
 }
 .member_userRegistration_userDetails_model_footerButton_insideDiv{
     display: flex;
@@ -26,4 +33,8 @@
 }
 .member_userRegistration_userDetails_model_footerButton_insideDiv .gap{
     width: 5px;
+}
+
+.model_userApprove1234{
+    background: rgba(0, 0, 0, 0.605);
 }

@@ -59,7 +59,8 @@ const SignupPage = () => {
         block: block.name,
         panchayath: panchayath.name,
         blockOId:`${district.id}${block.id}`,
-        panchayathOId:`${district.id}${block.id}${panchayath.id}`
+        panchayathOId:`${district.id}${block.id}${panchayath.id}`,
+        wardOId:`${district.id}${block.id}${panchayath.id}${data1.wardNo}`
       }
     ))
     form.append('image', data1.image[0]);

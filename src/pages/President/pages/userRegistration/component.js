@@ -4,20 +4,15 @@ import { AiOutlineSearch } from "react-icons/ai";
 import './component.css'
 import { UserRegistrationModel } from "./Model";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 function SurvayTemplate(props) {
-    const navigate = useNavigate();
-    const { ward } = props;
-
+    const { user, index } = props;
     return (
-        <tr className='member_userRegistration_usersList_template'>
-            <td className='first'>{ward.wardNo}</td>
-            <td className='second'>{ward.member.fullName}</td>
+        <tr className={`member_userRegistration_usersList_template ${user.isRejected===true?'reddishUser':user.isApproved===false?'pendingApprovelUser':''}`}>
+            <td className='first'>{index}</td>
+            <td className='second'>{user.fullName}</td>
             <td className='third'>
-                <RectangleButton primary width='80px' height='30px' onClick={() => navigate(`editWard/${ward._id}`)}>Edit</RectangleButton>
-                <div className="gap"></div>
-                <RectangleButton primary width='80px' danger height='30px' onClick={()=>props.onDeleteButtonClick(ward)}>Delete</RectangleButton>
+                <RectangleButton primary width='80px' height='30px' onClick={() => { props.onViewPress(user._id) }}>View</RectangleButton>
             </td>
             {/* <td className='fourth'>
                 <RectangleButton width='50px' height='30px'><TiTick/></RectangleButton>
@@ -31,8 +26,10 @@ function SurvayTemplate(props) {
 
 export function SurvayList(props) {
     const [showUserRegistrationModel, setshowUserRegistrationModel] = useState(false);
-    const { wards } = props;
-    function showUserRegistrationModelfn() {
+    const [selectedUserId, setSelectedUserId] = useState(null)
+    const { users } = props;
+    function showUserRegistrationModelfn(userId) {
+        setSelectedUserId(userId);
         setshowUserRegistrationModel(true)
     }
 
@@ -42,22 +39,30 @@ export function SurvayList(props) {
 
     return (
         <div className='member_userRegistration_usersList_outerDiv'>
-            <table className='member_userRegistration_usersList_table'>
+            {
+
+                users.length===0?
+                <div style={{ height: '100%', width: '100%',display:'flex',justifyContent:'center',alignItems:'center',fontSize:'40px',color:'gray',fontWeight:'700'}}>
+                    No User Found
+                </div>:
+                <table className='member_userRegistration_usersList_table'>
                 <tr>
-                    <th className='h_first'>Ward No</th>
-                    <th className='h_second'>Member Name</th>
+                    <th className='h_first'>No</th>
+                    <th className='h_second'>User Name</th>
                     <th className='h_third'></th>
                     {/* <th className='h_fourth'></th> */}
                 </tr>
                 {
-                    wards.map(
-                        (ward) => {
-                            return <SurvayTemplate ward={ward} onDeleteButtonClick={props.onDeleteButtonClick} />
+                    users.map(
+                        (user,index) => {
+                            return <SurvayTemplate index={index+1} onViewPress={showUserRegistrationModelfn} user={user} />   
                         }
                     )
+
                 }
             </table>
-            <UserRegistrationModel show={showUserRegistrationModel} onClose={closeshowUserRegistrationModelfn} />
+            }
+            <UserRegistrationModel changeUi={props.changeUi} selectedUserId={selectedUserId} show={showUserRegistrationModel} onClose={closeshowUserRegistrationModelfn} />
         </div>
 
     );

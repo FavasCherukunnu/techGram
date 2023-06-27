@@ -5,6 +5,7 @@ import Nav from 'react-bootstrap/Nav';
 import './sideNavigationBar.css'
 import {SideNavLink} from './components';
 import { MyContext } from '../user/userHomePage';
+import { logoutUser } from '../../staticFiles/functions';
 
 function SideNavigationBar(props) {
 
@@ -22,7 +23,7 @@ function SideNavigationBar(props) {
             <SideNavLink onClick={props.onClick} path='User Registration'>Users Registration</SideNavLink>
             <SideNavLink onClick={props.onClick} path='locate'>Locate</SideNavLink>
             <SideNavLink onClick={props.onClick} path='survay'>Survey</SideNavLink>
-            <SideNavLink onClick={props.onClick} path='/login'>Logout</SideNavLink>
+            <SideNavLink onClick={()=>{logoutUser();props.onClick();}} path='/login'>Logout</SideNavLink>
         </div>
     )
 }

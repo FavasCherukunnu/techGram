@@ -69,7 +69,7 @@ export function PresidentMemberRegistration() {
 
     return (
         <UnderNavigationOuterDiv isNotStyleChangable height='100%'>
-            <div className='member_userRegistrationPage_topHeadDiv'>
+            <div className='member_memberRegistrationPage_topHeadDiv'>
                 <div className='title'>Member Registration</div>
             </div>
             <DivScrollableWithGeastureP0 height='calc(100% - 45px)' isNotStyleChangable>

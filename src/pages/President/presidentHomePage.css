@@ -49,13 +49,17 @@
 .sideNavBar {
 
     /* width: 276px; */
-    overflow-y: auto;
+    overflow-y: hidden;
     background: #FFFFFF;
     box-shadow: 6px 4px 8px -2px rgba(0, 0, 0, 0.08);
     border-radius: 12px 12px 12px 12px;
     height: 100%;
     overflow-x: hidden;
 
+}
+.sideNavBar .sdeNavouterDiv{
+    height: 100%;
+    overflow-y: auto;
 }
 
 .sideNavBarOuter {

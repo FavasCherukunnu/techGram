@@ -16,6 +16,12 @@
     overflow-y: hidden;
 }
 
+.sideNavBar .sdeNavouterDiv{
+    height: 100%;
+    overflow-y: auto;
+}
+
+
 .topNavBar {
     background: #FFFFFF;
     /* shadow */

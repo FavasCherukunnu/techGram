@@ -16,6 +16,7 @@ export function isLogedIn(err){
 
 export function checkLoggedIn(err){
     if(getAdminToken()===undefined){
+        loginUser();
         window.location = '/login'
         alert('Not logged In. login First');
         return false;   //not logged in
@@ -23,6 +24,7 @@ export function checkLoggedIn(err){
     if(err.response){
         if(err.response.status===401){
             console.log('not logged in');
+            loginUser();
             window.location = '/login'
             alert('Not logged In. login First');
             return false;   //not logged in

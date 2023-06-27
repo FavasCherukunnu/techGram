@@ -21,6 +21,7 @@ function SideNavigationBar(props) {
             <SideNavLink onClick={props.onClick} path='panchayathInfo'>Panchayath Info</SideNavLink>
             <SideNavLink onClick={props.onClick} path='complaints'>Complaints</SideNavLink>
             <SideNavLink onClick={props.onClick} path='Member Registration'>Member Registration</SideNavLink>
+            <SideNavLink onClick={props.onClick} path='User Registration'>User Registration</SideNavLink>
             <SideNavLink onClick={props.onClick} path='locate'>Locate</SideNavLink>
             <SideNavLink onClick={props.onClick} path='survay'>Survey</SideNavLink>
             <SideNavLink onClick={()=>{logoutUser();props.onClick();}} path='/login'>Logout</SideNavLink>

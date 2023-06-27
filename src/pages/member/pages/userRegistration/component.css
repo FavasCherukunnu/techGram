@@ -36,6 +36,21 @@
     padding: 10px 5px 10px 0px;
 }
 
+.member_userRegistration_usersList_template .first{
+    padding-left: 5px;
+}
+.member_userRegistration_usersList_template .middle{
+    height: 5px;
+}
+.reddishUser td{
+    color: #F14D4D;
+    font-weight: 700;
+}
+
+.pendingApprovelUser td{
+    color: #4DB6F1;
+}
+
 .member_userRegistration_usersList_table .h_fourth{
     width: 60px;
 }
@@ -47,9 +62,3 @@
     width: 80px;
 }
 
-.member_userRegistration_usersList_template .first{
-    padding-left: 5px;
-}
-.member_userRegistration_usersList_template .middle{
-    height: 5px;
-}

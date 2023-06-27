@@ -78,7 +78,7 @@ import { PresidentPanchayathInstitutePage } from "../pages/President/pages/panch
 import { PresidentLocatePage } from "../pages/President/pages/LocatePage/locatePage";
 import { PresidentSurvayPage } from "../pages/President/pages/survayPage/survayPage";
 import { PresidentOnlyComplaintPage } from "../pages/President/pages/ComplaintPage/UserPanchayathComplaintPage";
-import { PresidentMemberRegistration } from "../pages/President/pages/userRegistration/memberUserRegistration";
+import { PresidentMemberRegistration } from "../pages/President/pages/memberRegistration/memberUserRegistration";
 import { AdminPage } from "../pages/AdminPage/loginPage";
 import { AdminHomePage } from "../pages/AdminPage/pages/homePage/HomePage";
 import { ViewPanchayath } from "../pages/AdminPage/pages/viewPanchayath/ViewPanchayath";
@@ -87,9 +87,12 @@ import { AdminHomePageRoot } from "../pages/AdminPage/pages/homePage/Home";
 import { SelectPresidentPage } from "../pages/AdminPage/pages/createPanchayath/pages/SelectPresidentPage";
 import { EditAdminPage, EditPresidentPage } from "../pages/President/pages/editUserPage/EditUserPage";
 import { EditPresidentpage2 } from "../pages/President/pages/editUserPage/editPage2";
-import { CreateWard } from "../pages/President/pages/userRegistration/pages/createWard/CreatePanchayath";
+import { CreateWard } from "../pages/President/pages/memberRegistration/pages/createWard/CreatePanchayath";
 import { CreatePanchayath } from "../pages/AdminPage/pages/createPanchayath/CreatePanchayath";
-import { EditWard } from "../pages/President/pages/userRegistration/pages/editWard/editWard";
+import { EditWard } from "../pages/President/pages/memberRegistration/pages/editWard/editWard";
+import { PresidentUserRegistration } from "../pages/President/pages/userRegistration/PresidentUserRegistration";
+import { EditMemberpage2 } from "../pages/member/pages/editUserPage/editPage2";
+import { EditMemberPage } from "../pages/member/pages/editUserPage/EditUserPage";
 
 
 
@@ -109,10 +112,10 @@ export function RouterHandler() {
                     <Route path="Admin">
                         <Route index element={<AdminPage />} />
                         <Route path="home" element={<AdminHomePage />}>
-                            <Route path="" element={<AdminHomePageRoot/>}/>
+                            <Route path="" element={<AdminHomePageRoot />} />
                             <Route path="createPanchayath">
-                                <Route path="" element={<CreatePanchayath />}/>
-                                <Route path="selectPresident/:panchayathId" element={<SelectPresidentPage/>}/>
+                                <Route path="" element={<CreatePanchayath />} />
+                                <Route path="selectPresident/:panchayathId" element={<SelectPresidentPage />} />
                             </Route>
                             <Route path="viewPanchayath" element={<ViewPanchayath />} />
                             <Route path="editPanchayath/:id" element={<EditPanchayath />} />
@@ -173,8 +176,12 @@ export function RouterHandler() {
                             <Route path="locate" element={<MemberLocatePage />} />
                             <Route path="survay" element={<MemberSurvayPage />} />
                             <Route path="complaints" element={<MemberOnlyComplaintPage />} />
-                            <Route path="User Registration" element={<MemberUserRegistration />} />
+                            <Route path="User Registration" element={<MemberUserRegistration />} >
+                                <Route path="" element={<MemberUserRegistration />} />
+                            </Route>
                         </Route>
+                        <Route path="editProfile" element={<EditMemberpage2 />} />
+                        <Route path="editUser" element={<EditMemberPage />} />
                     </Route>
                     <Route path="president">
                         <Route path="home" element={<PresidentHomePage />}>
@@ -206,7 +213,10 @@ export function RouterHandler() {
                             <Route path="Member Registration" >
                                 <Route path="" element={<PresidentMemberRegistration />} />
                                 <Route path="createWard" element={<CreateWard />} />
-                                <Route path="editWard/:id" element={<EditWard/>} />
+                                <Route path="editWard/:id" element={<EditWard />} />
+                            </Route>
+                            <Route path="User Registration" >
+                                <Route path="" element={<PresidentUserRegistration />} />
                             </Route>
                         </Route>
                         <Route path="editProfile" element={<EditPresidentpage2 />} />
