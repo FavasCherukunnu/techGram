@@ -6,135 +6,414 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { SERVER_ADDRESS } from '../../../../staticFiles/constants';
-import { getUserToken } from '../../../../staticFiles/functions';
+import { checkLoggedIn, getUserToken } from '../../../../staticFiles/functions';
+import { IconButton } from '../../../../components/iconButton';
+import { HiOutlineHome } from 'react-icons/hi';
+import { FormProvider, useForm } from 'react-hook-form';
+import data from '../../../../staticFiles/districts.json'
+import _ from 'lodash';
+import { SimpleLoadingScreen } from '../../../../components/LoadingScreen';
 
 const EditPresidentpage2 = (props) => {
 
   let navigate = useNavigate();
+  const methods = useForm();
+  const errors = methods.formState.errors;
+  const [districtId, setDistrictId] = useState();
+  const [blockId, setBlockId] = useState();
+  const [panchayathId, setPanchayathId] = useState();
+  const [errorMsg, setErrorMsg] = useState('');
+  const [isLoaded, setIsLoaded] = useState(false);
 
-  const [formData, setFormData] = useState({
-    fullName: '',
-    address: '',
-    phoneNo: '',
-    email: '',
-    fatherName: '',
-    motherName: '',
-    district: '',
-    taluk: '',
-    panchayath: '',
-    wardNo: '',
-    pinCode: '',
-    dob: { day: '', month: '', year: '' },
-    adharNo: '',
-    password: '',
-    dateTimeNow: '',
-    image: '',
-    isApproved: false
-  });
-
-    useEffect(
-      () => {
-        axios.get(`${SERVER_ADDRESS}/user/getUserInfo`, { headers: { 'u-auth-token': getUserToken() } }).then((res) => {
-          let userData = res.data.user;
-          setFormData({
-            ...userData,
-            dob:{day:new Date(userData.dob).getDate(),month:new Date(userData.dob).getMonth()+1,year:new Date(userData.dob).getFullYear()}
-          });
-        }).catch((err) => {
-          console.log(err);
-        })
-      }, []
-    )
-
-  const handleOnChange = (event) => {
-    const name = event.target['name'];
-    if (name === 'dob.day') {
-      formData['dob']['day'] = event.target.value;
-    } else if (name === 'dob.month') {
-      formData['dob']['month'] = event.target.value;
-    } else if (name === 'dob.year') {
-      formData['dob']['year'] = event.target.value;
-    } else if (name === 'profileImage') {
-      // console.log(event.target.files[0]);
-      formData['image'] = event.target.files[0];
-
-    } else {
-      formData[name] = event.target.value;
+  const validation = {
+    fullName: {
+      required: {
+        message: "cannot be empty",
+        value: true
+      },
+      minLength: {
+        value: 3,
+        message: 'Atleast 3 characters'
+      }
+    },
+    address: {
+      required: {
+        message: "cannot be empty",
+        value: true
+      },
+      minLength: {
+        value: 8,
+        message: 'Atleast 8 characters'
+      }
+    },
+    fatherName: {
+      required: {
+        message: "cannot be empty",
+        value: true
+      },
+      minLength: {
+        value: 3,
+        message: 'Atleast 3 characters'
+      }
+    },
+    motherName: {
+      required: {
+        message: "cannot be empty",
+        value: true
+      },
+      minLength: {
+        value: 3,
+        message: 'Atleast 3 characters'
+      }
+    },
+    phoneNo: {
+      required: {
+        message: "cannot be empty",
+        value: true
+      },
+      minLength: {
+        value: 3,
+        message: 'Atleast 3 characters'
+      },
+      pattern: {
+        value: /^\d+$/,
+        message: 'value is not a number'
+      }
+    },
+    email: {
+      required: {
+        message: "cannot be empty",
+        value: true
+      },
+      pattern: {
+        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+        message: 'not valid email'
+      }
+    },
+    district: {
+      required: {
+        message: "cannot be empty",
+        value: true
+      },
+    },
+    taluk: {
+      required: {
+        message: "cannot be empty",
+        value: true
+      },
+    },
+    panchayath: {
+      required: {
+        message: "cannot be empty",
+        value: true
+      },
+    },
+    wardNo: {
+      required: {
+        message: "cannot be empty",
+        value: true
+      },
+    },
+    pinCode: {
+      required: {
+        message: "cannot be empty",
+        value: true
+      },
+      pattern: {
+        value: /^\d+$/,
+        message: 'enter valid pincode'
+      }
+    },
+    'dob.day': {
+      required: {
+        value: true,
+        message: "required",
+      },
+      min: {
+        value: 1,
+        message: 'not Valid'
+      },
+      max: {
+        value: 31,
+        message: 'not Valid',
+      }
+    },
+    'dob.month': {
+      required: {
+        value: true,
+        message: "required"
+      },
+      min: {
+        value: 1,
+        message: 'not Valid'
+      },
+      max: {
+        value: 12,
+        message: 'not Valid',
+      }
+    },
+    'dob.year': {
+      required: {
+        value: true,
+        message: "required",
+      },
+      min: {
+        value: 1,
+        message: 'not Valid'
+      },
+    },
+    adharNo: {
+      required: {
+        message: "cannot be empty",
+        value: true
+      },
+      pattern: {
+        value: /^\d+$/,
+        message: 'enter valid pincode'
+      }
+    },
+    password: {
+      required: {
+        value: true,
+        message: "required"
+      }
     }
-    setFormData({ ...formData });
-  };
+  }
+
+  const selectValidateFn = (value) => {
+    if (value > 0) {
+      return true;
+    } else {
+      return "Select Value"
+    }
+  }
+
+  useEffect(
+    () => {
+      axios.get(`${SERVER_ADDRESS}/user/getUserInfo`, { headers: { 'u-auth-token': getUserToken() } }).then((res) => {
+        let userData = res.data.user;
+        // console.log(userData);
+        let dob = new Date(userData.dob);
+        methods.reset(
+          {
+            ...userData,
+            image: '',
+            dob: {
+              day: dob.getDate(),
+              month: dob.getMonth() + 1,
+              year: dob.getFullYear(),
+            }
+          }
+        )
+        setDistrictId(methods.getValues('districtId'))
+        setBlockId(methods.getValues('blockId'))
+        setPanchayathId(methods.getValues('panchayathId'))
+        setIsLoaded(true)
+      }).catch((err) => {
+        console.log(err);
+        checkLoggedIn(err);
+      })
+    }, []
+  )
+
+  const registerDistrict = methods.register('districtId', { validate: { required: selectValidateFn } })
+  const registerBlock = methods.register('blockId', { validate: { required: selectValidateFn } })
+  const registerPanchayath = methods.register('panchayathId', { validate: { required: selectValidateFn } })
+  const districtOnChange = (event) => {
+    registerDistrict.onChange(event)
+    setDistrictId(event.target.value);
+  }
+  const blockOnChange = (event) => {
+    registerBlock.onChange(event)
+    setBlockId(event.target.value);
+  }
+  const panchayathOnChange = (event) => {
+    registerPanchayath.onChange(event)
+    setPanchayathId(event.target.value);
+  }
 
 
-  const handleSubmit = async (event) => {
+  const onSubmit = async (data1) => {
+
+    let district = data.districts[data1.districtId - 1];
+    let block = district.block_panchayats[data1.blockId - 1];
+    let panchayath = block.panchayats[data1.panchayathId - 1]
     const form = new FormData();
-    event.preventDefault();
-    form.append('data1', JSON.stringify(formData))
-    form.append('image', formData.image);
+    form.append('data1', JSON.stringify(
+      {
+        ...data1,
+        district: district.name,
+        block: block.name,
+        panchayath: panchayath.name,
+        blockOId: `${district.id}${block.id}`,
+        panchayathOId: `${district.id}${block.id}${panchayath.id}`,
+        wardOId: `${district.id}${block.id}${panchayath.id}${data1.wardNo}`
+      }
+    ))
+    form.append('image', data1.image[0]);
 
     // formData.dataTimeNow = 
     try {
-      // await axios.post('http://localhost:3002/api/register', form, { headers: localStorage.getItem('token') }).then((res) => {
-        // localStorage.setItem('auth-token',res.data.token);
-        navigate('/home');
-      // })
-    } catch(err) {
+      await axios.post(`${SERVER_ADDRESS}/user/editUser`, form, { headers: { 'u-auth-token': getUserToken() } }).then((res) => {
+        navigate('../home');
+      })
+    } catch (err) {
       console.log(err);
-      console.log('Not signed in');
+      const errmsg = checkLoggedIn(err)
+      if (errmsg !== false) {
+        setErrorMsg(errmsg);
+      }
     }
 
-    // Perform signup logic here
-    // For example, you can make an API request to register the user
+  }
 
-    // Reset form inputs
-  };
+  const buildDistrict = () => {
+    return data.districts.map(
+      (element) => {
+        return (<option key={element.id} value={element.id} >{element.name}</option>)
+      }
+    )
+  }
+
+  const builBlock = () => {
+    var arr = [];
+    if (districtId > 0) {
+      const district = data.districts[districtId - 1];
+      if (district.block_panchayats !== undefined) {
+
+        arr.push(district.block_panchayats.map(
+          (block) => {
+            return (<option key={block.id} value={block.id} >{block.name}</option>)
+          }
+        ))
+      } else {
+        methods.setValue('blockId', -1)
+      }
+    }
+    return arr
+  }
+
+  const builPanchayath = () => {
+    var arr = [];
+    if (districtId > 0 && blockId > 0) {
+      const district = data.districts[districtId - 1];
+      if (district.block_panchayats !== undefined && district.block_panchayats[blockId - 1] !== undefined) {
+        const block = data.districts[districtId - 1].block_panchayats[blockId - 1];
+        if (block.panchayats !== undefined) {
+
+          arr.push(block.panchayats.map(
+            (panchayath) => {
+              return (<option key={panchayath.id} value={panchayath.id} >{panchayath.name}</option>)
+            }
+          ));
+        }
+      } else {
+        methods.setValue('panchayathId', -1)
+      }
+    }
+    return arr;
+  }
 
   return (
-    <div className=" signup-page rootDiv">
-      <div className='topFlexiv'>
-        <div style={{ overflowY: 'auto', padding: '20px' }}>
-          <h1 className="hero_title">SIGN UP</h1>
-          <form>
-            <div className="gridDiv">
-              <div className='gridItem'>
-                <FormInput inputTitle='Full Name' onChange={handleOnChange} width='100%' name='fullName' value={formData.fullName} placeholder="Full Name" />
-                <FormInput inputTitle='Address' width='100%' onChange={handleOnChange} name='address' value={formData.address} placeholder="Address" />
-                <FormInput inputTitle='Father Name' width='100%' onChange={handleOnChange} name='fatherName' value={formData.fatherName} placeholder="Father Name" />
-                <FormInput inputTitle='Mother Name' width='100%' onChange={handleOnChange} name='motherName' value={formData.motherName} placeholder="Mother Name" />
-                <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
-                  <FormInput inputTitle='Phone No' width='48%' onChange={handleOnChange} name='phoneNo' value={formData.phoneNo} placeholder="Phone No" />
-                  <FormInput inputTitle='Email' width='48%' onChange={handleOnChange} name='email' value={formData.email} placeholder="Email" />
-                </div>
-                <FormInput inputTitle='Profile image' type='file' name='profileImage' onChange={handleOnChange} />
+    <FormProvider {...methods}>
+      <div className='user_registerPage_base'>
+        {isLoaded === false ?
+          <SimpleLoadingScreen /> :
+          <>
+            <div className='topBarFixed'>
+              <div></div>
+              <div style={{ display: 'flex' }}>
+                <IconButton onClick={() => navigate('/login')}><HiOutlineHome size={28} /></IconButton>
               </div>
-              <div className='gridItem'>
-                <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
-                  <FormInput inputTitle='District' width='48%' onChange={handleOnChange} name='district' value={formData.district} placeholder="District" />
-                  <FormInput inputTitle='Block' width='48%' onChange={handleOnChange} name='block' value={formData.block} placeholder="Taluk" />
-                </div>
-                <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
-                  <FormInput inputTitle='Panchayath' width='48%' onChange={handleOnChange} name='panchayath' value={formData.panchayath} placeholder="Panchayath" />
-                  <FormInput inputTitle='Ward No' width='48%' onChange={handleOnChange} name='wardNo' value={formData.wardNo} placeholder="Ward No" />
-                </div>
-                <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
-                  <FormInput inputTitle='Pin Code' width='48%' onChange={handleOnChange} name='pinCode' value={formData.pinCode} placeholder="Pin Code" />
-                  <div style={{ width: '48%', display: 'flex', justifyContent: 'space-between' }}>
-                    <FormInput inputTitle='Day' width='30%' onChange={handleOnChange} name='dob.day' value={formData.dob.day} placeholder="Day" />
-                    <FormInput inputTitle='Month' width='30%' onChange={handleOnChange} name='dob.month' value={formData.dob.month} placeholder="Month" />
-                    <FormInput inputTitle='Year' width='30%' onChange={handleOnChange} name='dob.year' value={formData.dob.year} placeholder="Year" />
-                  </div>
-                </div>
-                <FormInput inputTitle='Adhar No' width='100%' onChange={handleOnChange} name='adharNo' value={formData.adharNo} placeholder="Adhar No" />
-                <div style={{ width: '100%', display: 'flex', justifyContent: 'end', paddingTop: '22px' }}>
-                  <RectangleButton width='150px' onClick={handleSubmit}>Apply</RectangleButton>
+            </div>
+            <div className="rootDiv">
+              <div className='topFlexiv'>
+                <div style={{ overflowY: 'auto', padding: '20px' }}>
+                  <h1 className="hero_title">EDIT</h1>
+                  <form onSubmit={(e) => e.preventDefault()}>
+                    <div className="gridDiv">
+                      <div className='gridItem'>
+                        <FormInput validation={validation} inputTitle='Full Name' width='100%' name='fullName' placeholder="Full Name" />
+                        <FormInput validation={validation} inputTitle='Address' width='100%' name='address' placeholder="Address" />
+                        <FormInput validation={validation} inputTitle='Father Name' width='100%' name='fatherName' placeholder="Father Name" />
+                        <FormInput validation={validation} inputTitle='Mother Name' width='100%' name='motherName' placeholder="Mother Name" />
+                        <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
+                          <FormInput validation={validation} inputTitle='Phone No' width='48%' name='phoneNo' placeholder="Phone No" />
+                          <FormInput validation={validation} inputTitle='Email' width='48%' name='email' placeholder="Email" />
+                        </div>
+                        <FormInput validation={validation} inputTitle='Profile image' type='file' name='image' />
+                      </div>
+                      <div className='gridItem'>
+                        <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
+                          <div className='user_signUp_DropDownOutDiv' style={{ width: '48%' }}>
+                            <p className="user_signUp_DropDowninputTitleFont">Select District</p>
+                            <select name='districtId' className='user_signUp_customDropDownToggle' ref={registerDistrict.ref} onChange={districtOnChange} >
+                              <option key={-1} value={-1} >select</option>
+                              {
+                                buildDistrict()
+                              }
+                            </select>
+                            <p className="user_signupPage_form_errorText">{_.get(errors, 'districtId')?.message}</p>
+                          </div>
+                          <div className='user_signUp_DropDownOutDiv' style={{ width: '48%' }}>
+                            <p className="user_signUp_DropDowninputTitleFont">Select Block</p>
+                            <select name='blockId' className='user_signUp_customDropDownToggle' ref={registerBlock.ref} onChange={blockOnChange} >
+                              <option key={-1} value={-1} >select</option>
+                              {
+                                builBlock()
+                              }
+                            </select>
+                            <p className="user_signupPage_form_errorText">{_.get(errors, 'blockId')?.message}</p>
+                          </div>
+
+                        </div>
+                        <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
+                          <div className='user_signUp_DropDownOutDiv' style={{ width: '48%' }}>
+                            <p className="user_signUp_DropDowninputTitleFont">Select Panchayath</p>
+                            <select name='panchayathId' className='user_signUp_customDropDownToggle' ref={registerPanchayath.ref} onChange={panchayathOnChange} >
+                              <option key={-1} value={-1} >select</option>
+                              {
+                                builPanchayath()
+                              }
+                            </select>
+                            <p className="user_signupPage_form_errorText">{_.get(errors, 'panchayathId')?.message}</p>
+                          </div>
+                          <FormInput validation={validation} inputTitle='Ward No' width='48%' name='wardNo' placeholder="Ward No" />
+                        </div>
+                        <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
+                          <FormInput validation={validation} inputTitle='Pin Code' width='48%' name='pinCode' placeholder="Pin Code" />
+                          <div style={{ width: '48%', display: 'flex', justifyContent: 'space-between' }}>
+                            <FormInput validation={validation} type='number' inputTitle='Day' width='30%' name='dob.day' placeholder="Day" />
+                            <FormInput validation={validation} type='number' inputTitle='Month' width='30%' name='dob.month' placeholder="Month" />
+                            <FormInput validation={validation} type='number' inputTitle='Year' width='30%' name='dob.year' placeholder="Year" />
+                          </div>
+                        </div>
+                        <FormInput validation={validation} inputTitle='Adhar No' width='100%' name='adharNo' placeholder="Adhar No" />
+                        <FormInput validation={validation} inputTitle='Password' width='100%' name='password' placeholder="Password" type='password' />
+                        <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', paddingTop: '22px' }}>
+                          <div style={{ height: '60px', lineHeight: '0.6' }}>
+
+                          </div>
+                          <RectangleButton width='100px' onClick={methods.handleSubmit(onSubmit)}>EDIT</RectangleButton>
+                        </div>
+                      </div>
+                    </div>
+                    <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                      <div className='user_signUp_errormsgDiv'>
+                        {errorMsg !== '' ? `${errorMsg}!!!` : ''}
+                      </div>
+                    </div>
+
+                  </form>
                 </div>
               </div>
             </div>
+          </>
+        }
 
-          </form>
-        </div>
       </div>
-    </div>
+    </FormProvider>
   );
 };
 
-export {EditPresidentpage2};
+export { EditPresidentpage2 };

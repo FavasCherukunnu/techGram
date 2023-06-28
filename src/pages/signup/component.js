@@ -1,7 +1,7 @@
 import React from "react";
 import './component.css'
 import { useFormContext } from "react-hook-form";
-import { validation } from "./Validation";
+import { validation } from "../../staticFiles/Validation";
 import _ from "lodash";
 
 export function FormInput(props) {
