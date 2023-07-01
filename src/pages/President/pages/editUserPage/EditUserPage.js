@@ -5,6 +5,7 @@ import { RectangleButton } from '../../../../components/buttonRectangle';
 import { useNavigate } from 'react-router-dom';
 import { SERVER_ADDRESS } from '../../../../staticFiles/constants';
 import { getUserToken } from '../../../../staticFiles/functions';
+import { AvatarImage } from '../../../../components/imageLoading';
 
 export function EditPresidentPage() {
 
@@ -26,10 +27,7 @@ export function EditPresidentPage() {
     image: { data: { data: '' }, contentType: '' }
   });
   const navigate = useNavigate();
-  const uint8Array = new Uint8Array(userData.image.data.data);
-  let base64img = btoa(new Uint8Array(uint8Array).reduce(function (data, byte) {
-    return data + String.fromCharCode(byte);
-  }, ''));
+
   useEffect(
     () => {
       axios.get(`${SERVER_ADDRESS}/user/getUserInfo`, { headers: { 'u-auth-token': getUserToken() } }).then((res) => {
@@ -45,9 +43,7 @@ export function EditPresidentPage() {
   return (
     <div className='EditUserPage_outerDiv'>
       <div>
-      <div className='EditUserPage_avatarDiv' style={{ backgroundImage: `url(data:${userData.image.contentType};base64,${base64img})` }}>
-        {/* <img src={`data:${userData.image.contentType};base64,${base64img}`} alt="Profile Picture" style={{ }} /> */}
-      </div>
+      <AvatarImage id={userData._id} height='200px' width='200px'/>
       </div>
       <div className='EditUserPage_formDiv'>
         <p className='profile_profileName'>{userData.fullName}</p>
