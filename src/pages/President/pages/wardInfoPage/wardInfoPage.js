@@ -2,14 +2,16 @@ import React from 'react'
 import './wardInfoPage.css'
 import Nav from 'react-bootstrap/Nav';
 import { NavLink, Outlet } from 'react-router-dom';
-import { UserWardInfoTopNavBar} from './components';
+import { UserWardInfoTopNavBar } from './components';
 import { SwipeGeastureDiv } from '../../../../components/divisions';
 
 export function PresidentWardInfoPage() {
   return (
-    <div style={{height:'100%',width:'100%',overflow:'hidden'}}>
-      <SwipeGeastureDiv><UserWardInfoTopNavBar/></SwipeGeastureDiv>
-      <Outlet/>
+    <div style={{ height: '100%', width: '100%', overflow: 'hidden' }}>
+      <SwipeGeastureDiv>
+        <UserWardInfoTopNavBar />
+      </SwipeGeastureDiv>
+      <Outlet />
     </div>
   )
 }

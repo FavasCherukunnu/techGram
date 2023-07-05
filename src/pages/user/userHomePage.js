@@ -9,6 +9,8 @@ import SideNavigationBar from "./sideNavigationBar";
 import { Outlet, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { IconButton } from "../../components/iconButton";
+import { SERVER_ADDRESS } from "../../staticFiles/constants";
+import { checkLoggedIn, getUserToken } from "../../staticFiles/functions";
 
 export const MyContext = React.createContext();
 export const UserContext = React.createContext();
@@ -84,13 +86,12 @@ export default function UserHomePage() {
 
     useEffect(
         () => {
-            const token = localStorage.getItem('auth-token');
-            axios.get('http://localhost:3002/api/getUserInfo', { headers: { 'x-auth-token': token } }).then((res) => {
+            axios.get(`${SERVER_ADDRESS}/user/getUserInfo`, { headers: { 'u-auth-token': getUserToken() } }).then((res) => {
                 // console.log(res.data.user.image.data.data);
                 const dat = { ...res.data.user };
                 setUserData(dat);
             }).catch((err) => {
-                console.log(err);
+                checkLoggedIn(err);
             })
         }, []
     )
@@ -112,8 +113,10 @@ export default function UserHomePage() {
                     <div className="flex_container">
                         <div className="sideNavBarOuter" style={expanded ? { width: '0px', padding: '0px' } : { width: '250px', paddingRight: '10px' }}>
                             <Stack className='sideNavBar'>
+                            <div className="sdeNavouterDiv">
                                 <ProfileComponent userData={memoUserData} />
                                 <SideNavigationBar onClick={autoCloseSideNavOnClickInSmallScreen} />
+                            </div>
                             </Stack>
                         </div>
                         <div className="rightFlexItem"  >

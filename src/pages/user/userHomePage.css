@@ -28,7 +28,10 @@
     justify-content: center;
     transition: all 0.2s;
 }
-
+.sideNavBar .sdeNavouterDiv{
+    height: 100%;
+    overflow-y: auto;
+}
 .userHomePage_outerDiv {
     /* position: fixed; */
     /* width: 100px; */

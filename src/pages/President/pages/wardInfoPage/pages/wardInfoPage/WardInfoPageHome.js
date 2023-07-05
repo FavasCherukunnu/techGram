@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext, useMemo } from 'react'
 import { PostTemplate, RoundedIconButton } from '../../../homePage/component'
 import { PlaneButton } from '../../../../../../components/planeButton'
 import { AiOutlinePlus } from 'react-icons/ai'
@@ -10,6 +10,7 @@ import { DivScrollableWithGeasture, DivScrollableWithGeasture2, UnderNavigationO
 import { ChatSection } from './ChatDiv'
 import { NotificationSection } from './NotificationDiv'
 import { ShowFormmodel } from './Model'
+import { UserContext } from '../../../../../user/userHomePage'
 
 
 
@@ -17,6 +18,11 @@ function ChatDiv(props) {
   const smallScreen = props.smallScreen;
   const style = { "width": smallScreen ? '100%' : "60%", "height": smallScreen ? "calc(100% - 100px)" : "100%", "position": "relative", "overflow": "hidden" }
   const [showFormModel, setShowFormModel] = useState(false);
+  const usercont = useContext(UserContext).user;
+  const user = useMemo(
+    ()=> {return {...usercont}},
+    [usercont.wardOId]
+  )
 
   function showFormModelFun() {
     setShowFormModel(true);
@@ -28,7 +34,7 @@ function ChatDiv(props) {
   return (
     <div style={style}>
       <DivScrollableWithGeasture isNotStyleChangable={false}>
-        <ChatSection />
+        <ChatSection user={user}/>
       </DivScrollableWithGeasture>
       {/* <div className='user_home_postDiv'>
           
@@ -69,7 +75,7 @@ function TopNav(props) {
 }
 
 
-export function PresidentWardInfoPageHome() {
+function PresidentWardInfoPageHome() {
 
 
   const [smallScreen, setSmallScreen] = useState(false);
@@ -97,6 +103,8 @@ export function PresidentWardInfoPageHome() {
   }
 
   const render = () => {
+  console.log('rebuilding wardInfo full page');
+
     if (val === 1) {
       return (<NotificationDiv smallScreen={smallScreen} />);
     } else {
@@ -130,3 +138,6 @@ export function PresidentWardInfoPageHome() {
     )
   }
 }
+
+// const PresidentWardInfoPageHome = React.memo(PresidentWardInfoPageHome1);
+export {PresidentWardInfoPageHome}

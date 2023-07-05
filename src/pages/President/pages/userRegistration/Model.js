@@ -75,7 +75,7 @@ export function UserRegistrationModel(props) {
         setShowRejectModel(false);
     }
 
-    if (props.show === true) {
+    // if (props.show === true) {
 
         return (
             <>
@@ -199,8 +199,8 @@ export function UserRegistrationModel(props) {
                 </Modal>
             </>
         );
-    } else {
-        return <></>
-    }
+    // } else {
+    //     return <></>
+    // }
 
 }

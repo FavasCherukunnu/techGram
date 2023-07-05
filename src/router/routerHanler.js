@@ -148,6 +148,8 @@ export function RouterHandler() {
                             <Route path="locate" element={<UserLocatePage />} />
                             <Route path="survay" element={<UserSurvayPage />} />
                         </Route>
+                        <Route path="editProfile" element={<Editpage2 />} />
+                        <Route path="editUser" element={<EditUserPage />} />
                     </Route>
                     <Route path="member">
                         <Route path="home" element={<MemberHomePage />}>

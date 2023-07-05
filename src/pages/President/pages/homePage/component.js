@@ -68,21 +68,22 @@ export function PostTemplate(props) {
   function closeDiscussionModelfunc() {
     setShowDiscussionModel(false)
   }
+  const post = props.value;
 
   return (
     <div className='user_postTemplate_outerDiv'>
       <div className='user_postTemplate_innerDiv'>
         <div className='user_postTemplate_autherDiv'>
-          <p>{props.value.owner}</p>
+          <p>{post.owner.fullName}</p>
         </div>
         <div className='user_postTemplate_contenDiv'>
-          {props.value.images ? <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+          {post.images ? <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
             <div className='user_postTemplate_imageSpace'>
-              {props.value.images.map((image) => <div className='user_postTemplate_imageDiv'><img src={image} alt="" className='user_postTemplate_image' /></div>)}
+              {post.images.map((image) => <div className='user_postTemplate_imageDiv'><img src={image} alt="" className='user_postTemplate_image' /></div>)}
             </div>
           </div> : <div></div>}
-          <p className='heading'>{props.value.title}</p>
-          <p className='body'>{props.value.description}</p>
+          <p className='heading'>{post.title}</p>
+          <p className='body'>{post.description}</p>
           <div className='intractionDiv'>
             <IconButton ><AiOutlineLike size={30} /></IconButton>
             <div style={{ width: '20px' }}></div>

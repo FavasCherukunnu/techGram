@@ -2,24 +2,21 @@ import React from 'react';
 import './profile.css';
 import { PlaneButton } from '../../components/planeButton';
 import { useNavigate } from 'react-router-dom';
+import { AvatarImage } from '../../components/imageLoading';
 
 const ProfileComponent = (props) => {
   const userData = props.userData;
   console.log('rebuilding profile component');
-  const uint8Array = new Uint8Array(userData.image.data.data);
   const navigate = useNavigate();
-  let base64img = btoa(new Uint8Array(uint8Array).reduce(function (data, byte) {
-    return data + String.fromCharCode(byte);
-  }, ''));
 
-  let handleOnClick = ()=>{
-    navigate('/editUser');
+  let handleOnClick = () => {
+    navigate('../editUser');
   }
 
   return (
     <div className='profile_Container'>
-      <div className='user_profile_avatarDiv' style={{ backgroundImage: `url(data:${userData.image.contentType};base64,${base64img})` }}>
-        {/* <img src={`data:${userData.image.contentType};base64,${base64img}`} alt="Profile Picture" style={{ }} /> */}
+      <div className='user_profile_avatarDiv'>
+        <AvatarImage dId='sideProfileAvatar' id={userData._id} height='100%' width='100%' />
       </div>
       <p className='profile_profileName'>{userData.fullName}</p>
       <div style={{ margin: '10px' }}>

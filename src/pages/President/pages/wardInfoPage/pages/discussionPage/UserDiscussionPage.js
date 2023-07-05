@@ -18,7 +18,7 @@ export function PresidentDiscussionPage() {
   return (
     <UnderNavigationOuterDiv>
       <DivScrollableWithGeasture>
-          <PostSection/>
+          <PostSection />
       </DivScrollableWithGeasture>
         <div style={{ position: 'absolute', bottom: '15px', right: '15px' }}><RoundedIconButton onClick={showDiscussionModelFun}><AiOutlinePlus size={25} /></RoundedIconButton></div>
         <ShowDiscussionModel show={showDiscussionModel} onClose={closeDiscuusionModelFun}/>

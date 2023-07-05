@@ -4,6 +4,8 @@ import axios from 'axios';
 import { RectangleButton } from '../../../../components/buttonRectangle';
 import { useNavigate } from 'react-router-dom';
 import { SERVER_ADDRESS } from '../../../../staticFiles/constants';
+import { getUserToken } from '../../../../staticFiles/functions';
+import { AvatarImage } from '../../../../components/imageLoading';
 
 export function EditUserPage() {
 
@@ -25,14 +27,9 @@ export function EditUserPage() {
     image: { data: { data: '' }, contentType: '' }
   });
   const navigate = useNavigate();
-  const uint8Array = new Uint8Array(userData.image.data.data);
-  let base64img = btoa(new Uint8Array(uint8Array).reduce(function (data, byte) {
-    return data + String.fromCharCode(byte);
-  }, ''));
   useEffect(
     () => {
-      const token = localStorage.getItem('auth-token');
-      axios.get(`${SERVER_ADDRESS}/user/getUserInfo`, { headers: { 'x-auth-token': token } }).then((res) => {
+      axios.get(`${SERVER_ADDRESS}/user/getUserInfo`, { headers: { 'u-auth-token': getUserToken() } }).then((res) => {
         // console.log(res.data.user.image.data.data);
         const dat = { ...res.data.user };
         setUserData(dat);
@@ -45,9 +42,7 @@ export function EditUserPage() {
   return (
     <div className='EditUserPage_outerDiv'>
       <div>
-      <div className='EditUserPage_avatarDiv' style={{ backgroundImage: `url(data:${userData.image.contentType};base64,${base64img})` }}>
-        {/* <img src={`data:${userData.image.contentType};base64,${base64img}`} alt="Profile Picture" style={{ }} /> */}
-      </div>
+      <AvatarImage id={userData._id} height='200px' width='200px'/>
       </div>
       <div className='EditUserPage_formDiv'>
         <p className='profile_profileName'>{userData.fullName}</p>
@@ -84,8 +79,8 @@ export function EditUserPage() {
               <td className='second_element'>{userData.district}</td>
             </tr>
             <tr>
-              <td className='first_element'>Taluk</td>
-              <td className='second_element'>{userData.taluk}</td>
+              <td className='first_element'>Block</td>
+              <td className='second_element'>{userData.block}</td>
             </tr>
             <tr>
               <td className='first_element'>Panchayath</td>
@@ -101,7 +96,7 @@ export function EditUserPage() {
             </tr>
             <tr>
               <td className='first_element'>Date of Birth</td>
-              <td className='second_element'>{`${new Date(userData.dob).getDate()}-${new Date(userData.dob).getMonth()}-${new Date(userData.dob).getFullYear()}`}</td>
+              <td className='second_element'>{`${new Date(userData.dob).getDate()}-${new Date(userData.dob).getMonth()+1}-${new Date(userData.dob).getFullYear()}`}</td>
             </tr>
             <tr>
               <td className='first_element'>Adhar No</td>
@@ -113,7 +108,7 @@ export function EditUserPage() {
         <div style={{ display: 'flex', justifyContent: 'center', width: '100%',marginTop:'10px'}}>
           <RectangleButton height='40px' onClick={()=>{navigate('../editProfile')}}>Edit</RectangleButton>
           <div style={{width:'30px'}}></div>
-          <RectangleButton onClick={()=>{navigate('/home')}} height='40px'>Ok</RectangleButton>
+          <RectangleButton onClick={()=>{navigate('../home')}} height='40px'>Ok</RectangleButton>
         </div>
       </div>
     </div>

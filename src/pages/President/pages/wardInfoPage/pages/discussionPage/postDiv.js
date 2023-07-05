@@ -2,6 +2,7 @@ import React from 'react'
 import { PostTemplate } from '../../../homePage/component'
 
 function PostDiv() {
+    console.log('rebuilding discussion section');
     const message = {
         owner: 'Mohammed Favas',
         id: '12345',
