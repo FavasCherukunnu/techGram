@@ -17,6 +17,7 @@ const LoginPage = () => {
   const [errorMsg, setErrorMsg] = useState('');
 
   function handleNavigation(user){
+    console.log(user);
     if (user.isPresident === true) {
       navigate('/president/home');
     }else if(user.userType==='member'){

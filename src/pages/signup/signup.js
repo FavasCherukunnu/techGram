@@ -69,7 +69,7 @@ const SignupPage = () => {
     try {
       await axios.post(`${SERVER_ADDRESS}/user/register`, form).then((res) => {
         // localStorage.setItem('u-auth-token', res.data.token);
-        // navigate('/login');
+        navigate('/login');
       })
     } catch (err) {
       console.log(err);

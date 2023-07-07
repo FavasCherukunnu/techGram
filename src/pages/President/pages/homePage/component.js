@@ -6,6 +6,7 @@ import React from 'react'
 import { Button } from 'react-bootstrap';
 import { IconButton } from '../../../../components/iconButton';
 import { ShowDiscussionmodel } from './Model';
+import { PostImage } from '../../../../components/imageLoading';
 
 
 export function RoundedIconButton(props) {
@@ -28,7 +29,7 @@ export function DiscussionTemplate() {
         here notification displays. notification is controlled by admin of institutions
         here notification displays. notification is controlled by admin of institutions
         here notification displays. notification is controlled by admin of institutions
-        user types Discussion here so that others can also participate. this is very important section in the world famouse hystory of the logica illussion. 
+        user types Discussion here so that others can also participate. this is very important section in the world famouse hystory of the logica illussion.
       </div>
       <div className='user_homePage_discussion_template_time'>
         00:00
@@ -69,7 +70,8 @@ export function PostTemplate(props) {
     setShowDiscussionModel(false)
   }
   const post = props.value;
-
+  const date = new Date(post.createdAt)
+  
   return (
     <div className='user_postTemplate_outerDiv'>
       <div className='user_postTemplate_innerDiv'>
@@ -77,17 +79,22 @@ export function PostTemplate(props) {
           <p>{post.owner.fullName}</p>
         </div>
         <div className='user_postTemplate_contenDiv'>
-          {post.images ? <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+          {post.images.length > 0 ? <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
             <div className='user_postTemplate_imageSpace'>
-              {post.images.map((image) => <div className='user_postTemplate_imageDiv'><img src={image} alt="" className='user_postTemplate_image' /></div>)}
+              {post.images.map((id, index) => <PostImage key={index} id={id} dId={id} />)}
             </div>
           </div> : <div></div>}
           <p className='heading'>{post.title}</p>
           <p className='body'>{post.description}</p>
-          <div className='intractionDiv'>
-            <IconButton ><AiOutlineLike size={30} /></IconButton>
-            <div style={{ width: '20px' }}></div>
-            <PlaneButton1 width={'100px'} onClick={showDiscussionModelfunc}>Discussion</PlaneButton1>
+          <div className='botttt'>
+            <div className='intractionDiv'>
+              <IconButton ><AiOutlineLike size={30} /></IconButton>
+              <div style={{ width: '20px' }}></div>
+              <PlaneButton1 width={'100px'} onClick={showDiscussionModelfunc}>Discussion</PlaneButton1>
+            </div>
+            <div>
+              {date.toLocaleString()}
+            </div>
           </div>
         </div>
       </div>

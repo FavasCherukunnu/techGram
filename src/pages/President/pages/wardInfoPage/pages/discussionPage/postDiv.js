@@ -1,20 +1,38 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { PostTemplate } from '../../../homePage/component'
+import { SERVER_ADDRESS } from '../../../../../../staticFiles/constants';
+import axios from 'axios';
+import { checkLoggedIn, getUserToken } from '../../../../../../staticFiles/functions';
 
-function PostDiv() {
-    console.log('rebuilding discussion section');
-    const message = {
-        owner: 'Mohammed Favas',
-        id: '12345',
-        images: ['https://cdn2.advanceinfotech.org/kozhikode.directory/1200x675/business/1149/kozhikode-district-panchayath-01-1643971673.webp', 'https://www.entemalappuram.com/wp-content/uploads/2019/06/edavanna-panchayath-office-number.jpg'],
-        title: 'This is title',
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been theLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been theLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been theLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the"
-      }
+function PostDiv(props) {
+    const [posts, setPosts] = useState([]);
+    const user = props.user;
+    console.log('rebuilding chat div');
+
+    useEffect(
+        () => {
+            const onLoad = async () => {
+                try {
+                    const res = await axios.get(`${SERVER_ADDRESS}/user/getPostsByWard/${user.wardOId}`, { headers: { 'u-auth-token': getUserToken() }, params: { key: '' } })
+                    setPosts(res.data.posts);
+                } catch (err) {
+                    console.log(err);
+                    checkLoggedIn(err);
+                }
+            }
+            onLoad();
+        }
+        , [user.wardOId]
+    )
     return (
-        <div style={{height:'100%',width:'100%'}}>
-            <PostTemplate value={message} />
-            <PostTemplate value={message} />
-            <PostTemplate value={message} />
+        <div style={{ height: '100%', width: '100%' }}>
+            {
+                posts.map(
+                    (post, index) => {
+                        return <PostTemplate key={index} value={post} />
+                    }
+                )
+            }
         </div>
     )
 }

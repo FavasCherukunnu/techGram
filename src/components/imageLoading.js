@@ -3,7 +3,8 @@ import './imageLoading.css'
 import axios from 'axios';
 import { SERVER_ADDRESS } from '../staticFiles/constants';
 import { SimpleLoadingScreen } from './LoadingScreen';
-import { getUserToken } from '../staticFiles/functions';
+import { checkLoggedIn, getUserToken } from '../staticFiles/functions';
+import { Modal } from 'react-bootstrap';
 
 export function AvatarImage(props) {
 
@@ -18,7 +19,7 @@ export function AvatarImage(props) {
             let blob = new Blob([new Uint8Array((await axios.get(`${SERVER_ADDRESS}/user/getProfileImageById/${props.id}`, { headers: { 'u-auth-token': getUserToken() } })).data.image.image.data.data)]);
             const imageUrl = URL.createObjectURL(blob);
             imageElement.style.backgroundImage = `url(${imageUrl})`
-            imageElement.onload = ()=>URL.revokeObjectURL(imageUrl)
+            imageElement.onload = () => URL.revokeObjectURL(imageUrl)
             // setImage(res.data.image.image)
         } catch (err) {
             console.log(err);
@@ -35,15 +36,104 @@ export function AvatarImage(props) {
 
     return (
         <div id={props.dId ? props.dId : 'id123'} className='component_AvatarImage_AvatarOuter' style={{
-            minHeight: props.height, maxHeight: props.height, minWidth: props.width, maxWidth: props.width,height:props.height,width:props.width
+            minHeight: props.height, maxHeight: props.height, minWidth: props.width, maxWidth: props.width, height: props.height, width: props.width
         }}>{
-            isLoaded===true?<></>:<SimpleLoadingScreen/>
-        }
+                isLoaded === true ? <></> : <SimpleLoadingScreen />
+            }
 
         </div>
     );
 }
 
+export function PostImage(props) {
+
+    const [image, setImage] = useState();
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [showImageModel, setshowImageModel] = useState(false);
+    const loadImage = async () => {
+        const imageElement = document.getElementById(props.dId ? props.dId : 'postImage123');
+        imageElement.style.backgroundImage = ''
+        setIsLoaded(false);
+        try {
+            // console.log((await axios.get(`${SERVER_ADDRESS}/user/getProfileImageById/${props.id}`,{headers:{'u-auth-token':getUserToken()}})).data.image.image.data.data)
+            let blob = new Blob([new Uint8Array((await axios.get(`${SERVER_ADDRESS}/user/getCompressedImageById/${props.id}`, { headers: { 'u-auth-token': getUserToken() } })).data.image.compressedData.data)]);
+            const imageUrl = URL.createObjectURL(blob);
+            imageElement.style.backgroundImage = `url(${imageUrl})`
+            imageElement.onload = () => URL.revokeObjectURL(imageUrl)
+            // setImage(res.data.image.image)
+        } catch (err) {
+            console.log(err);
+            imageElement.innerHTML = checkLoggedIn(err);
+        }
+        setIsLoaded(true)
+    }
+
+    useEffect(
+        () => {
+            loadImage();
+        }
+        , [props.id]
+    )
+
+    return (
+        <>
+            <div id={props.dId ? props.dId : 'postImage123'} className='user_postTemplate_imageDiv' onClick={() => { setshowImageModel(true) }}>
+                {
+                    isLoaded === true ? <></> : <SimpleLoadingScreen />
+                }
+            </div>
+            <ImageModel id={props.id} dId={props.dId} show={showImageModel} onClose={() => { setshowImageModel(false) }} />
+
+        </>
+    );
+}
+
+function ImageModel(props) {
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [blobUrl,setBlobUrl] = useState('')
+    let id = props.dId ? props.dId+'-img' : 'postImage123-img'
+    // console.log(blobUrl);
+    const loadImage = async () => {
+        const imageElement = document.getElementById(id);
+        setIsLoaded(false);
+        if(blobUrl===''){
+            try {
+                // console.log((await axios.get(`${SERVER_ADDRESS}/user/getProfileImageById/${props.id}`,{headers:{'u-auth-token':getUserToken()}})).data.image.image.data.data)
+                let blob = new Blob([new Uint8Array((await axios.get(`${SERVER_ADDRESS}/user/getImageById/${props.id}`, { headers: { 'u-auth-token': getUserToken() } })).data.image.data.data)]);
+                const imageUrl = URL.createObjectURL(blob);
+                imageElement.style.backgroundImage = `url(${imageUrl})`
+                setBlobUrl(imageUrl);
+                imageElement.onload = () => URL.revokeObjectURL(imageUrl)
+                // setImage(res.data.image.image)
+            } catch (err) {
+                console.log(err);
+                imageElement.innerHTML = checkLoggedIn(err);
+            }
+        }else{
+            imageElement.style.backgroundImage = `url(${blobUrl})`
+        }
+        setIsLoaded(true)
+    }
+
+    return (
+        <Modal fullscreen onShow={loadImage} show={props.show} onHide={props.onClose} onExited={() => setIsLoaded(false)} aria-labelledby="example-custom-modal-styling-title" centered>
+            <Modal.Header closeButton>
+                <Modal.Title>Image</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <div className='imageModel_outerDiv'>
+                    <div className='imageModel_imageDiv' id={id}>
+                        {
+                            isLoaded===false?
+                            <SimpleLoadingScreen/>:
+                            null
+                        }
+                    </div>
+                </div>
+            </Modal.Body>
+        </Modal>)
+
+}
 // export function AvatarImage(props) {
 
 //     const [image, setImage] = useState();

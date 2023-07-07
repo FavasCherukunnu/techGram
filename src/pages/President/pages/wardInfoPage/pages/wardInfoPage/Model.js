@@ -72,7 +72,7 @@ export function ShowFormmodel(props) {
                             message: 'Atleast 3 characters'
                         }
                     })} />
-                    <PitInputLabelled multiple inputTitle='Image' height={'35px'} type='File' name='images' reg={register('images')} ></PitInputLabelled>
+                    <PitInputLabelled accept={'image/png, image/jpeg'} multiple inputTitle='Image' height={'35px'} type='File' name='images' reg={register('images')} ></PitInputLabelled>
                 </Modal.Body>
                 <Modal.Footer>
                     <RectangleButton danger onClick={props.onClose} height='40px' >

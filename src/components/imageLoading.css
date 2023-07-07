@@ -14,3 +14,25 @@
     width: 200px;
 }
 
+.user_postTemplate_imageDiv {
+    height: 300px;
+    max-width: 400px;
+    margin: 0px 8px 0px 8px;
+    border-radius: 12px 12px 12px 12px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    min-width: 250px;
+    background-size: cover;
+    background-repeat: no-repeat;}
+
+    .imageModel_outerDiv{
+        height: 100%;
+        width: 100%;
+    }
+    .imageModel_imageDiv{
+        height: 100%;
+        width: 100%;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
