@@ -18,7 +18,14 @@
     padding-top: 10px;
     padding-bottom: 50px;
 }
-
+.user_userProjectPage_imageSpace{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    overflow-x: auto;
+    /* flex-wrap: wrap; */
+}
 .user_AnnouncementTemplate_innerDiv {
     /* width: 800px; */
     /* height: 400px; */

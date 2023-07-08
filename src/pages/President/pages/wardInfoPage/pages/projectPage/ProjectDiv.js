@@ -36,7 +36,7 @@ function ProjectDiv(props) {
       }
       onLoad();
     }
-    , [user.wardOId]
+    , [user.wardOId,props.updateUi]
   )
 
   return (

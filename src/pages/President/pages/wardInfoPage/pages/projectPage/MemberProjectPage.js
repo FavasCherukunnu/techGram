@@ -12,20 +12,22 @@ import {ShowAddProjectModel} from './Model.js'
 
 export function PresidentProjectPage() {
   const [showAddProjectModel , setShowAddProjectModel] = useState(false);
-
+  const [updateUi,setUpdateUi] = useState(false);
   function showAddProjectModelFun(){
     setShowAddProjectModel(true);
   }
   function closeAddProjectModelFun(){
     setShowAddProjectModel(false);
   }
+
+
   return (
     <UnderNavigationOuterDiv>
       <DivScrollableWithGeasture>
-        <ProjectSection/>
+        <ProjectSection updateUi={updateUi}/>
       </DivScrollableWithGeasture>
       <div style={{ position: 'absolute', bottom: '15px', right: '15px' }}><RoundedIconButton onClick={showAddProjectModelFun}><AiOutlinePlus size={25} /></RoundedIconButton></div>
-      <ShowAddProjectModel show={showAddProjectModel} onClose={closeAddProjectModelFun} />
+      <ShowAddProjectModel changeUi={()=>setUpdateUi(!updateUi)} show={showAddProjectModel} onClose={closeAddProjectModelFun} />
     </UnderNavigationOuterDiv>
   )
 }
