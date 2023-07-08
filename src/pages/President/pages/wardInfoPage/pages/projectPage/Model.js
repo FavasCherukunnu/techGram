@@ -143,7 +143,7 @@ export function ShowAddProjectModel(props) {
                         }
                     })} />
 
-                    <PitInputLabelled inputTitle='Start Date' height={'35px'} type='date' placeholder='Enter Project Start Date' error={errors['startDate']} reg={register('startDate', {
+                    <PitInputLabelled width='150px' inputTitle='Start Date' height='35px' type='date' placeholder='Enter Project Start Date' error={errors['startDate']} reg={register('startDate', {
                         required: {
                             message: "cannot be empty",
                             value: true
@@ -153,7 +153,7 @@ export function ShowAddProjectModel(props) {
                             message: 'Atleast 3 characters'
                         }
                     })} ></PitInputLabelled>
-                    <PitInputLabelled inputTitle='End Date' height={'35px'} type='date' placeholder='Enter Project End Date' error={errors['endDate']} reg={register('endDate')}></PitInputLabelled>
+                    <PitInputLabelled width='150px' inputTitle='End Date' height='35px' type='date' placeholder='Enter Project End Date' error={errors['endDate']} reg={register('endDate')}></PitInputLabelled>
                     <PitInputLabelled inputTitle='Fund Passed' height={'35px'} type='text' placeholder='Fund' error={errors['fundPassed']} reg={register('fundPassed', {
                         required: {
                             message: "cannot be empty",
@@ -164,7 +164,7 @@ export function ShowAddProjectModel(props) {
                             message: 'Atleast 3 characters'
                         }
                     })} ></PitInputLabelled>
-                    <PitInputLabelled multiple inputTitle='Image' height={'35px'} type='File' name='images' reg={register('images')} ></PitInputLabelled>
+                    <PitInputLabelled multiple accept='image/png, image/jpeg' inputTitle='Image' height={'35px'} type='File' name='images' reg={register('images')} ></PitInputLabelled>
                 </Modal.Body>
                 <Modal.Footer>
                     <RectangleButton danger onClick={props.onClose} height='40px' >
