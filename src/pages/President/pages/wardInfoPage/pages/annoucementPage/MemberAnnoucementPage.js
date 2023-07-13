@@ -8,7 +8,7 @@ import { ShowAddAnnoucementModel } from './Model'
 
 export function PresidentAnnoucementPage() {
   const [showAddAnnoucementModel , setShowAddAnnoucementModel] = useState(false);
-
+  const [updateUi,setUpdateUi] = useState(false);
   function showAddAnnoucementModelFun(){
     setShowAddAnnoucementModel(true);
   }
@@ -19,10 +19,10 @@ export function PresidentAnnoucementPage() {
   return (
     <UnderNavigationOuterDiv>
       <DivScrollableWithGeasture>
-        <AnnoucementSection/>
+        <AnnoucementSection updateUi={updateUi}/>
       </DivScrollableWithGeasture>
       <div style={{ position: 'absolute', bottom: '15px', right: '15px' }}><RoundedIconButton onClick={showAddAnnoucementModelFun}><AiOutlinePlus size={25} /></RoundedIconButton></div>
-      <ShowAddAnnoucementModel show={showAddAnnoucementModel} onClose={closeAddAnnoucementModelFun}/>
+      <ShowAddAnnoucementModel changeUi={()=>{setUpdateUi(!updateUi)}} show={showAddAnnoucementModel} onClose={closeAddAnnoucementModelFun}/>
     </UnderNavigationOuterDiv>
   )
 }

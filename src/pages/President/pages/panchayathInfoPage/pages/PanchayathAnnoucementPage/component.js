@@ -5,6 +5,7 @@ import { useState } from 'react';
 import React from 'react'
 import { Button } from 'react-bootstrap';
 import { IconButton } from '../../../../../../components/iconButton';
+import { PostImage } from '../../../../../../components/imageLoading';
 
 
 export function RoundedIconButton(props) {
@@ -38,13 +39,19 @@ export function PlaneButton1(props) {
 
 
 export function AnnouncementTemplate(props) {
+    const time = new Date(props.value.createdAt);
     return (
         <div className='user_AnnouncementTemplate_outerDiv'>
             <div className='user_AnnouncementTemplate_innerDiv'>
                 <div className='user_AnnouncementTemplate_autherDiv'>
-                    <p>{props.value.owner}</p>
+                    <p>{props.value.owner.fullName}</p>
                 </div>
                 <div className='user_AnnouncementTemplate_contenDiv'>
+                    {props.value.images ? <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                        <div className='user_userProjectPage_imageSpace'>
+                            {props.value.images.map((image, index) => <PostImage key={index} id={image} dId={`proj-${image}`} />)}
+                        </div>
+                    </div> : <div></div>}
                     <p className='heading'>{props.value.title}</p>
                     <p className='body'>{props.value.description}</p>
                     <div className='fullDiv'>
@@ -53,7 +60,7 @@ export function AnnouncementTemplate(props) {
                             <div style={{ width: '20px' }}></div>
                             <PlaneButton1 width={'100px'}>Discussion</PlaneButton1>
                         </div>
-                        <p className='time'>Time</p>
+                        <p className='time'>{time.toLocaleString()}</p>
                     </div>
                 </div>
             </div>

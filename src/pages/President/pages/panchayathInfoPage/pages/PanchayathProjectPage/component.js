@@ -4,6 +4,7 @@ import { BsStarFill } from 'react-icons/bs'
 import { PlaneButton1 } from '../../../homePage/component'
 import './component.css'
 import { ShowProjectModel } from './Model'
+import { PostImage } from '../../../../../../components/imageLoading'
 
 function buildStart() {
 
@@ -28,16 +29,18 @@ export function ProjectTemplate(props) {
     function closeProjectModelfunc() {
       setShowProjectModel(false)
     }
+    const startDate = new Date(props.value.startDate);
+    const endDate = props.value.endDate?new Date(props.value.endDate):null;
     return (
         <div className='user_userProjectPage_PostOuterDiv'>
             <div className='user_userProjectPage_PostInnerDiv'>
                 <div className='user_userProjectPage_autherDiv'>
-                    <p>{props.value.owner}</p>
+                    <p>{props.value.owner.fullName}</p>
                 </div>
                 <div className='user_userProjectPage_PostcontenDiv'>
                     {props.value.images ? <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
                         <div className='user_userProjectPage_imageSpace'>
-                            {props.value.images.map((image) => <div className='user_userProjectPage_imageDiv'><img src={image} alt="" className='user_userProjectPage_image' /></div>)}
+                            {props.value.images.map((image,index) => <PostImage key={index} id={image} dId={`proj-${image}`}/>)}
                         </div>
                     </div> : <div></div>}
                     <p className='heading'>{props.value.title}</p>
@@ -47,20 +50,20 @@ export function ProjectTemplate(props) {
                         <table className='user_userProjectPage_dateTable'>
                             <tr>
                                 <td className='first'>Start Date</td>
-                                <td className='second'>{props.value.startDate}</td>
+                                <td className='second'>{startDate.toLocaleDateString()}</td>
                             </tr>
                         </table>
                         <table className='user_userProjectPage_dateTable'>
                             <tr>
                                 <td className='first'>End Date</td>
-                                <td className='second'>{props.value.endDate}</td>
+                                <td className='second'>{endDate?.toLocaleDateString()}</td>
                             </tr>
                         </table>
                     </div>
                     <table className='user_userProjectPage_dateTable'>
                         <tr>
                             <td className='first'>Fund Passed</td>
-                            <td className='second'>{props.value.fund}</td>
+                            <td className='second'>{props.value.fundPassed}</td>
                         </tr>
                     </table>
                     <div className='intractionDiv'>

@@ -52,3 +52,11 @@ export function loginUser(token){
 export function logoutUser(){
     return localStorage.removeItem('u-auth-token');
 }
+
+export function removeFirstEqualString(firstString, secondString) {
+    if (firstString.startsWith(secondString)) {
+      return firstString.slice(secondString.length);
+    } else {
+      return null;
+    }
+  }

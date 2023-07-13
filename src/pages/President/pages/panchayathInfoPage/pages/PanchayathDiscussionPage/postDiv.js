@@ -1,19 +1,37 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { PostTemplate } from '../../../homePage/component'
+import axios from 'axios';
+import { SERVER_ADDRESS } from '../../../../../../staticFiles/constants';
+import { checkLoggedIn, getUserToken } from '../../../../../../staticFiles/functions';
 
-function PostDiv() {
-    const message = {
-        owner: 'Mohammed Favas',
-        id: '12345',
-        images: [],
-        title: 'This is title',
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been theLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been theLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been theLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the"
-      }
+function PostDiv(props) {
+    const [posts, setPosts] = useState([]);
+    const user = props.user;
+    useEffect(
+        () => {
+            const onLoad = async () => {
+                try {
+                    const res = await axios.get(`${SERVER_ADDRESS}/user/getPostsByPanchayath/${user.panchayathOId}`, { headers: { 'u-auth-token': getUserToken() }, params: { key: '' } })
+                    setPosts(res.data.posts);
+                } catch (err) {
+                    console.log(err);
+                    checkLoggedIn(err);
+                }
+            }
+            onLoad();
+        }
+        , [user.wardOId, props.updateUi]
+    )
+
     return (
-        <div style={{height:'100%',width:'100%'}}>
-            <PostTemplate value={message} />
-            <PostTemplate value={message} />
-            <PostTemplate value={message} />
+        <div style={{ height: '100%', width: '100%' }}>
+            {
+                posts.map(
+                    (post, index) => {
+                        return <PostTemplate key={index} value={post} />
+                    }
+                )
+            }
         </div>
     )
 }

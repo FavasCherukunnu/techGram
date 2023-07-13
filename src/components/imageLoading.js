@@ -10,6 +10,7 @@ export function AvatarImage(props) {
 
     const [image, setImage] = useState();
     const [isLoaded, setIsLoaded] = useState(false);
+    const [errText,setErrText] = useState('');
     const loadImage = async () => {
         const imageElement = document.getElementById(props.dId ? props.dId : 'id123');
         imageElement.style.backgroundImage = ''
@@ -20,9 +21,14 @@ export function AvatarImage(props) {
             const imageUrl = URL.createObjectURL(blob);
             imageElement.style.backgroundImage = `url(${imageUrl})`
             imageElement.onload = () => URL.revokeObjectURL(imageUrl)
+            setErrText('');
             // setImage(res.data.image.image)
         } catch (err) {
             console.log(err);
+            let msg = checkLoggedIn(err);
+            if(msg){
+                setErrText(msg);
+            }
         }
         setIsLoaded(true)
     }
@@ -35,10 +41,10 @@ export function AvatarImage(props) {
     )
 
     return (
-        <div id={props.dId ? props.dId : 'id123'} className='component_AvatarImage_AvatarOuter' style={{
+        <div key={props.dId} id={props.dId ? props.dId : 'id123'} className='component_AvatarImage_AvatarOuter' style={{
             minHeight: props.height, maxHeight: props.height, minWidth: props.width, maxWidth: props.width, height: props.height, width: props.width
         }}>{
-                isLoaded === true ? <></> : <SimpleLoadingScreen />
+                isLoaded === true ? errText?<div>{errText}</div>:null : <SimpleLoadingScreen />
             }
 
         </div>
@@ -50,6 +56,7 @@ export function PostImage(props) {
     const [image, setImage] = useState();
     const [isLoaded, setIsLoaded] = useState(false);
     const [showImageModel, setshowImageModel] = useState(false);
+    const [errText,setErrText] = useState('');
     const loadImage = async () => {
         const imageElement = document.getElementById(props.dId ? props.dId : 'postImage123');
         imageElement.style.backgroundImage = ''
@@ -63,7 +70,10 @@ export function PostImage(props) {
             // setImage(res.data.image.image)
         } catch (err) {
             console.log(err);
-            imageElement.innerHTML = checkLoggedIn(err);
+            let msg = checkLoggedIn(err);
+            if(msg){
+                setErrText(msg);
+            }
         }
         setIsLoaded(true)
     }
@@ -79,7 +89,7 @@ export function PostImage(props) {
         <>
             <div id={props.dId ? props.dId : 'postImage123'} className='user_postTemplate_imageDiv' onClick={() => { setshowImageModel(true) }}>
                 {
-                    isLoaded === true ? <></> : <SimpleLoadingScreen />
+                    isLoaded === true ? errText?<div>{errText}</div>:null  : <SimpleLoadingScreen />
                 }
             </div>
             <ImageModel id={props.id} dId={props.dId} show={showImageModel} onClose={() => { setshowImageModel(false) }} />
@@ -90,7 +100,9 @@ export function PostImage(props) {
 
 function ImageModel(props) {
     const [isLoaded, setIsLoaded] = useState(false);
-    const [blobUrl,setBlobUrl] = useState('')
+    const [blobUrl,setBlobUrl] = useState('');
+    const [errText,setErrText] = useState('');
+
     let id = props.dId ? props.dId+'-img' : 'postImage123-img'
     // console.log(blobUrl);
     const loadImage = async () => {
@@ -107,7 +119,6 @@ function ImageModel(props) {
                 // setImage(res.data.image.image)
             } catch (err) {
                 console.log(err);
-                imageElement.innerHTML = checkLoggedIn(err);
             }
         }else{
             imageElement.style.backgroundImage = `url(${blobUrl})`
