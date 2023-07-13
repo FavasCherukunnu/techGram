@@ -8,6 +8,7 @@ import { ShowAddGramSabhaModel } from './Model'
 export function PresidentGramSabhaPage() {
 
   const [showAddGramSabhaModel , setShowAddGramSabhaModel] = useState(false);
+  const [updateUi,setUpdateUi] = useState(false);
 
   function showAddGramSabhaModelFun(){
     setShowAddGramSabhaModel(true);
@@ -18,10 +19,10 @@ export function PresidentGramSabhaPage() {
   return (
     <UnderNavigationOuterDiv>
       <DivScrollableWithGeasture>
-        <GramSabhaTemplateSection/>
+        <GramSabhaTemplateSection updateUi={updateUi}/>
       </DivScrollableWithGeasture>
       <div style={{ position: 'absolute', bottom: '15px', right: '15px' }}><RoundedIconButton onClick={showAddGramSabhaModelFun}><AiOutlinePlus size={25} /></RoundedIconButton></div>
-      <ShowAddGramSabhaModel show={showAddGramSabhaModel} onClose={closeAddGramSabhaModelFun}/>
+      <ShowAddGramSabhaModel changeUi={()=>setUpdateUi(!updateUi)} show={showAddGramSabhaModel} onClose={closeAddGramSabhaModelFun}/>
     </UnderNavigationOuterDiv >
   )
 }

@@ -75,7 +75,6 @@ export function ShowAddProjectModel(props) {
 
 
     const onSubmit = (data)=>{
-        console.log(data);
         setPostData(data);
         setShowApproveModel(true);
     }

@@ -30,7 +30,7 @@ export function MemberUserRegistration() {
                 setIsLoaded(false);
                 try {
                     const isApproved = isRejected===''?'':'false';
-                    const res = await axios.get(`${SERVER_ADDRESS}/user/getUsersUnApproved/${wardOId}`, { headers: { 'u-auth-token': getUserToken() },params:{isRejected:isRejected,isApproved:isApproved} })
+                    const res = await axios.get(`${SERVER_ADDRESS}/user/getUsersUnApproved/${wardOId}`, { headers: { 'u-auth-token': getUserToken() },params:{isRejected:isRejected,isApproved:isApproved,key:''} })
                     setUsers(res.data.users)
                 } catch (err) {
                     console.log(err);

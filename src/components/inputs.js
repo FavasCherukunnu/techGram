@@ -21,6 +21,17 @@ export function PitInputLabelled(props) {
   );
 }
 
+export function PitSelectLabelled(props) {
+  return (
+    <div style={{ paddingTop: '20px', width: props.width ? props.width : '', paddingBottom: '5px' }}>
+      <p className="inputTitleFont">{props.inputTitle}</p>
+      <select accept={props.accept ? props.accept : null} name={props.name} multiple={props.multiple ? true : false} onChange={(e) => props.onChange(e)} style={{ height: props.height ? props.height : '' }} className='component_pitInput' placeholder={props.placeholder} type={props.type} value={props.value} {...props.reg}>
+        {props.children}
+      </select>
+      <p className="PitTextAreaLabelled_errorText">{props.error?.message}</p>
+    </div>
+  );
+}
 export function PitTextAreaLabelled(props) {
   return (
     <div style={{ paddingTop: props.padding ? '' : '20px', width: props.width ? props.width : '100%', paddingBottom: '5px' }}>
