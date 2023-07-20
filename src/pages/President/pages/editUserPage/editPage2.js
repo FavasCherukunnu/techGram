@@ -255,7 +255,7 @@ const EditPresidentpage2 = (props) => {
     // formData.dataTimeNow = 
     try {
       await axios.post(`${SERVER_ADDRESS}/user/editUser`, form, { headers: { 'u-auth-token': getUserToken() } }).then((res) => {
-        navigate('../home');
+        navigate('../home',{replace:true});
       })
     } catch (err) {
       console.log(err);

@@ -1,22 +1,47 @@
 import React from "react";
-import { PostTemplate } from "./component";
+import { PostTemplate, PostTemplateWithCarousel } from "./component";
+import { useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
+import { SERVER_ADDRESS } from "../../../../staticFiles/constants";
+import { checkLoggedIn, getUserToken } from "../../../../staticFiles/functions";
+import { useContext } from "react";
+import { UserContext } from "../../../user/userHomePage";
 
-function PostSection() {
-    
-    const message = {
-        owner: 'Mohammed Favas',
-        id: '12345',
-        images: [],
-        title: 'This is title',
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been theLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been theLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been theLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the"
-    }
+function PostSection(props) {
 
-    return <div style={{ width: '100%', height: '100%' }}>
+    const [posts, setPosts] = useState([]);
+    const usercont = useContext(UserContext)
+    const user = usercont.user;
+    useEffect(
+        () => {
+            const onLoad = async () => {
+                if (user.wardOId) {
+                    try {
+                        const res = await axios.get(`${SERVER_ADDRESS}/user/getGallaryPostsByWardAndPanchayath`, { headers: { 'u-auth-token': getUserToken() }, params: { wardOId: user.wardOId, panchayathOId: user.panchayathOId } })
+                        setPosts(res.data.posts);
+                    } catch (err) {
+                        console.log(err);
+                        checkLoggedIn(err);
+                    }
+                }
+            }
+            onLoad();
+        }
+        , [user.wardOId, props.updateUi]
+    )
 
-        <PostTemplate value={message} />
-        <PostTemplate value={message} />
-        <PostTemplate value={message} />
-    </div>
+    return (
+        <div style={{ height: '100%', width: '100%' }}>
+            {
+                posts.map(
+                    (post, index) => {
+                        return <PostTemplateWithCarousel height='500px' key={index} value={post} />
+                    }
+                )
+            }
+        </div>
+    )
 }
 
 export default React.memo(PostSection);

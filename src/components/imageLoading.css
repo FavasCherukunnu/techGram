@@ -26,6 +26,19 @@
     background-position: center;
 }
 
+.user_CarouselImage_imageDiv {
+    
+    /* max-width: 100%; */
+    /* margin: 0px 8px 0px 8px; */
+    border-radius: 12px 12px 0px 0px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    min-width: 250px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
     .imageModel_outerDiv{
         height: 100%;
         width: 100%;

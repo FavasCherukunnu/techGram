@@ -31,6 +31,7 @@ export function ShowFormmodel(props) {
         form.append('owner', userData.userId);
         form.append('wardOId', 'NOT');
         form.append('panchayathOId', userData.panchayathOId);
+        form.append('isGallaryPost', true);
         for (let i = 0; i < postData.images.length; i++) {
             form.append("images", postData.images[i]);
         }

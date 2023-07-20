@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { PostTemplate } from '../../../homePage/component'
+import { PostTemplate, PostTemplateWithCarousel } from '../../../homePage/component'
 import axios from 'axios';
 import { SERVER_ADDRESS } from '../../../../../../staticFiles/constants';
 import { UserContext } from '../../../../../user/userHomePage';
@@ -15,7 +15,7 @@ export function ChatDiv1(props) {
     () => {
       const onLoad = async () => {
         try {
-          const res = await axios.get(`${SERVER_ADDRESS}/user/getPostsByWard/${user.wardOId}`, { headers: { 'u-auth-token': getUserToken() }, params: { key: '' } })
+          const res = await axios.get(`${SERVER_ADDRESS}/user/getGallaryPostsByWard`, { headers: { 'u-auth-token': getUserToken() }, params: { wardOId:user.wardOId,panchayathOId:user.panchayathOId } })
           setPosts(res.data.posts);
         } catch (err) {
           console.log(err);
@@ -32,7 +32,7 @@ export function ChatDiv1(props) {
       {
         posts.map(
           (post,index) => {
-            return <PostTemplate key={index} value={post} />
+            return <PostTemplateWithCarousel key={index} value={post} />
           }
         )
       }

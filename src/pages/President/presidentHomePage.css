@@ -1,11 +1,11 @@
-.userHomePage_contentDiv {
+.presidentHomePage_contentDiv {
     /* width: 100%; */
     /* flex-grow: 1; */
     /* padding-top: 10px; */
-    overflow-y: hidden;
+    /* overflow-y: hidden; */
 }
 
-.userHomePage_contentInnerDiv {
+.presidentHomePage_contentInnerDiv {
     background: #FFFFFF;
     /* shadow */
 
@@ -13,7 +13,7 @@
     border-radius: 12px;
     height: 100%;
     width: 100%;
-    overflow-y: hidden;
+    /* overflow-y: hidden; */
 }
 
 .topNavBar {
@@ -97,7 +97,7 @@
 }
 
 @media screen and (max-width: 1000px) {
-    .userHomePage_contentInnerDiv {
+    .presidentHomePage_contentInnerDiv {
         background-color: transparent;
     }
 }

@@ -109,7 +109,7 @@ export function EditPresidentPage() {
         <div style={{ display: 'flex', justifyContent: 'center', width: '100%',marginTop:'10px'}}>
           <RectangleButton height='40px' onClick={()=>{navigate('../editProfile')}}>Edit</RectangleButton>
           <div style={{width:'30px'}}></div>
-          <RectangleButton onClick={()=>{navigate('../home')}} height='40px'>Ok</RectangleButton>
+          <RectangleButton onClick={()=>{navigate(-1)}} height='40px'>Ok</RectangleButton>
         </div>
       </div>
     </div>

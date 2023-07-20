@@ -41,7 +41,7 @@ export function PlaneButton1(props) {
 export function AnnouncementTemplate(props) {
     const time = new Date(props.value.createdAt);
     return (
-        <div className='user_AnnouncementTemplate_outerDiv'>
+        <div className='user_AnnouncementTemplate_outerDiv' id={`id-${props.value._id}`}>
             <div className='user_AnnouncementTemplate_innerDiv'>
                 <div className='user_AnnouncementTemplate_autherDiv'>
                     <p>{props.value.owner.fullName}</p>

@@ -59,7 +59,7 @@ function ChatDiv(props) {
       <DivScrollableWithGeasture isNotStyleChangable={false}>
         <ChatSection user={user} updateUi={updateUi}/>
       </DivScrollableWithGeasture>
-      <div style={{ position: 'absolute', bottom: '20px', right: '15px' }}><RoundedIconButton onClick={showFormModelFun}><AiOutlinePlus size={25} /></RoundedIconButton></div>
+      <div style={{ position: 'absolute', bottom: '20px', right: '15px',zIndex:5 }}><RoundedIconButton onClick={showFormModelFun}><AiOutlinePlus size={25} /></RoundedIconButton></div>
       <ShowFormmodel show={showFormModel} onClose={closeFormModelFun} changeUi={()=>setUpdateUi(!updateUi)}/>
     </div>
   );

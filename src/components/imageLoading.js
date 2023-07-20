@@ -98,6 +98,53 @@ export function PostImage(props) {
     );
 }
 
+export function CarouselImage(props) {
+
+    const [image, setImage] = useState();
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [showImageModel, setshowImageModel] = useState(false);
+    const [errText,setErrText] = useState('');
+    const loadImage = async () => {
+        const imageElement = document.getElementById(props.dId ? props.dId : 'postImage123');
+        imageElement.style.backgroundImage = ''
+        setIsLoaded(false);
+        try {
+            // console.log((await axios.get(`${SERVER_ADDRESS}/user/getProfileImageById/${props.id}`,{headers:{'u-auth-token':getUserToken()}})).data.image.image.data.data)
+            let blob = new Blob([new Uint8Array((await axios.get(`${SERVER_ADDRESS}/user/getCompressedImageById/${props.id}`, { headers: { 'u-auth-token': getUserToken() } })).data.image.compressedData.data)]);
+            const imageUrl = URL.createObjectURL(blob);
+            imageElement.style.backgroundImage = `linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ),url(${imageUrl})`
+            imageElement.onload = () => URL.revokeObjectURL(imageUrl)
+            // setImage(res.data.image.image)
+        } catch (err) {
+            console.log(err);
+            let msg = checkLoggedIn(err);
+            if(msg){
+                setErrText(msg);
+            }
+        }
+        setIsLoaded(true)
+    }
+
+    useEffect(
+        () => {
+            loadImage();
+        }
+        , [props.id]
+    )
+
+    return (
+        <>
+            <div id={props.dId ? props.dId : 'postImage123'} className='user_CarouselImage_imageDiv' style={{height:props.height?props.height:'400px'}} onClick={() => { setshowImageModel(true) }}>
+                {
+                    isLoaded === true ? errText?<div>{errText}</div>:null  : <SimpleLoadingScreen />
+                }
+            </div>
+            <ImageModel id={props.id} dId={props.dId} show={showImageModel} onClose={() => { setshowImageModel(false) }} />
+
+        </>
+    );
+}
+
 function ImageModel(props) {
     const [isLoaded, setIsLoaded] = useState(false);
     const [blobUrl,setBlobUrl] = useState('');

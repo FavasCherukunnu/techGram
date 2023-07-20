@@ -7,13 +7,24 @@ import axios from 'axios';
 import { SERVER_ADDRESS } from '../../../../../../staticFiles/constants';
 import { getUserToken } from '../../../../../../staticFiles/functions';
 import { AvatarImage } from '../../../../../../components/imageLoading';
+import ShowUsermodel from './Model';
 
 function NotificationSection() {
 
   const userCont = useContext(UserContext);
+  const [showModel, setShowModal] = useState(false);
   const user = userCont.user;
-  const [wardDetails,setWardDetails] = useState({})
-
+  const [wardDetails,setWardDetails] = useState({});
+  const [annoucement, setAnnoucement] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState(null)
+  function onViewPress(userId) {
+    setSelectedUserId(userId);
+    setShowModal(true);
+  }
+  function onCloseModel() {
+    setShowModal(false);
+  }
   useEffect(
     ()=>{
       const loadWard = async ()=>{
@@ -22,7 +33,11 @@ function NotificationSection() {
           const res = await axios.get(
             `${SERVER_ADDRESS}/user/getWardBywardOId/${user.wardOId}`,{headers:{'u-auth-token':getUserToken()}}
           );
-          setWardDetails(res.data.ward)
+          const res2 = await axios.get(
+            `${SERVER_ADDRESS}/user/getAnnouncementsByWard/${user.wardOId}`,{headers:{'u-auth-token':getUserToken()}}
+          );
+          setWardDetails(res.data.ward);
+          setAnnoucement(res2.data.announcements);
         }catch(err){
           console.log(err);
         }
@@ -37,20 +52,21 @@ function NotificationSection() {
         <AvatarImage id={wardDetails?.member?._id} dId={'samapamdsfdfsl'} height='100%' width='100%' />
       </div>
       <p className='user_wardInfo_memberName'>{wardDetails?.member?.fullName}</p>
-      <PlaneButton>Show more</PlaneButton>
+      <PlaneButton onClick={()=>{onViewPress(wardDetails.member?._id)}}>Show more</PlaneButton>
       <WardDetailsTable details={wardDetails}/>
       <p className='user_wardInfo_notification'>Notification</p>
-      <NotificatonTemplate />
-      <NotificatonTemplate />
-      <NotificatonTemplate />
-      <NotificatonTemplate />
-      <NotificatonTemplate />
-      <NotificatonTemplate />
-      <NotificatonTemplate />
-      <NotificatonTemplate />
-      <NotificatonTemplate />
-      <NotificatonTemplate />
+      {
+        annoucement.length>0?
+        annoucement.map(
+          (annoucement)=>{
+            return <NotificatonTemplate data={annoucement} />
+          }
+        ):
+        <div></div>
+      }
       {/* <NotificatonTemplate /> */}
+      <ShowUsermodel selectedUserId={selectedUserId} show={showModel} onClose={onCloseModel} />
+
 
     </div>);
 }

@@ -12,6 +12,7 @@ export function AnnoucementSection(props) {
     const userCont = useContext(UserContext);
     const [isLoaded, setIsLoaded] = useState(false);
     const user = userCont.user;
+    const pointingId = props.pointingId;
     useEffect(
         () => {
           const onLoad = async () => {
@@ -20,7 +21,8 @@ export function AnnoucementSection(props) {
                 setIsLoaded(false)
                 const res = await axios.get(`${SERVER_ADDRESS}/user/getAnnouncementsByWard/${user.wardOId}`, { headers: { 'u-auth-token': getUserToken() }, params: { key: '' } })
                 setannoucements(res.data.announcements);
-                setIsLoaded(true)
+                setIsLoaded(true);
+                
               }
             } catch (err) {
               console.log(err);
@@ -34,7 +36,17 @@ export function AnnoucementSection(props) {
           onLoad();
         }
         , [user.wardOId,props.updateUi]
-      )
+      );
+    useEffect(
+      ()=>{
+        if(isLoaded){
+          if(pointingId){
+            const section = document.getElementById('notificationDiv').querySelector(`#id-${pointingId}`);
+            section.scrollIntoView( { behavior: 'smooth', block: 'start' } );
+          }
+        }
+      },[isLoaded]
+    )
     return (
         <div style={{ height: '100%', width: '100%' }}>
             

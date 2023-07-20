@@ -1,3 +1,4 @@
+import { NavLink, useNavigate } from 'react-router-dom'
 import './component.css'
 import React from 'react'
 
@@ -22,8 +23,19 @@ export function WardDetailsTable(props) {
 }
 
 
-export function NotificatonTemplate() {
+export function NotificatonTemplate(props) {
+
+  const navigate = useNavigate();
+
+  const onClickFunction = ()=>{
+    navigate('../Announcement',{state:{id:props.data._id}});
+  }
+
   return (
-        <div className='user_wardInfo_notfication_template'>Notification Displays Here</div>
+        <div className='user_wardInfo_notfication_template'>
+          <p className='linkDemoText' href='' onClick={onClickFunction}>
+          {props.data?.title}
+          </p>
+        </div>
   )
 }
