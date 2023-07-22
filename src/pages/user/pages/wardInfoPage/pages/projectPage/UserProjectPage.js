@@ -6,14 +6,17 @@ import { PostTemplate } from './component'
 import { UnderNavigationOuterDiv } from '../../../../../../components/divisions'
 import { DivScrollableWithGeasture } from '../../../../../../components/divisions'
 import { ProjectSection } from './ProjectDiv'
+import { useState } from 'react'
 
 export function UserProjectPage() {
-  
+  const [updateUi,setUpdateUi] = useState(false);
+
+
   return (
     <UnderNavigationOuterDiv>
       <DivScrollableWithGeasture>
-        <ProjectSection/>
+        <ProjectSection updateUi={updateUi}/>
       </DivScrollableWithGeasture>
-    </UnderNavigationOuterDiv>
+      </UnderNavigationOuterDiv>
   )
 }

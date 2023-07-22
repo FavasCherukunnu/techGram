@@ -1,12 +1,15 @@
 import './component.css'
 import { AiOutlineLike } from 'react-icons/ai'
 import { useEffect, useState } from 'react';
-
+import { PlaneButton } from '../../../../components/planeButton';
 import React from 'react'
 import { Button } from 'react-bootstrap';
 import { IconButton } from '../../../../components/iconButton';
 import { ShowDiscussionmodel } from './Model';
-
+import { CarouselImage, PostImage } from '../../../../components/imageLoading';
+import Carousel from 'react-bootstrap/Carousel';
+import ShowMore from 'react-show-more-button/dist/module';
+import { PlaneButton3 } from '../../../../components/planeButton3';
 
 export function RoundedIconButton(props) {
   return (
@@ -28,7 +31,7 @@ export function DiscussionTemplate() {
         here notification displays. notification is controlled by admin of institutions
         here notification displays. notification is controlled by admin of institutions
         here notification displays. notification is controlled by admin of institutions
-        user types Discussion here so that others can also participate. this is very important section in the world famouse hystory of the logica illussion. 
+        user types Discussion here so that others can also participate. this is very important section in the world famouse hystory of the logica illussion.
       </div>
       <div className='user_homePage_discussion_template_time'>
         00:00
@@ -68,25 +71,32 @@ export function PostTemplate(props) {
   function closeDiscussionModelfunc() {
     setShowDiscussionModel(false)
   }
+  const post = props.value;
+  const date = new Date(post.createdAt)
 
   return (
     <div className='user_postTemplate_outerDiv'>
       <div className='user_postTemplate_innerDiv'>
         <div className='user_postTemplate_autherDiv'>
-          <p>{props.value.owner}</p>
+          <p>{post.owner.fullName}</p>
         </div>
         <div className='user_postTemplate_contenDiv'>
-          {props.value.images ? <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+          {post.images.length > 0 ? <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
             <div className='user_postTemplate_imageSpace'>
-              {props.value.images.map((image) => <div className='user_postTemplate_imageDiv'><img src={image} alt="" className='user_postTemplate_image' /></div>)}
+              {post.images.map((id, index) => <PostImage key={index} id={id} dId={id} />)}
             </div>
           </div> : <div></div>}
-          <p className='heading'>{props.value.title}</p>
-          <p className='body'>{props.value.description}</p>
-          <div className='intractionDiv'>
-            <IconButton ><AiOutlineLike size={30} /></IconButton>
-            <div style={{ width: '20px' }}></div>
-            <PlaneButton1 width={'100px'} onClick={showDiscussionModelfunc}>Discussion</PlaneButton1>
+          <p className='heading'>{post.title}</p>
+          <p className='body'>{post.description}</p>
+          <div className='botttt'>
+            <div className='intractionDiv'>
+              <IconButton ><AiOutlineLike size={30} /></IconButton>
+              <div style={{ width: '20px' }}></div>
+              <PlaneButton1  onClick={showDiscussionModelfunc}>Discussion</PlaneButton1>
+            </div>
+            <div>
+              {date.toLocaleString()}
+            </div>
           </div>
         </div>
       </div>
@@ -94,3 +104,53 @@ export function PostTemplate(props) {
     </div>
   )
 }
+
+export function PostTemplateWithCarousel(props) {
+
+  const [showDiscussionModel, setShowDiscussionModel] = useState(false);
+  const [isShrink, setisShrink] = useState(true);
+  function showDiscussionModelfunc() {
+    setShowDiscussionModel(true);
+  }
+  function closeDiscussionModelfunc() {
+    setShowDiscussionModel(false)
+  }
+  const post = props.value;
+  const date = new Date(post.createdAt)
+
+  return (
+    <div className='user_postTemplate_outerDiv' >
+      <div className='user_CarouselPost_outerDiv'>
+        <div className='user_CarouselPost_ImageInnerDiv'>
+          <Carousel interval={null}>
+
+            {post.images.map((id, index) =>
+              <Carousel.Item  >
+                <CarouselImage height={props.height} key={index} id={id} dId={id} />
+                {/* <Carousel.Caption>
+      <h3>First slide label</h3>
+      <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+    </Carousel.Caption> */}
+              </Carousel.Item>
+            )}
+
+          </Carousel>
+          <div className='user_CarouselPost_whiteBottomDiv' id={`f${post._id}`}>
+
+          </div>
+        </div>
+        <div className='user_CarouselPost_contenDiv' >
+          {/* {post.description} */}
+          <ShowMore maxHeight={120} backgroundColor='#000' anchor={`#f${post._id}`} defaultAnchor={false} button={isShrink === true ? <PlaneButton3>Show More</PlaneButton3> : <PlaneButton3>Show Less</PlaneButton3>} onChange={(expanded) => { setisShrink(expanded) }}>
+            <p>{post.description}</p>
+          </ShowMore>
+          <div className='intractionDiv'>
+            <IconButton ><AiOutlineLike size={30} /></IconButton>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  )
+}
+

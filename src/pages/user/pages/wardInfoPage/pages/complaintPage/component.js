@@ -7,6 +7,7 @@ import { Button } from 'react-bootstrap';
 import { Dropdown, DropdownButton } from 'react-bootstrap';
 import { RectangleButton } from '../../../../../../components/buttonRectangle';
 import { ShowComplaintDiscussionmodel } from './Model';
+import { PostImage } from '../../../../../../components/imageLoading';
 
 
 export function RoundedIconButton(props) {
@@ -40,26 +41,26 @@ export function PlaneButton1(props) {
 
 
 export function ComplaintTemplate(props) {
-  const [showDiscussion,setShowDiscussion] = useState(false);
+  const [showDiscussion, setShowDiscussion] = useState(false);
 
-  function showDiscussionfn(){
+  function showDiscussionfn() {
     setShowDiscussion(true);
   }
 
-  function closeDiscussionfn(){
+  function closeDiscussionfn() {
     setShowDiscussion(false);
   }
-
+  const time = new Date(props.value.createdAt);
   return (
     <div className='user_ComplaintTemplate_outerDiv'>
       <div className='user_ComplaintTemplate_innerDiv'>
-        <div style={{ backgroundColor: props.value.isSolved ? '#81F14D' : '#FF3232' }} className='user_ComplaintTemplate_autherDiv'>
-          <p>{props.value.owner}</p>
+        <div style={{ backgroundColor: props.value.isSolved===true ? '#81F14D' : '#FF3232' }} className='user_ComplaintTemplate_autherDiv'>
+          <p>{props.value.owner.fullName}</p>
         </div>
         <div className='user_ComplaintTemplate_contenDiv'>
           {props.value.images ? <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
             <div className='user_ComplaintTemplate_imageSpace'>
-              {props.value.images.map((image) => <div className='user_ComplaintTemplate_imageDiv'><img src={image} alt="" className='user_ComplaintTemplate_image' /></div>)}
+              {props.value.images.map((image, index) => <PostImage key={index} id={image} dId={`Annoucement-${image}`} />)}
             </div>
           </div> : <div></div>}
           <p className='heading'>{props.value.title}</p>
@@ -69,13 +70,17 @@ export function ComplaintTemplate(props) {
               <IconButton ><AiOutlineLike size={30} /></IconButton>
               <div style={{ width: '20px' }}></div>
               <PlaneButton1 width={'100px'} onClick={showDiscussionfn}>Discussion</PlaneButton1>
+              <div style={{ width: '10px' }}></div>
+              {props.value.isSolved===true ? <RectangleButton >Closed</RectangleButton> : <RectangleButton danger>Not Closed</RectangleButton>}
             </div>
-            {props.value.isSolved?<RectangleButton >Closed</RectangleButton>:<RectangleButton danger>Not Closed</RectangleButton>}
-            
+
+          </div>
+          <div className='complaintDateDiv'>
+            <p className='time'>{time.toLocaleString()}</p>
           </div>
         </div>
       </div>
-      <ShowComplaintDiscussionmodel show={showDiscussion} onClose={closeDiscussionfn}/>
+      <ShowComplaintDiscussionmodel show={showDiscussion} onClose={closeDiscussionfn} />
     </div>
   )
 }

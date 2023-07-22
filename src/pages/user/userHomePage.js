@@ -109,7 +109,7 @@ export default function UserHomePage() {
 
         <div className="navBarOuter">
             <MyContext.Provider value={scrollCallback}>
-                <UserContext.Provider value={{ user: {userId:userData._id,panchayathOId:userData.panchayathOId,wardNo:userData.wardNo}}}>
+                <UserContext.Provider value={{ user: { userId: userData._id, panchayathOId: userData.panchayathOId, wardOId:userData.wardOId,wardNo:userData.wardNo} }}>
                     <div className="flex_container">
                         <div className="sideNavBarOuter" style={expanded ? { width: '0px', padding: '0px' } : { width: '250px', paddingRight: '10px' }}>
                             <Stack className='sideNavBar'>

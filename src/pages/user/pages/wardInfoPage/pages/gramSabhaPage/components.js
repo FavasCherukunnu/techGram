@@ -14,31 +14,32 @@ function BorderedDiv(props) {
 
 
 export function GramSabhaTemplate(props) {
+    const gramSabha = props.value;
+    const date = new Date(gramSabha.date);
+
     return (
         <div className='user_GramSabhaTemplate_outerDiv'>
             <div className='user_GramSabhaTemplate_innerDiv'>
                 <div className='user_GramSabhaTemplate_autherDiv'>
-                    <p>{props.value.owner}</p>
+                    <p>{gramSabha.owner.fullName}</p>
                 </div>
                 <div className='user_GramSabhaTemplate_contenDiv'>
                     <div className="user_GramSabhaTemplate_Decisions">
                         <p style={{ fontWeight: '600', fontSize: '25px' }}>Decistions</p>
                         <div style={{ overflowY: 'auto', maxHeight: '500px' }}>
                             <div >
-                                <BorderedDiv>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed mollis, enim quis semper iaculis, enim libero ultricies sapien, eget varius risus dolor sit amet mauris. Maecenas semper, quam in iaculis scelerisque, est urna varius sapien, quis ullamcorper neque mauris sed eros. Praesent sit amet luctus mauris. Nullam tincidunt, risus quis semper ultricies, lacus lectus luctus mauris, ut scelerisque neque lectus eget mauris.</BorderedDiv>
-                                <BorderedDiv>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed mollis, enim quis semper iaculis, enim libero ultricies sapien, eget varius risus dolor sit amet mauris. Maecenas semper, quam in iaculis scelerisque, est urna varius sapien, quis ullamcorper neque mauris sed eros. Praesent sit amet luctus mauris. Nullam tincidunt, risus quis semper ultricies, lacus lectus luctus mauris, ut scelerisque neque lectus eget mauris.</BorderedDiv>
-                                <BorderedDiv>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed mollis, enim quis semper iaculis, enim libero ultricies sapien, eget varius risus dolor sit amet mauris. Maecenas semper, quam in iaculis scelerisque, est urna varius sapien, quis ullamcorper neque mauris sed eros. Praesent sit amet luctus mauris. Nullam tincidunt, risus quis semper ultricies, lacus lectus luctus mauris, ut scelerisque neque lectus eget mauris.</BorderedDiv>
-                                <BorderedDiv>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed mollis, enim quis semper iaculis, enim libero ultricies sapien, eget varius risus dolor sit amet mauris. Maecenas semper, quam in iaculis scelerisque, est urna varius sapien, quis ullamcorper neque mauris sed eros. Praesent sit amet luctus mauris. Nullam tincidunt, risus quis semper ultricies, lacus lectus luctus mauris, ut scelerisque neque lectus eget mauris.</BorderedDiv>
-                                <BorderedDiv>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed mollis, enim quis semper iaculis, enim libero ultricies sapien, eget varius risus dolor sit amet mauris. Maecenas semper, quam in iaculis scelerisque, est urna varius sapien, quis ullamcorper neque mauris sed eros. Praesent sit amet luctus mauris. Nullam tincidunt, risus quis semper ultricies, lacus lectus luctus mauris, ut scelerisque neque lectus eget mauris.</BorderedDiv>
-                                <BorderedDiv>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed mollis, enim quis semper iaculis, enim libero ultricies sapien, eget varius risus dolor sit amet mauris. Maecenas semper, quam in iaculis scelerisque, est urna varius sapien, quis ullamcorper neque mauris sed eros. Praesent sit amet luctus mauris. Nullam tincidunt, risus quis semper ultricies, lacus lectus luctus mauris, ut scelerisque neque lectus eget mauris.</BorderedDiv>
-                                <BorderedDiv>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed mollis, enim quis semper iaculis, enim libero ultricies sapien, eget varius risus dolor sit amet mauris. Maecenas semper, quam in iaculis scelerisque, est urna varius sapien, quis ullamcorper neque mauris sed eros. Praesent sit amet luctus mauris. Nullam tincidunt, risus quis semper ultricies, lacus lectus luctus mauris, ut scelerisque neque lectus eget mauris.</BorderedDiv>
-                                <BorderedDiv>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed mollis, enim quis semper iaculis, enim libero ultricies sapien, eget varius risus dolor sit amet mauris. Maecenas semper, quam in iaculis scelerisque, est urna varius sapien, quis ullamcorper neque mauris sed eros. Praesent sit amet luctus mauris. Nullam tincidunt, risus quis semper ultricies, lacus lectus luctus mauris, ut scelerisque neque lectus eget mauris.</BorderedDiv>
-                                <BorderedDiv>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed mollis, enim quis semper iaculis, enim libero ultricies sapien, eget varius risus dolor sit amet mauris. Maecenas semper, quam in iaculis scelerisque, est urna varius sapien, quis ullamcorper neque mauris sed eros. Praesent sit amet luctus mauris. Nullam tincidunt, risus quis semper ultricies, lacus lectus luctus mauris, ut scelerisque neque lectus eget mauris.</BorderedDiv>
+                                {
+                                    gramSabha.description.map(
+                                        (description)=>{
+                                            return <BorderedDiv>{description}</BorderedDiv>
+                                        }
+                                    )
+                                }
                             </div>
                         </div>
                     </div>
                     <div className="user_GramSabhaTemplate_informations" >
-                                <p className='GramSabhaTemplate_boldText'>Gram Sabha Informations</p>
+                        <p className='GramSabhaTemplate_boldText'>Gram Sabha Informations</p>
                         <BorderedDiv >
                             <div style={{ textAlign: 'center', maxHeight: '500px', overflowY: 'auto' }}>
                                 <table className="user_GramSabhaCommitte_table">
@@ -46,24 +47,24 @@ export function GramSabhaTemplate(props) {
                                         <td style={{ textAlign: 'left' }} colSpan={2} className="GramSabhaTemplate_boldText">Committee</td>
                                     </tr>
                                     <tr>
-                                        <td className="first">Charman</td>
-                                        <td className="Second">president name </td>
+                                        <td className="first">Chairman</td>
+                                        <td className="Second">{gramSabha.chairman}</td>
                                     </tr>
                                     <tr>
                                         <td className="first">Convener</td>
-                                        <td className="Second">Sideeque</td>
+                                        <td className="Second">{gramSabha.convener}</td>
                                     </tr>
                                     <tr>
                                         <td className="first">Co-ordinator</td>
-                                        <td className="Second">shivan</td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td className="first">Date</td>
-                                        <td className="Second">28-05-2023</td>
+                                        <td className="Second">{gramSabha.coOrdinator}</td>
                                     </tr>
 
                                     <tr>
+                                        <td className="first">Date</td>
+                                        <td className="Second">{date.toLocaleDateString()}</td>
+                                    </tr>
+
+                                    {/* <tr>
                                         <td rowSpan={20} className="first">Participation</td>
                                         <td className="Second">Sideeque</td>
                                     </tr>
@@ -78,7 +79,7 @@ export function GramSabhaTemplate(props) {
                                     </tr>
                                     <tr>
                                         <td className="Second">Sideeque</td>
-                                    </tr>
+                                    </tr> */}
                                 </table>
                             </div>
                         </BorderedDiv>

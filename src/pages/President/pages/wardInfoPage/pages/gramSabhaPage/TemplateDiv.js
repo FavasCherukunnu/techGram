@@ -46,7 +46,7 @@ export function GramSabhaTemplateSection(props) {
         isLoaded?
           data.length === 0 ?
             <div style={{ height: '100%', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '40px', color: 'gray', fontWeight: '700' }}>
-              No Projects
+              No GramSabha Meeting Yet
             </div> :
             <div>
               {

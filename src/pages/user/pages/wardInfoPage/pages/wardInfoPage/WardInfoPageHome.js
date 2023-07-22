@@ -10,6 +10,9 @@ import { DivScrollableWithGeasture, DivScrollableWithGeasture2, UnderNavigationO
 import { ChatSection } from './ChatDiv'
 import { NotificationSection } from './NotificationDiv'
 import { ShowFormmodel } from './Model'
+import { useContext } from 'react'
+import { UserContext } from '../../../../userHomePage'
+import { useMemo } from 'react'
 
 
 
@@ -17,6 +20,11 @@ function ChatDiv(props) {
   const smallScreen = props.smallScreen;
   const style = { "width": smallScreen ? '100%' : "60%", "height": smallScreen ? "calc(100% - 100px)" : "100%", "position": "relative", "overflow": "hidden" }
   const [showFormModel, setShowFormModel] = useState(false);
+  const usercont = useContext(UserContext).user;
+  const user = useMemo(
+    ()=> {return {...usercont}},
+    [usercont.wardOId]
+  )
 
   function showFormModelFun() {
     setShowFormModel(true);
@@ -28,14 +36,11 @@ function ChatDiv(props) {
   return (
     <div style={style}>
       <DivScrollableWithGeasture isNotStyleChangable={false}>
-        <ChatSection />
+        <ChatSection user={user}/>
       </DivScrollableWithGeasture>
       {/* <div className='user_home_postDiv'>
           
-      </div> */}
-      <div style={{ position: 'absolute', bottom: '20px', right: '15px' }}><RoundedIconButton onClick={showFormModelFun}><AiOutlinePlus size={25} /></RoundedIconButton></div>
-      <ShowFormmodel show={showFormModel} onClose={closeFormModelFun}/>
-    </div>
+      </div> */}</div>
   );
 }
 
@@ -67,6 +72,7 @@ function TopNav(props) {
     <div onClick={() => { props.onClick(props.val) }} style={user_info_topNav_content}>{props.children}</div>
   );
 }
+
 
 
 export function UserWardInfoPageHome() {

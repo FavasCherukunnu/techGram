@@ -1,27 +1,61 @@
-import React from 'react'
-import { PostTemplate } from '../../../homePage/component'
+import React, { useContext, useEffect, useState } from 'react'
+import { PostTemplate, PostTemplateWithCarousel } from '../../../homePage/component'
+import axios from 'axios';
+import { SERVER_ADDRESS } from '../../../../../../staticFiles/constants';
+import { UserContext } from '../../../../../user/userHomePage';
+import { checkLoggedIn, getUserToken } from '../../../../../../staticFiles/functions';
+import { SimpleLoadingScreen } from '../../../../../../components/LoadingScreen';
 
-export function ChatDiv1() {
-  console.log('rebuilding notificaton div');
+export function ChatDiv1(props) {
 
-    const message = {
-        owner: 'Mohammed Favas',
-        id: '12345',
-        images: ['https://assets.simpleviewinc.com/simpleview/image/upload/crm/bloomington/Sample-Gates_4478802b-5056-a36a-06180ee91f953fc5.jpg', 'https://fscl01.fonpit.de/userfiles/7446224/image/apple-iphone-14-pro-max-sample-photos/nextpit_apple_iphone_14_pro_max_review_day_1.1.JPEG'],
-        title: 'This is title',
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been theLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been theLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been theLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the"
+  const [posts, setPosts] = useState([]);
+  const user = props.user;
+  console.log('rebuilding chat div');
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(
+    () => {
+      const onLoad = async () => {
+        try {
+          setIsLoaded(false)
+          const res = await axios.get(`${SERVER_ADDRESS}/user/getGallaryPostsByWard`, { headers: { 'u-auth-token': getUserToken() }, params: { wardOId: user.wardOId, panchayathOId: user.panchayathOId } })
+          setPosts(res.data.posts);
+          setIsLoaded(true)
+        } catch (err) {
+          console.log(err);
+          checkLoggedIn(err);
+        }
       }
+      onLoad();
+    }
+    , [user.wardOId]
+  )
 
   return (
-    <div style={{height:'100%',width:'100%'}}>
-        <PostTemplate value={message} />
-        <PostTemplate value={message} />
-        <PostTemplate value={message} />
-    </div>
+    <>
+      {
+        isLoaded ?
+          posts.length === 0 ?
+            <div style={{ height: '100%', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '40px', color: 'gray', fontWeight: '700' }}>
+              No Posts Yet
+            </div> :
+            <div style={{ height: '100%', width: '100%' }}>
+              {
+                posts.map(
+                  (post, index) => {
+                    return <PostTemplateWithCarousel key={index} value={post} />
+                  }
+                )
+              }
+            </div>
+          :
+          < SimpleLoadingScreen />
+      }
+    </>
   )
 }
 
 
 const ChatSection = React.memo(ChatDiv1)
 
-export {ChatSection}
+export { ChatSection }

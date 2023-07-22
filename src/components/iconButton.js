@@ -46,3 +46,31 @@ export function IconButtonWIthText(props) {
     </div>
   );
 }
+
+export function IconButtonWIthText2(props) {
+
+
+  //icon - icon
+  //text - text
+
+  const [isHoverded, setHover] = useState(false);
+  const style = {"borderRadius": "50px", "display": "flex", "alignItems": "center", "justifyContent": "center",paddingRight:'5px' }
+
+  function mouseOverEvent() {
+    setHover(true);
+  }
+
+  function mouseLeaveEvent() {
+    setHover(false);
+  }
+  return (
+    <div className="IconButtonWIthText_outerDiv2" onClick={props.onClick} style={{height:props.height?props.height:'60px'}}>
+      <div onMouseEnter={mouseOverEvent} onMouseLeave={mouseLeaveEvent} style={style}>
+        {props.icon}
+      </div>
+      <div className="textStyle">
+        {props.text}
+      </div>
+    </div>
+  );
+}

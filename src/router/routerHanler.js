@@ -154,7 +154,7 @@ export function RouterHandler() {
                     <Route path="member">
                         <Route path="home" element={<MemberHomePage />}>
                             <Route path="" element={<HomeMember />} />
-                            <Route path="wardInfo" element={<MemberWardInfoPage />}>
+                            {/* <Route path="wardInfo" element={<MemberWardInfoPage />}>
                                 <Route path="" element={<MemberWardInfoPageRoot />} />
                                 <Route path="Ward Info" element={<MemberWardInfoPageHome />} />
                                 <Route path="Discussion" element={<MemberDiscussionPage />} />
@@ -164,6 +164,17 @@ export function RouterHandler() {
                                 <Route path="Gram Sabha" element={<MemberGramSabhaPage />} />
                                 <Route path="Institutes" element={<MemberInstitutePage />} />
                                 <Route path="Users" element={<MemberUsersPage />} />
+                            </Route> */}
+                            <Route path="wardInfo" element={<PresidentWardInfoPage />}>
+                                <Route path="" element={<MemberWardInfoPageRoot />} />
+                                <Route path="Ward Info" element={<PresidentWardInfoPageHome />} />
+                                <Route path="Discussion" element={<PresidentDiscussionPage />} />
+                                <Route path="Project" element={<PresidentProjectPage />} />
+                                <Route path="Announcement" element={<PresidentAnnoucementPage />} />
+                                <Route path="Complaint" element={<PresidentComplaintPage />} />
+                                <Route path="Gram Sabha" element={<PresidentGramSabhaPage />} />
+                                <Route path="Institutes" element={<PresidentInstitutePage />} />
+                                <Route path="Users" element={<PresidentUsersPage />} />
                             </Route>
                             <Route path="panchayathInfo" element={<MemberPanchayathInfo />} >
                                 <Route path="" element={<MemberPanchayathInfoPageRoot />} />

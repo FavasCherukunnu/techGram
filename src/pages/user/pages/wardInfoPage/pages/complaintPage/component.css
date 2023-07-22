@@ -103,6 +103,11 @@
     
 }
 
+.user_ComplaintTemplate_contenDiv .complaintDateDiv{
+    display: flex;
+    justify-content: end;
+}
+
 .user_complaintPage_complaintDiv_dropDownDiv{
     position: sticky;
     top: 0;

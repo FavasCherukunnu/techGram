@@ -10,6 +10,7 @@ import { useLocation } from 'react-router-dom'
 export function PresidentAnnoucementPage() {
   const [showAddAnnoucementModel , setShowAddAnnoucementModel] = useState(false);
   const [updateUi,setUpdateUi] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const location = useLocation();
   const state = location.state;
