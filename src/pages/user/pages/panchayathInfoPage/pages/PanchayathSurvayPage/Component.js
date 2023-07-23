@@ -9,6 +9,7 @@ import { UserContext } from '../../../../userHomePage'
 import axios from 'axios'
 import { SERVER_ADDRESS } from '../../../../../../staticFiles/constants'
 import { getUserToken } from '../../../../../../staticFiles/functions'
+import { SurvayTemplate } from '../../../../../President/pages/panchayathInfoPage/pages/PanchayathSurvayPage/Component'
 
 function buildStart() {
 
@@ -23,16 +24,16 @@ function buildStart() {
             </div>
 
 }
-function SurvayTemplate() {
-    return (
-        <tr className='user_panchayathInfo_survay_survayList_template'>
-            <td className='first'>1</td>
-            <td className='second'>othukkungal cherukunnu djlfs</td>
-            <td className='third'>{buildStart()}</td>
-            <td className='fourth'><RectangleButton width='60px' height='30px'><AiOutlineSearch /></RectangleButton></td>
-        </tr>
-    )
-}
+// function SurvayTemplate() {
+//     return (
+//         <tr className='user_panchayathInfo_survay_survayList_template'>
+//             <td className='first'>1</td>
+//             <td className='second'>othukkungal cherukunnu djlfs</td>
+//             <td className='third'>{buildStart()}</td>
+//             <td className='fourth'><RectangleButton width='60px' height='30px'><AiOutlineSearch /></RectangleButton></td>
+//         </tr>
+//     )
+// }
 
 
 export default function TopBar() {

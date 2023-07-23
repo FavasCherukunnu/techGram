@@ -9,26 +9,35 @@ import axios from 'axios'
 import { SERVER_ADDRESS } from '../../../../../../staticFiles/constants'
 import { getUserToken } from '../../../../../../staticFiles/functions'
 import { UserContext } from '../../../../../user/userHomePage'
+import { ImStarEmpty, ImStarFull } from 'react-icons/im'
 
-function buildStart() {
+function buildStart(count) {
 
     let star = [];
     let x = 0
     for (x = 0; x < 5; x++) {
-        star.push(<BsStarFill size={20} />)
+        if (x < count) {
+            star.push(
+                <ImStarFull size={20} />
+            )
+        } else {
+            star.push(
+                <ImStarEmpty size={20} />
+            )
+        }
     }
 
-    return <div style={{display:'flex'}}>
-            {star}
-            </div>
+    return <div style={{ display: 'flex' }}>
+        {star}
+    </div>
 
 }
-function SurvayTemplate(props) {
+export function SurvayTemplate(props) {
     return (
         <tr className='user_panchayathInfo_survay_survayList_template'>
             <td className='first'>{props.index}</td>
             <td className='second'>{props.data.wardNo}</td>
-            <td className='third'>{buildStart()}</td>
+            <td className='third'>{buildStart(props.data.averageRating)}</td>
             <td className='fourth'><RectangleButton width='60px' height='30px'><AiOutlineSearch /></RectangleButton></td>
         </tr>
     )
