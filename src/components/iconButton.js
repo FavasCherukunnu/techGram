@@ -14,7 +14,7 @@ export function IconButton(props) {
   function mouseLeaveEvent() {
     setHover(false);
   }
-  return (<div onMouseEnter={mouseOverEvent} onMouseLeave={mouseLeaveEvent} style={style} onClick={props.onClick}>
+  return (<div onMouseEnter={mouseOverEvent} onMouseLeave={mouseLeaveEvent} style={style} onClick={props.onClick} >
     {props.children}
   </div>);
 }

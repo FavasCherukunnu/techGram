@@ -1,11 +1,12 @@
 import React from 'react'
-import { AnnouncementTemplate } from './component';
+// import { AnnouncementTemplate } from './component';
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../../../../user/userHomePage";
 import axios from "axios";
 import { SERVER_ADDRESS } from "../../../../../../staticFiles/constants";
 import { checkLoggedIn, getUserToken } from "../../../../../../staticFiles/functions";
 import { SimpleLoadingScreen } from '../../../../../../components/LoadingScreen';
+import { AnnouncementTemplate } from '../../../../../user/pages/wardInfoPage/pages/annoucementPage/component';
 
 export function AnnoucementSection(props) {
 

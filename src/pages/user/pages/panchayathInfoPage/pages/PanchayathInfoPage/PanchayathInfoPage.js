@@ -4,6 +4,9 @@ import { RoundedIconButton } from '../PanchayathComplaintPage/component';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { ChatSection } from './ChatDiv';
 import { PanchayathDetailsSection } from './panchayathDetailsSection.js';
+import { useMemo } from 'react';
+import { useContext } from 'react';
+import { UserContext } from '../../../../userHomePage';
 function PanchayathDetailsDiv(props) {
   const smallScreen = props.smallScreen;
   const user_wardInfo_RightOuter = { "paddingLeft": smallScreen ? '' : "15px", "width": smallScreen ? '100%' : "40%", "height": smallScreen ? 'calc(100% - 65px)' : "100%", "overflow": "hidden" }
@@ -37,7 +40,13 @@ function ChatDiv(props) {
   const smallScreen = props.smallScreen;
   const style = { "width": smallScreen ? '100%' : "60%", "height": smallScreen ? "calc(100% - 100px)" : "100%", "position": "relative", "overflow": "hidden" }
   const [showFormModel, setShowFormModel] = useState(false);
+  const usercont = useContext(UserContext).user;
+  const [updateUi,setUpdateUi] = useState(false);
 
+  const user = useMemo(
+    ()=> {return {...usercont}},
+    [usercont.wardOId]
+  )
   function showFormModelFun() {
     setShowFormModel(true);
   }
@@ -48,13 +57,8 @@ function ChatDiv(props) {
   return (
     <div style={style}>
       <DivScrollableWithGeasture isNotStyleChangable={false}>
-        <ChatSection />
+        <ChatSection user={user} updateUi={updateUi}/>
       </DivScrollableWithGeasture>
-      {/* <div className='user_home_postDiv'>
-          
-      </div> */}
-      <div style={{ position: 'absolute', bottom: '20px', right: '15px' }}><RoundedIconButton onClick={showFormModelFun}><AiOutlinePlus size={25} /></RoundedIconButton></div>
-      {/* <ShowFormmodel show={showFormModel} onClose={closeFormModelFun}/> */}
     </div>
   );
 }

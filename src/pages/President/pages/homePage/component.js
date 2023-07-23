@@ -1,5 +1,5 @@
 import './component.css'
-import { AiOutlineLike } from 'react-icons/ai'
+import { AiFillLike, AiOutlineLike } from 'react-icons/ai'
 import { useEffect, useState } from 'react';
 import { PlaneButton } from '../../../../components/planeButton';
 import React from 'react'
@@ -10,6 +10,12 @@ import { CarouselImage, PostImage } from '../../../../components/imageLoading';
 import Carousel from 'react-bootstrap/Carousel';
 import ShowMore from 'react-show-more-button/dist/module';
 import { PlaneButton3 } from '../../../../components/planeButton3';
+import { SimpleLoadingScreen } from '../../../../components/LoadingScreen';
+import { SERVER_ADDRESS } from '../../../../staticFiles/constants';
+import { useContext } from 'react';
+import { UserContext } from '../../../user/userHomePage';
+import axios from 'axios';
+import { checkLoggedIn, getUserToken } from '../../../../staticFiles/functions';
 
 export function RoundedIconButton(props) {
   return (
@@ -109,14 +115,55 @@ export function PostTemplateWithCarousel(props) {
 
   const [showDiscussionModel, setShowDiscussionModel] = useState(false);
   const [isShrink, setisShrink] = useState(true);
+  const post = props.value;
+  const date = new Date(post.createdAt)
+  const [likes, setLikes] = useState(post.likesCount)  
+  const [isLoading, setisLoading] = useState(false);
+  const [isLiked, setIsLiked] = useState(post.isLiked);
+  const userData = useContext(UserContext).user;
+  const onLike = async () => {
+    const dat = {
+      userId: userData.userId,
+      postId: post._id
+    }
+    try {
+      setisLoading(true);
+      const res = await axios.post(`${SERVER_ADDRESS}/user/likeDiscussionPost`, { data: dat }, { headers: { 'u-auth-token': getUserToken() } });
+      setLikes(res.data.likes);
+      setIsLiked(res.data.isLiked);
+      setisLoading(false);
+    } catch (err) {
+      console.log(err);
+      checkLoggedIn(err);
+    }
+
+  }
+
+  const onDisLike = async () => {
+    const dat = {
+      userId: userData.userId,
+      postId: post._id
+    }
+    try {
+      setisLoading(true);
+      const res = await axios.post(`${SERVER_ADDRESS}/user/DislikeDiscussionPost`, { data: dat }, { headers: { 'u-auth-token': getUserToken() } });
+      setLikes(res.data.likes);
+      setIsLiked(res.data.isLiked);
+      setisLoading(false);
+
+
+    } catch (err) {
+      console.log(err);
+      checkLoggedIn(err);
+    }
+
+  }
   function showDiscussionModelfunc() {
     setShowDiscussionModel(true);
   }
   function closeDiscussionModelfunc() {
     setShowDiscussionModel(false)
   }
-  const post = props.value;
-  const date = new Date(post.createdAt)
 
   return (
     <div className='user_postTemplate_outerDiv' >
@@ -145,7 +192,19 @@ export function PostTemplateWithCarousel(props) {
             <p>{post.description}</p>
           </ShowMore>
           <div className='intractionDiv'>
-            <IconButton ><AiOutlineLike size={30} /></IconButton>
+            <div style={{ textAlign: 'center' }}>
+              {
+                isLoading === false ?
+                  isLiked === true
+                    ?
+                    <IconButton onClick={onDisLike} ><AiFillLike color='red' size={30} /></IconButton>
+                    :
+                    <IconButton onClick={onLike} ><AiOutlineLike size={30} /></IconButton>
+                  : <SimpleLoadingScreen />
+
+              }
+              <p>{likes}</p>
+            </div>
           </div>
         </div>
       </div>

@@ -42,11 +42,11 @@ export function ShowFormmodel(props) {
 export function ShowDiscussionmodel(props) {
 
     const val = props.value;
-    const { register, handleSubmit, formState: { errors },reset } = useForm();
+    const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const [replayData, setreplayData] = useState([]);
     const userData = useContext(UserContext).user;
     const [isLoading, setIsLoading] = useState(false);
-    const [updateUi,setUpdateUi] = useState(false);
+    const [updateUi, setUpdateUi] = useState(false);
     useEffect(
         () => {
             const loadData = async () => {
@@ -55,7 +55,8 @@ export function ShowDiscussionmodel(props) {
                         setIsLoading(true)
                         const res = await axios.get(`${SERVER_ADDRESS}/user/getDiscussionReplayById/${val._id}`, { headers: { 'u-auth-token': getUserToken() }, params: { key: '' } })
                         setreplayData(res.data.replays);
-                        setIsLoading(false)
+                        setIsLoading(false);
+
                     } catch (err) {
                         console.log(err);
                         checkLoggedIn(err);
@@ -63,7 +64,7 @@ export function ShowDiscussionmodel(props) {
                 }
             }
             loadData();
-        }, [props.show,updateUi]
+        }, [props.show, updateUi]
     )
 
     const onSubmit = async (data) => {
@@ -79,6 +80,7 @@ export function ShowDiscussionmodel(props) {
             setIsLoading(true);
             const res = await axios.post(`${SERVER_ADDRESS}/user/addDiscussionReplay`, { data: dat }, { headers: { 'u-auth-token': getUserToken() } });
             setUpdateUi(!updateUi);
+            reset({ description: '' });
             setIsLoading(false);
         } catch (err) {
             console.log(err);
@@ -95,31 +97,31 @@ export function ShowDiscussionmodel(props) {
 
     return (
         <>
-            <Modal onExited={()=>reset({description:''})} fullscreen show={props.show} onHide={props.onClose} aria-labelledby="example-custom-modal-styling-title" centered>
+            <Modal onExited={() => reset({ description: '' })} fullscreen show={props.show} onHide={props.onClose} aria-labelledby="example-custom-modal-styling-title" centered>
                 <Modal.Header closeButton>
                     <Modal.Title>Discussion</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     {
                         isLoading === true
-                        ?
-                        <SimpleLoadingScreen />
-                        :
-                        replayData.length === 0
                             ?
-                            <div style={{ height: '100%', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '40px', color: 'gray', fontWeight: '700' }}>
-                                No Replays Yet
-                            </div>:
-                        <div className='user_wardInfo_homePage_discussion_bodyDiv'>
-                            {
-                                replayData.map(
-                                    (replay) => {
-                                        return <DiscussionTemplate value={replay} />;
-                                    }
-                                )
+                            <SimpleLoadingScreen />
+                            :
+                            replayData.length === 0
+                                ?
+                                <div style={{ height: '100%', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '40px', color: 'gray', fontWeight: '700' }}>
+                                    No Replays Yet
+                                </div> :
+                                <div className='user_wardInfo_homePage_discussion_bodyDiv'>
+                                    {
+                                        replayData.map(
+                                            (replay) => {
+                                                return <DiscussionTemplate value={replay} />;
+                                            }
+                                        )
 
-                            }
-                        </div>
+                                    }
+                                </div>
                     }
                 </Modal.Body>
                 <Modal.Footer>

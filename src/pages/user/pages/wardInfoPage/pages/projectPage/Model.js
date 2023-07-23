@@ -1,11 +1,11 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Modal } from 'react-bootstrap';
 import './Model.css'
 import { PitDatePickerLabelled, PitInput, PitInputLabelled, PitTextAreaLabelled } from '../../../../../../components/inputs';
 import { ProJectReviewTemplate } from './component';
 import { RectangleButton } from '../../../../../../components/buttonRectangle';
 import { IconButton } from '../../../../../../components/iconButton';
-import { BsStarFill } from 'react-icons/bs';
+import { ImStarFull, ImStarHalf, ImStarEmpty } from 'react-icons/im';
 import { useForm } from 'react-hook-form';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -16,13 +16,63 @@ import { SERVER_ADDRESS } from '../../../../../../staticFiles/constants';
 import { UserContext } from '../../../../../user/userHomePage';
 
 export function ShowProjectModel(props) {
+    const [hoverVal, setHoverVal] = useState(-1);
+    const [isStarSelected, setStarSelected] = useState(false);
+    const [showApproveModel, setShowApproveModel] = useState(false)
+    const [reviewData, setreviewData] = useState([]);
+    const userData = useContext(UserContext).user;
+    const [isLoading, setIsLoading] = useState(false);
+    const [postData, setPostData] = useState({});
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    const [starVal, setstarVal] = useState(-1);
+    const [updateUi, setUpdateUi] = useState(false);
+
+    function resetModel() {
+        setstarVal(-1);
+        setStarSelected(false)
+    }
+
+    const onSubmit = (data)=>{
+        setPostData(data);
+        setShowApproveModel(true);
+    }
 
     function buildStart() {
 
         let star = [];
         let x = 0
         for (x = 0; x < 5; x++) {
-            star.push(<IconButton ><BsStarFill size={20} /></IconButton>)
+            const y = x + 1;
+            star.push(
+                <div onMouseEnter={
+                    () => { setHoverVal(y) }
+                }
+                    onMouseLeave={
+                        () => { setHoverVal(-1) }
+                    }
+                    onClick={
+                        () => { setStarSelected(true); setstarVal(y) }
+                    }
+                >
+                    <IconButton  >
+                        {
+                            isStarSelected === true
+                                ?
+                                x < starVal
+                                    ?
+                                    <ImStarFull size={20} />
+                                    :
+                                    <ImStarEmpty size={20} />
+                                :
+                                x < hoverVal
+                                    ?
+                                    <ImStarFull size={20} />
+                                    :
+                                    <ImStarEmpty size={20} />
+                        }
+                    </IconButton>
+                </div>
+            )
         }
 
         return <div style={{ display: 'flex' }}>
@@ -31,35 +81,126 @@ export function ShowProjectModel(props) {
 
     }
 
+    useEffect(
+        () => {
+            const loadData = async () => {
+                if (props.show === true) {
+                    try {
+                        setIsLoading(true)
+                        const res = await axios.get(`${SERVER_ADDRESS}/user/wardProjectReviewById/${props.id}`, { headers: { 'u-auth-token': getUserToken() }, params: { key: '' } })
+                        setreviewData(res.data.reviews.rating)
+                        setIsLoading(false);
+
+                    } catch (err) {
+                        console.log(err);
+                        checkLoggedIn(err);
+                    }
+                }
+            }
+            loadData();
+        }, [props.show, updateUi]
+    )
+
+    const onConfirm = async () => {
+
+        const form = {
+            reviewText:postData.reviewText,
+            owner:userData.userId,
+            rating:starVal,
+            dateOfRating:new Date()
+        }
+        try {
+            setIsLoading(true);
+            const res = await axios.post(`${SERVER_ADDRESS}/user/addProjectRatingUser/${props.id}`, {data:form}, { headers: { 'u-auth-token': getUserToken() } });
+            setIsLoading(false);
+            setShowApproveModel(false);
+            props.onClose();
+        } catch (err) {
+            console.log(err);
+            let res = checkLoggedIn(err);
+            if (res === false) {
+                //not logged in
+            } else {
+                alert(res);
+                setShowApproveModel(false);
+                setIsLoading(false);
+            }
+
+        }
+
+    }
     return (
         <>
-            <Modal fullscreen show={props.show} onHide={props.onClose} aria-labelledby="example-custom-modal-styling-title" centered>
+            <Modal onExited={() => resetModel()} fullscreen show={props.show} onHide={props.onClose} aria-labelledby="example-custom-modal-styling-title" centered>
                 <Modal.Header closeButton>
                     <Modal.Title>Project Review</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div className='user_wardInfo_projectPage_discussion_bodyDiv'>
-                        <ProJectReviewTemplate />
-                        <ProJectReviewTemplate />
-                        <ProJectReviewTemplate />
-                        <ProJectReviewTemplate />
-                        <ProJectReviewTemplate />
-                        <ProJectReviewTemplate />
+                    {
+                        isLoading === true
+                            ?
+                            <SimpleLoadingScreen />
+                            :
+                            reviewData.length === 0
+                                ?
+                                <div style={{ height: '100%', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '40px', color: 'gray', fontWeight: '700' }}>
+                                    No Reviews Yet
+                                </div> :
+                                <div className='user_wardInfo_homePage_discussion_bodyDiv'>
+                                    {
+                                        reviewData.map(
+                                            (replay) => {
+                                                return <ProJectReviewTemplate value={replay} />;
+                                            }
+                                        )
+
+                                    }
+                                </div>
+                    }
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
                     <div className='user_wardInfo_projectPage_discussion_footerDiv'>
                         <div className='user_wardInfo_projectPage_discussion_footerDiv_inputDiv'>
                             {buildStart()}
-                            <PitTextAreaLabelled padding='0px' rows={3} placeholder='Enter Your Review'></PitTextAreaLabelled>
+                            <PitTextAreaLabelled padding='0px' rows={3} placeholder='Enter Your Review' error={errors['reviewText']} reg={register('reviewText', {
+                                required: {
+                                    message: "cannot be empty",
+                                    value: true
+                                },
+                                minLength: {
+                                    value: 3,
+                                    message: 'Atleast 3 characters'
+                                }
+                            })}></PitTextAreaLabelled>
                         </div>
-                        <RectangleButton onClick={props.onClose} height='40px' width='70px'>
+                        <RectangleButton  height='40px' width='70px' onClick={handleSubmit(onSubmit)}>
                             Sent
                         </RectangleButton>
                     </div>
                 </Modal.Footer>
             </Modal>
-            
+            {/* CONFORM POST */}
+            <Modal show={showApproveModel} style={{ background: 'rgba(0, 0, 0, 0.605)' }} onHide={isLoading === false ? () => setShowApproveModel(false) : null}>
+                {
+                    isLoading === true ?
+                        <div style={{ height: '200px' }}>
+                            <SimpleLoadingScreen />
+                        </div> :
+                        <>
+                            <Modal.Header closeButton>
+                                <Modal.Title>Confirm?</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>Sure?</Modal.Body>
+                            <Modal.Footer>
+                                <RectangleButton height='45px' danger onClick={() => { setShowApproveModel(false) }}>No</RectangleButton>
+                                <RectangleButton height='45px' onClick={onConfirm}>Yes</RectangleButton>
+                            </Modal.Footer>
+                        </>
+                }
+            </Modal>
+
         </>
     );
 }
@@ -74,7 +215,7 @@ export function ShowAddProjectModel(props) {
     const userData = useContext(UserContext).user;
 
 
-    const onSubmit = (data)=>{
+    const onSubmit = (data) => {
         setPostData(data);
         setShowApproveModel(true);
     }
@@ -90,13 +231,13 @@ export function ShowAddProjectModel(props) {
         form.append('endDate', postData.endDate);
         form.append('title', postData.title);
         form.append('fundPassed', postData.fundPassed);
-        form.append('wardNo',userData.wardNo)
+        form.append('wardNo', userData.wardNo)
         for (let i = 0; i < postData.images.length; i++) {
             form.append("images", postData.images[i]);
         }
         try {
             setIsLoading(true);
-            const res = await axios.post(`${SERVER_ADDRESS}/user/addWardProject`, form,{headers:{'u-auth-token':getUserToken()}});
+            const res = await axios.post(`${SERVER_ADDRESS}/user/addWardProject`, form, { headers: { 'u-auth-token': getUserToken() } });
             setIsLoading(false);
             setShowApproveModel(false);
             props.onClose();

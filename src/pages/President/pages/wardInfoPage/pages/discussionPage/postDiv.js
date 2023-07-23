@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { PostTemplate } from '../../../homePage/component'
+// import { PostTemplate } from '../../../homePage/component'
 import { SERVER_ADDRESS } from '../../../../../../staticFiles/constants';
 import axios from 'axios';
 import { checkLoggedIn, getUserToken } from '../../../../../../staticFiles/functions';
 import { SimpleLoadingScreen } from '../../../../../../components/LoadingScreen';
+import { PostTemplate } from '../../../../../user/pages/homePage/component';
 
 function PostDiv(props) {
     const [posts, setPosts] = useState([]);

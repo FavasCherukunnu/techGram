@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { IconButton } from '../../../../../../components/iconButton'
-import { BsStarFill } from 'react-icons/bs'
+import { ImStarFull,ImStarHalf } from 'react-icons/im';
 import { PlaneButton1 } from '../../../homePage/component'
 import './component.css'
 import { ShowProjectModel } from './Model'
@@ -11,7 +11,7 @@ function buildStart() {
     let star = [];
     let x = 0
     for (x = 0; x < 5; x++) {
-        star.push(<IconButton ><BsStarFill size={20} /></IconButton>)
+        star.push(<IconButton ><ImStarHalf size={20} /></IconButton>)
     }
 
     return <div style={{display:'flex'}}>

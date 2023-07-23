@@ -5,7 +5,7 @@ import { PitInput, PitInputLabelled, PitTextAreaLabelled } from '../../../../../
 import { ProJectReviewTemplate } from './component';
 import { RectangleButton } from '../../../../../../components/buttonRectangle';
 import { IconButton } from '../../../../../../components/iconButton';
-import { BsStarFill } from 'react-icons/bs';
+import { ImStarFull,ImStarHalf } from 'react-icons/im';
 import { useForm } from 'react-hook-form';
 import { UserContext } from '../../../../../user/userHomePage';
 import axios from 'axios';
@@ -20,7 +20,7 @@ export function ShowProjectModel(props) {
         let star = [];
         let x = 0
         for (x = 0; x < 5; x++) {
-            star.push(<IconButton ><BsStarFill size={20} /></IconButton>)
+            star.push(<IconButton ><ImStarHalf size={20} /></IconButton>)
         }
 
         return <div style={{ display: 'flex' }}>

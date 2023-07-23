@@ -3,59 +3,226 @@ import { DivScrollableWithGeasture, UnderNavigationOuterDiv } from '../../../../
 import { ExpandListHeader } from './component';
 import { ListGroup } from 'react-bootstrap';
 import { ShowModal } from './Modal';
+import { useContext } from 'react';
+import { UserContext } from '../../../../userHomePage';
+import { useEffect } from 'react';
+import axios from 'axios';
+import { SERVER_ADDRESS } from '../../../../../../staticFiles/constants';
+import { checkLoggedIn, getUserToken, removeFirstEqualString } from '../../../../../../staticFiles/functions';
+import { SimpleLoadingScreen } from '../../../../../../components/LoadingScreen';
+import { RoundedIconButton } from '../../../../../../components/PlaneButton1';
+import { AiOutlinePlus } from 'react-icons/ai';
 
 export function UserPanchayathInstitutePage() {
 
-  const [showModal,setShowModal] = useState(false);
-  const [id,setId] = useState(null);
-  
+  const [showModal, setShowModal] = useState(false);
+  const [id, setId] = useState(null);
+  const [showAddInstituteModel, setShowAddInstituteModel] = useState(false);
+  const userCont = useContext(UserContext);
+  const user = userCont.user;
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [insitutes, setInsitutes] = useState([]);
+  const [updateUi, setUpdateUi] = useState(false);
+
+  function showAddInstituteModelFun() {
+    setShowAddInstituteModel(true);
+  }
+  function closeAddInstituteModelFun() {
+    setShowAddInstituteModel(false);
+  }
+
+  useEffect(
+    () => {
+      const onLoad = async () => {
+        if (user.wardOId) {
+          try {
+            if (user.wardOId) {
+              setIsLoaded(false)
+              const res = await axios.get(`${SERVER_ADDRESS}/user/getInstitutesByPanchayathId/${user.panchayathOId}`, { headers: { 'u-auth-token': getUserToken() }, params: { key: '' } })
+              setInsitutes(res.data.institutes);
+              setIsLoaded(true)
+            }
+          } catch (err) {
+            console.log(err);
+            const msg = checkLoggedIn(err);
+            if (msg) {
+              alert(msg)
+            }
+
+          }
+        }
+      }
+      onLoad();
+    }
+    , [user.panchayathOId, updateUi]
+  )
+
   return (
     <UnderNavigationOuterDiv>
       <DivScrollableWithGeasture>
-        <ExpandListHeader title='Agriculture'>
-          <ListGroup>
-            <ListGroup.Item action variant="light" onClick={()=>{setShowModal(true);setId('Krishi Bhavan')}}>Krishi Bhavan</ListGroup.Item>
-          </ListGroup>
-        </ExpandListHeader>
-        <ExpandListHeader title='AnimalHusbandry'>
-          <ListGroup>
-            <ListGroup.Item action variant="light" onClick={()=>{setShowModal(true);setId('Veterinary Dispensary')}}>Veterinary Dispensary</ListGroup.Item>
-            <ListGroup.Item action variant="light" onClick={()=>{setShowModal(true);setId('ICDP Sub Center')}}>ICDP Sub Center</ListGroup.Item>
-          </ListGroup>
-        </ExpandListHeader>
-        <ExpandListHeader title='Fisheries'>
-          <ListGroup>
-            <ListGroup.Item action variant="light" onClick={()=>{setShowModal(true);setId('Malsya Bahvan')}}>Malsya Bahvan</ListGroup.Item>
-          </ListGroup>
-        </ExpandListHeader>
-        <ExpandListHeader title='Education'>
-          <ListGroup>
-            <ListGroup.Item action variant="light" onClick={()=>{setShowModal(true);setId('GMLP School')}}>GMLP School</ListGroup.Item>
-            <ListGroup.Item action variant="light" onClick={()=>{setShowModal(true);setId('AUP School')}}>AUP School</ListGroup.Item>
-          </ListGroup>       
-           </ExpandListHeader>
-        <ExpandListHeader title='Health'>
-          <ListGroup>
-            <ListGroup.Item action variant="light" onClick={()=>{setShowModal(true);setId('Primary Health Center')}} >Primary Health Center</ListGroup.Item>
-            <ListGroup.Item action variant="light" onClick={()=>{setShowModal(true);setId('Family Health Center')}} >Family Health Center</ListGroup.Item>
-            <ListGroup.Item action variant="light" onClick={()=>{setShowModal(true);setId('Homio Dispensary')}} >Homio Dispensary</ListGroup.Item>
-            <ListGroup.Item action variant="light" onClick={()=>{setShowModal(true);setId('Ayurveda Dispensary')}} >Ayurveda Dispensary</ListGroup.Item>
-          </ListGroup>       
-           </ExpandListHeader>
-        <ExpandListHeader title='Welfare'>
-          <ListGroup>
-            <ListGroup.Item action variant="light" onClick={()=>{setShowModal(true);setId('ICDS office')}} >ICDS office</ListGroup.Item>
-            <ListGroup.Item action variant="light" onClick={()=>{setShowModal(true);setId('Day Care Center')}} >Day Care Center</ListGroup.Item>
-            <ListGroup.Item action variant="light" onClick={()=>{setShowModal(true);setId('Anganavadies')}} >Anganavadies</ListGroup.Item>
-          </ListGroup>        
-          </ExpandListHeader>
-        <ExpandListHeader title='Rural Development'>
-          <ListGroup>
-            <ListGroup.Item action variant="light" onClick={()=>{setShowModal(true);setId('Village Extension Office')}} >Village Extension Office</ListGroup.Item>
-          </ListGroup>        
-          </ExpandListHeader>
+        {
+          isLoaded ?
+            <>
+              <ExpandListHeader title='Agriculture'>
+                <ListGroup>
+                  {
+                    insitutes.map(
+                      (insitute) => {
+                        if (insitute.catogery === 'Agriculture') {
+                          return <ListGroup.Item action variant="light" onClick={() => { setShowModal(true); setId(insitute._id) }}>
+                            <div className='userPanchayathInstitute_listOuter'>
+                              <div>
+                                {insitute.title}
+                              </div>
+                              <div className='innerWardText'>
+                                {insitute.wardOId === 'NOT' ? null : `Ward: ${removeFirstEqualString(insitute.wardOId, insitute.panchayathOId)}`}
+                              </div>
+                            </div>
+                          </ListGroup.Item>
+                        }
+                      }
+                    )
+                  }
+                </ListGroup>
+              </ExpandListHeader>
+              <ExpandListHeader title='AnimalHusbandry'>
+                <ListGroup>
+                  {
+                    insitutes.map(
+                      (insitute) => {
+                        if (insitute.catogery === 'AnimalHusbandry') {
+                          return <ListGroup.Item action variant="light" onClick={() => { setShowModal(true); setId(insitute._id) }}>
+                            <div className='userPanchayathInstitute_listOuter'>
+                              <div>
+                                {insitute.title}
+                              </div>
+                              <div className='innerWardText'>
+                                {insitute.wardOId === 'NOT' ? null : `Ward: ${removeFirstEqualString(insitute.wardOId, insitute.panchayathOId)}`}
+                              </div>
+                            </div>
+                          </ListGroup.Item>
+                        }
+                      }
+                    )
+                  }
+                </ListGroup>
+              </ExpandListHeader>
+              <ExpandListHeader title='Fisheries'>
+                <ListGroup>
+                  {
+                    insitutes.map(
+                      (insitute) => {
+                        if (insitute.catogery === 'Fisheries') {
+                          return <ListGroup.Item action variant="light" onClick={() => { setShowModal(true); setId(insitute._id) }}>
+                            <div className='userPanchayathInstitute_listOuter'>
+                              <div>
+                                {insitute.title}
+                              </div>
+                              <div className='innerWardText'>
+                                {insitute.wardOId === 'NOT' ? null : `Ward: ${removeFirstEqualString(insitute.wardOId, insitute.panchayathOId)}`}
+                              </div>
+                            </div>
+                          </ListGroup.Item>
+                        }
+                      }
+                    )
+                  }
+                </ListGroup>
+              </ExpandListHeader>
+              <ExpandListHeader title='Education'>
+                <ListGroup>
+                  {
+                    insitutes.map(
+                      (insitute) => {
+                        if (insitute.catogery === 'Education') {
+                          return <ListGroup.Item action variant="light" onClick={() => { setShowModal(true); setId(insitute._id) }}>
+                            <div className='userPanchayathInstitute_listOuter'>
+                              <div>
+                                {insitute.title}
+                              </div>
+                              <div className='innerWardText'>
+                                {insitute.wardOId === 'NOT' ? null : `Ward: ${removeFirstEqualString(insitute.wardOId, insitute.panchayathOId)}`}
+                              </div>
+                            </div>
+                          </ListGroup.Item>
+                        }
+                      }
+                    )
+                  }
+                </ListGroup>
+              </ExpandListHeader>
+              <ExpandListHeader title='Health'>
+                <ListGroup>
+                  {
+                    insitutes.map(
+                      (insitute) => {
+                        if (insitute.catogery === 'Health') {
+                          return <ListGroup.Item action variant="light" onClick={() => { setShowModal(true); setId(insitute._id) }}>
+                            <div className='userPanchayathInstitute_listOuter'>
+                              <div>
+                                {insitute.title}
+                              </div>
+                              <div className='innerWardText'>
+                                {insitute.wardOId === 'NOT' ? null : `Ward: ${removeFirstEqualString(insitute.wardOId, insitute.panchayathOId)}`}
+                              </div>
+                            </div>
+                          </ListGroup.Item>
+                        }
+                      }
+                    )
+                  }
+                </ListGroup>
+              </ExpandListHeader>
+              <ExpandListHeader title='Welfare'>
+                <ListGroup>
+                  {
+                    insitutes.map(
+                      (insitute) => {
+                        if (insitute.catogery === 'Welfare') {
+                          return <ListGroup.Item action variant="light" onClick={() => { setShowModal(true); setId(insitute._id) }}>
+                            <div className='userPanchayathInstitute_listOuter'>
+                              <div>
+                                {insitute.title}
+                              </div>
+                              <div className='innerWardText'>
+                                {insitute.wardOId === 'NOT' ? null : `Ward: ${removeFirstEqualString(insitute.wardOId, insitute.panchayathOId)}`}
+                              </div>
+                            </div>
+                          </ListGroup.Item>
+                        }
+                      }
+                    )
+                  }
+                </ListGroup>
+              </ExpandListHeader>
+              <ExpandListHeader title='Rural Development'>
+                <ListGroup>
+                  {
+                    insitutes.map(
+                      (insitute) => {
+                        if (insitute.catogery === 'Rural Development') {
+                          return <ListGroup.Item action variant="light" onClick={() => { setShowModal(true); setId(insitute._id) }}>
+                            <div className='userPanchayathInstitute_listOuter'>
+                              <div>
+                                {insitute.title}
+                              </div>
+                              <div className='innerWardText'>
+                                {insitute.wardOId === 'NOT' ? null : `Ward: ${removeFirstEqualString(insitute.wardOId, insitute.panchayathOId)}`}
+                              </div>
+                            </div>
+                          </ListGroup.Item>
+                        }
+                      }
+                    )
+                  }
+                </ListGroup>
+              </ExpandListHeader>
+            </> :
+            <SimpleLoadingScreen />
+        }
       </DivScrollableWithGeasture>
-      <ShowModal id={id} show={showModal} onClose={()=>{setShowModal(false);setId(null)}}/>    {/*calling show model */}
+
+      <ShowModal id={id} show={showModal} onClose={() => { setShowModal(false); setId(null) }} />    {/*calling show model */}
     </UnderNavigationOuterDiv>
   )
 }

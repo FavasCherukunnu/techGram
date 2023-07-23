@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { AnnouncementTemplate } from './component'
+// import { AnnouncementTemplate } from './component'
 import { UserContext } from '../../../../../user/userHomePage';
 import axios from 'axios';
 import { SERVER_ADDRESS } from '../../../../../../staticFiles/constants';
 import { checkLoggedIn, getUserToken } from '../../../../../../staticFiles/functions';
+import { AnnouncementTemplate } from '../../../../../user/pages/wardInfoPage/pages/annoucementPage/component';
 
 export function AnnoucementSection(props) {
 

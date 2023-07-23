@@ -8,6 +8,7 @@ import { Dropdown, DropdownButton } from 'react-bootstrap';
 import { RectangleButton } from '../../../../../../components/buttonRectangle';
 import { ShowComplaintDiscussionmodel } from './Model';
 import { PostImage } from '../../../../../../components/imageLoading';
+import { ShowDiscussionmodel } from '../../../homePage/Model';
 
 
 export function RoundedIconButton(props) {
@@ -41,14 +42,13 @@ export function PlaneButton1(props) {
 
 
 export function ComplaintTemplate(props) {
-  const [showDiscussion, setShowDiscussion] = useState(false);
+  const [showDiscussionModel, setShowDiscussionModel] = useState(false);
 
-  function showDiscussionfn() {
-    setShowDiscussion(true);
+  function showDiscussionModelfunc() {
+    setShowDiscussionModel(true);
   }
-
-  function closeDiscussionfn() {
-    setShowDiscussion(false);
+  function closeDiscussionModelfunc() {
+    setShowDiscussionModel(false)
   }
   const time = new Date(props.value.createdAt);
   return (
@@ -67,9 +67,9 @@ export function ComplaintTemplate(props) {
           <p className='body'>{props.value.description}</p>
           <div className='intractionDiv'>
             <div className='interactionOnly'>
-              <IconButton ><AiOutlineLike size={30} /></IconButton>
-              <div style={{ width: '20px' }}></div>
-              <PlaneButton1 width={'100px'} onClick={showDiscussionfn}>Discussion</PlaneButton1>
+              {/* <IconButton ><AiOutlineLike size={30} /></IconButton>
+              <div style={{ width: '20px' }}></div> */}
+              <PlaneButton1 width={'100px'} onClick={showDiscussionModelfunc}>Discussion</PlaneButton1>
               <div style={{ width: '10px' }}></div>
               {props.value.isSolved===true ? <RectangleButton >Closed</RectangleButton> : <RectangleButton danger>Not Closed</RectangleButton>}
             </div>
@@ -80,7 +80,7 @@ export function ComplaintTemplate(props) {
           </div>
         </div>
       </div>
-      <ShowComplaintDiscussionmodel show={showDiscussion} onClose={closeDiscussionfn} />
+      <ShowDiscussionmodel value={props.value} show={showDiscussionModel} onClose={closeDiscussionModelfunc} />
     </div>
   )
 }

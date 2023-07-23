@@ -1,22 +1,30 @@
 import React, { useState } from 'react'
 import { IconButton } from '../../../../../../components/iconButton'
-import { BsStarFill } from 'react-icons/bs'
+import { ImStarFull, ImStarHalf, ImStarEmpty } from 'react-icons/im';
 import { PlaneButton1 } from '../../../homePage/component'
 import './component.css'
 import { ShowProjectModel } from './Model'
 import { PostImage } from '../../../../../../components/imageLoading'
 
-function buildStart() {
+function buildStart(count) {
 
     let star = [];
     let x = 0
     for (x = 0; x < 5; x++) {
-        star.push(<IconButton ><BsStarFill size={20} /></IconButton>)
+        if (x < count) {
+            star.push(
+                <IconButton ><ImStarFull size={20} /></IconButton>
+            )
+        } else {
+            star.push(
+                <IconButton ><ImStarEmpty size={20} /></IconButton>
+            )
+        }
     }
 
-    return <div style={{display:'flex'}}>
-            {star}
-            </div>
+    return <div style={{ display: 'flex' }}>
+        {star}
+    </div>
 
 }
 
@@ -24,13 +32,13 @@ export function ProjectTemplate(props) {
 
     const [showProjectModel, setShowProjectModel] = useState(false);
     function showProjectModelfunc() {
-      setShowProjectModel(true);
+        setShowProjectModel(true);
     }
     function closeProjectModelfunc() {
-      setShowProjectModel(false)
+        setShowProjectModel(false)
     }
     const startDate = new Date(props.value.startDate);
-    const endDate = props.value.endDate?new Date(props.value.endDate):null;
+    const endDate = props.value.endDate ? new Date(props.value.endDate) : null;
     return (
         <div className='user_userProjectPage_PostOuterDiv'>
             <div className='user_userProjectPage_PostInnerDiv'>
@@ -40,7 +48,7 @@ export function ProjectTemplate(props) {
                 <div className='user_userProjectPage_PostcontenDiv'>
                     {props.value.images ? <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
                         <div className='user_userProjectPage_imageSpace'>
-                            {props.value.images.map((image,index) => <PostImage key={index} id={image} dId={`proj-${image}`}/>)}
+                            {props.value.images.map((image, index) => <PostImage key={index} id={image} dId={`proj-${image}`} />)}
                         </div>
                     </div> : <div></div>}
                     <p className='heading'>{props.value.title}</p>
@@ -67,37 +75,37 @@ export function ProjectTemplate(props) {
                         </tr>
                     </table>
                     <div className='intractionDiv'>
-                        {buildStart()}
+                        {buildStart(props.value.averageRating)}
                         {/* <div style={{ width: '20px',}}></div> */}
                         <PlaneButton1 width={'100px'} onClick={showProjectModelfunc}>Reviewe</PlaneButton1>
                     </div>
                 </div>
             </div>
-            <ShowProjectModel show={showProjectModel} onClose={closeProjectModelfunc}/>
+            <ShowProjectModel id={props.value._id} show={showProjectModel} onClose={closeProjectModelfunc} />
         </div>
     )
 }
 
 
-export function ProJectReviewTemplate() {
+export function ProJectReviewTemplate(props) {
+    const value = props.value;
+    const date = new Date(value.dateOfRating);
     return (
-      <div className='user_homePage_ProJectReviewTemplate_template'>
-        <div className='user_homePage_ProJectReviewTemplate_template_userName' >
-          UserName
+        <div className='user_homePage_ProJectReviewTemplate_template'>
+            <div className='user_homePage_ProJectReviewTemplate_template_userName' >
+                {value.owner.fullName}
+            </div>
+            <div className='user_homePage_ProJectReviewTemplate_template_text'>
+                {value.reviewText}
+            </div>
+            <div>
+                {buildStart(value.rating)}
+            </div>
+            <div className='user_homePage_ProJectReviewTemplate_template_time'>
+                {date.toLocaleString()}
+            </div>
+
+
         </div>
-        <div className='user_homePage_ProJectReviewTemplate_template_text'>
-          here notification displays. notification is controlled by admin of institutions
-          here notification displays. notification is controlled by admin of institutions
-          here notification displays. notification is controlled by admin of institutions
-          here notification displays. notification is controlled by admin of institutions
-          here notification displays. notification is controlled by admin of institutions
-          here notification displays. notification is controlled by admin of institutions
-          user types Discussion here so that others can also participate. this is very important section in the world famouse hystory of the logica illussion. 
-        </div>
-        <div className='user_homePage_ProJectReviewTemplate_template_time'>
-          00:00
-        </div>
-  
-      </div>
     )
-  }
+}
