@@ -11,7 +11,7 @@ import { getUserToken } from '../../../../../../staticFiles/functions'
 import { UserContext } from '../../../../../user/userHomePage'
 import { ImStarEmpty, ImStarFull } from 'react-icons/im'
 
-function buildStart(count) {
+export function buildStart(count) {
 
     let star = [];
     let x = 0
@@ -33,11 +33,12 @@ function buildStart(count) {
 
 }
 export function SurvayTemplate(props) {
+    const rating = Math.round(props.data.averageRating*10)/10;
     return (
         <tr className='user_panchayathInfo_survay_survayList_template'>
             <td className='first'>{props.index}</td>
             <td className='second'>{props.data.wardNo}</td>
-            <td className='third'>{buildStart(props.data.averageRating)}</td>
+            <td className='third'><div className='intra'><div>{rating}</div>{buildStart(props.data.averageRating)}</div></td>
             <td className='fourth'><RectangleButton width='60px' height='30px'><AiOutlineSearch /></RectangleButton></td>
         </tr>
     )

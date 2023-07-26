@@ -69,11 +69,13 @@
     text-align: justify;
 }
 
-.user_userProjectPage_PostcontenDiv .intractionDiv{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+.user_userProjectPage_PostcontenDiv .intractionDiv1{
+    display: inline-flex;
+    flex-direction: column;
+    /* flex-wrap: wrap; */
     padding: 10px 0px 10px 0px;
+    /* justify-content: center; */
+    align-items: center;
 }
 .user_userProjectPage_imageSpace{
     display: flex;

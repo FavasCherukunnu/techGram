@@ -23,13 +23,14 @@ export function ShowProjectModel(props) {
     const userData = useContext(UserContext).user;
     const [isLoading, setIsLoading] = useState(false);
     const [postData, setPostData] = useState({});
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const {reset, register, handleSubmit, formState: { errors } } = useForm();
     const [starVal, setstarVal] = useState(-1);
     const [updateUi, setUpdateUi] = useState(false);
 
     function resetModel() {
         setstarVal(-1);
         setStarSelected(false)
+        reset();
     }
 
     const onSubmit = (data)=>{
@@ -106,12 +107,13 @@ export function ShowProjectModel(props) {
         const form = {
             reviewText:postData.reviewText,
             owner:userData.userId,
-            rating:starVal,
+            rating:starVal<0?0:starVal,
             dateOfRating:new Date()
         }
         try {
             setIsLoading(true);
             const res = await axios.post(`${SERVER_ADDRESS}/user/addProjectRatingUser/${props.id}`, {data:form}, { headers: { 'u-auth-token': getUserToken() } });
+            props.updateReview(res.data.project[0].averageRating)
             setIsLoading(false);
             setShowApproveModel(false);
             props.onClose();

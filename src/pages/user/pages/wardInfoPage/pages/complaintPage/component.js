@@ -9,6 +9,9 @@ import { RectangleButton } from '../../../../../../components/buttonRectangle';
 import { ShowComplaintDiscussionmodel } from './Model';
 import { PostImage } from '../../../../../../components/imageLoading';
 import { ShowDiscussionmodel } from '../../../homePage/Model';
+import axios from 'axios';
+import { SERVER_ADDRESS } from '../../../../../../staticFiles/constants';
+import { checkLoggedIn, getUserToken } from '../../../../../../staticFiles/functions';
 
 
 export function RoundedIconButton(props) {
@@ -43,35 +46,45 @@ export function PlaneButton1(props) {
 
 export function ComplaintTemplate(props) {
   const [showDiscussionModel, setShowDiscussionModel] = useState(false);
-
+  const [complaint,setcomplaint] = useState(false); 
+  const thisComplaint = complaint===false?props.value:complaint;
   function showDiscussionModelfunc() {
     setShowDiscussionModel(true);
   }
   function closeDiscussionModelfunc() {
     setShowDiscussionModel(false)
   }
-  const time = new Date(props.value.createdAt);
+  const closeComplaint = async () => {
+    try {
+      const res = await axios.post(`${SERVER_ADDRESS}/user/closeComplaint/${props.value._id}`, { key: '' }, { headers: { 'u-auth-token': getUserToken() } });
+      setcomplaint(res.data.complaint);
+    } catch (err) {
+      console.log(err);
+      checkLoggedIn(err);
+    }
+  }
+  const time = new Date(thisComplaint.createdAt);
+  console.log('rererererere');
   return (
     <div className='user_ComplaintTemplate_outerDiv'>
       <div className='user_ComplaintTemplate_innerDiv'>
-        <div style={{ backgroundColor: props.value.isSolved===true ? '#81F14D' : '#FF3232' }} className='user_ComplaintTemplate_autherDiv'>
-          <p>{props.value.owner.fullName}</p>
+        <div style={{ backgroundColor: thisComplaint.isSolved === 'true' ? '#81F14D' : '#FF3232' }} className='user_ComplaintTemplate_autherDiv'>
+          <p>{thisComplaint.owner.fullName}</p>
         </div>
         <div className='user_ComplaintTemplate_contenDiv'>
-          {props.value.images ? <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+          {thisComplaint.images ? <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
             <div className='user_ComplaintTemplate_imageSpace'>
-              {props.value.images.map((image, index) => <PostImage key={index} id={image} dId={`Annoucement-${image}`} />)}
+              {thisComplaint.images.map((image, index) => <PostImage key={index} id={image} dId={`Annoucement-${image}`} />)}
             </div>
           </div> : <div></div>}
-          <p className='heading'>{props.value.title}</p>
-          <p className='body'>{props.value.description}</p>
-          <div className='intractionDiv'>
+          <p className='heading'>{thisComplaint.title}</p>
+          <p className='body'>{thisComplaint.description}</p>
+          <div className='intractionDiv2'>
+              {thisComplaint.isSolved==='true'?<div>Solved on {new Date(thisComplaint.solvedDate).toLocaleString()}</div>:<div></div>}
             <div className='interactionOnly'>
-              {/* <IconButton ><AiOutlineLike size={30} /></IconButton>
-              <div style={{ width: '20px' }}></div> */}
               <PlaneButton1 width={'100px'} onClick={showDiscussionModelfunc}>Discussion</PlaneButton1>
               <div style={{ width: '10px' }}></div>
-              {props.value.isSolved===true ? <RectangleButton >Closed</RectangleButton> : <RectangleButton danger>Not Closed</RectangleButton>}
+              {thisComplaint.isSolved === 'true' ? <RectangleButton >Closed</RectangleButton> : <RectangleButton danger onClick={closeComplaint}>Not Closed</RectangleButton>}
             </div>
 
           </div>
@@ -80,7 +93,7 @@ export function ComplaintTemplate(props) {
           </div>
         </div>
       </div>
-      <ShowDiscussionmodel value={props.value} show={showDiscussionModel} onClose={closeDiscussionModelfunc} />
+      <ShowDiscussionmodel value={thisComplaint} show={showDiscussionModel} onClose={closeDiscussionModelfunc} />
     </div>
   )
 }

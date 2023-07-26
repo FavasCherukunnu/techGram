@@ -31,14 +31,21 @@ function buildStart(count) {
 export function ProjectTemplate(props) {
 
     const [showProjectModel, setShowProjectModel] = useState(false);
+    const [IsRating,setIsRating] = useState(false);
     function showProjectModelfunc() {
         setShowProjectModel(true);
     }
     function closeProjectModelfunc() {
         setShowProjectModel(false)
     }
+    const onRatinChange = (rating)=>{
+        console.log(rating);
+        setIsRating(rating)
+    }
     const startDate = new Date(props.value.startDate);
     const endDate = props.value.endDate ? new Date(props.value.endDate) : null;
+    const rating = IsRating===false?Math.round(props.value.averageRating*10)/10:Math.round(IsRating*10)/10;
+
     return (
         <div className='user_userProjectPage_PostOuterDiv'>
             <div className='user_userProjectPage_PostInnerDiv'>
@@ -74,14 +81,15 @@ export function ProjectTemplate(props) {
                             <td className='second'>{props.value.fundPassed}</td>
                         </tr>
                     </table>
-                    <div className='intractionDiv'>
-                        {buildStart(props.value.averageRating)}
+                    <div className='intractionDiv1'>
+                        <div>{rating}</div>
+                        <div>{buildStart(props.value.averageRating)}</div>
                         {/* <div style={{ width: '20px',}}></div> */}
                         <PlaneButton1 width={'100px'} onClick={showProjectModelfunc}>Reviewe</PlaneButton1>
                     </div>
                 </div>
             </div>
-            <ShowProjectModel id={props.value._id} show={showProjectModel} onClose={closeProjectModelfunc} />
+            <ShowProjectModel updateReview={onRatinChange} id={props.value._id} show={showProjectModel} onClose={closeProjectModelfunc} />
         </div>
     )
 }

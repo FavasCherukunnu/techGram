@@ -16,7 +16,6 @@ function ComplaintDiv(props) {
     const userCont = useContext(UserContext);
     const [isLoaded, setIsLoaded] = useState(false);
     const user = userCont.user;
-
     useEffect(
         () => {
             const onLoad = async () => {

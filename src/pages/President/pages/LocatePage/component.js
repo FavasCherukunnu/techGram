@@ -9,26 +9,16 @@ import { useEffect } from "react";
 import axios from "axios";
 import { SERVER_ADDRESS } from "../../../../staticFiles/constants";
 import { getUserToken } from "../../../../staticFiles/functions";
+import { buildStart } from "../panchayathInfoPage/pages/PanchayathSurvayPage/Component";
 
-function buildStart() {
 
-    let star = [];
-    let x = 0
-    for (x = 0; x < 5; x++) {
-        star.push(<BsStarFill size={20} />)
-    }
-
-    return <div style={{ display: 'flex' }}>
-        {star}
-    </div>
-
-}
-function SurvayTemplate(props) {
+export function SurvayTemplate(props) {
+    const rating = Math.round(props.data.averageRating*10)/10;
     return (
         <tr className='user_survay_survayList_template'>
             <td className='first'>{props.index}</td>
             <td className='second'>{props.data.title}</td>
-            <td className='third'>{buildStart()}</td>
+            <td className='third'><div className="intra"><div>{rating}</div>{buildStart(props.data.averageRating)}</div></td>
             <td className='fourth'><RectangleButton width='60px' height='30px'><AiOutlineSearch /></RectangleButton></td>
         </tr>
     )

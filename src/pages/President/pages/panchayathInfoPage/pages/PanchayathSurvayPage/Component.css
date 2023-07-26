@@ -66,3 +66,8 @@
 .user_panchayathInfo_survay_survayList_table .h_fourth{
     width: 60px;
 }
+.user_panchayathInfo_survay_survayList_template .intra{
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+}
