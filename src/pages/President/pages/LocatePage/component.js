@@ -13,12 +13,12 @@ import { buildStart } from "../panchayathInfoPage/pages/PanchayathSurvayPage/Com
 
 
 export function SurvayTemplate(props) {
-    const rating = Math.round(props.data.averageRating*10)/10;
+    const rating = Math.round(props.data.averageRating*100)/100;
     return (
         <tr className='user_survay_survayList_template'>
             <td className='first'>{props.index}</td>
             <td className='second'>{props.data.title}</td>
-            <td className='third'><div className="intra"><div>{rating}</div>{buildStart(props.data.averageRating)}</div></td>
+            <td className='third'><div className="intra"><div>{rating}</div>{buildStart(rating)}</div></td>
             <td className='fourth'><RectangleButton width='60px' height='30px'><AiOutlineSearch /></RectangleButton></td>
         </tr>
     )

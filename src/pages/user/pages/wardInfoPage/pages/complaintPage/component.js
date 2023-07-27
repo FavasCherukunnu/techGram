@@ -46,8 +46,8 @@ export function PlaneButton1(props) {
 
 export function ComplaintTemplate(props) {
   const [showDiscussionModel, setShowDiscussionModel] = useState(false);
-  const [complaint,setcomplaint] = useState(false); 
-  const thisComplaint = complaint===false?props.value:complaint;
+  const [complaint, setcomplaint] = useState(false);
+  const thisComplaint = complaint === false ? props.value : complaint;
   function showDiscussionModelfunc() {
     setShowDiscussionModel(true);
   }
@@ -80,7 +80,7 @@ export function ComplaintTemplate(props) {
           <p className='heading'>{thisComplaint.title}</p>
           <p className='body'>{thisComplaint.description}</p>
           <div className='intractionDiv2'>
-              {thisComplaint.isSolved==='true'?<div>Solved on {new Date(thisComplaint.solvedDate).toLocaleString()}</div>:<div></div>}
+            {thisComplaint.isSolved === 'true' ? <div>Solved on {new Date(thisComplaint.solvedDate).toLocaleString()}</div> : <div></div>}
             <div className='interactionOnly'>
               <PlaneButton1 width={'100px'} onClick={showDiscussionModelfunc}>Discussion</PlaneButton1>
               <div style={{ width: '10px' }}></div>
@@ -120,16 +120,16 @@ export function ComplaintDiscussionTemplate() {
   )
 }
 
-export function DropdownTop() {
+export function DropdownTop(props) {
   return (
     <div className='user_complaintPage_complaintDiv_dropDownDiv'>
       <div className='dropdownText'>List Only </div>
-      <DropdownButton variant="light" id="dropdown-basic-button" title="All">
-        <Dropdown.Item href="#/action-1">All</Dropdown.Item>
-        <Dropdown.Item href="#/acction-2">Your Complaints</Dropdown.Item>
-        <Dropdown.Item href="#/acction-2">Open Complaints</Dropdown.Item>
-        <Dropdown.Item href="#/acction-2">Closed Complaints</Dropdown.Item>
-      </DropdownButton>
+      <select className='admin_customDropDownToggle' onChange={(event)=>props.onListDropdownChange(event.target.value)}>
+        <option key={-1} value={-1}>All</option>
+        <option key={-1} value={1}>My Complaint</option>
+        <option key={-1} value={2}>UnSolved</option>
+        <option key={-1} value={3}>Solved</option>
+      </select>
     </div>
   )
 }

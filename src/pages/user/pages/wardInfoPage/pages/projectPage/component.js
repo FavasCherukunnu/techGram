@@ -12,9 +12,20 @@ function buildStart(count) {
     let x = 0
     for (x = 0; x < 5; x++) {
         if (x < count) {
-            star.push(
-                <IconButton ><ImStarFull size={20} /></IconButton>
-            )
+            if(x+1===count || x+1<count){
+                star.push(
+                    <IconButton ><ImStarFull size={20} /></IconButton>
+                )
+            }else if(x+0.5<=count){
+                star.push(
+                    <IconButton ><ImStarHalf size={20} /></IconButton>
+                )
+            }else{
+                star.push(
+                    <IconButton ><ImStarEmpty size={20} /></IconButton>
+                )
+            }
+            
         } else {
             star.push(
                 <IconButton ><ImStarEmpty size={20} /></IconButton>
@@ -44,7 +55,7 @@ export function ProjectTemplate(props) {
     }
     const startDate = new Date(props.value.startDate);
     const endDate = props.value.endDate ? new Date(props.value.endDate) : null;
-    const rating = IsRating===false?Math.round(props.value.averageRating*10)/10:Math.round(IsRating*10)/10;
+    const rating = IsRating===false?Math.round(props.value.averageRating*100)/100:Math.round(IsRating*100)/100;
 
     return (
         <div className='user_userProjectPage_PostOuterDiv'>
@@ -83,7 +94,7 @@ export function ProjectTemplate(props) {
                     </table>
                     <div className='intractionDiv1'>
                         <div>{rating}</div>
-                        <div>{buildStart(props.value.averageRating)}</div>
+                        <div>{buildStart(rating)}</div>
                         {/* <div style={{ width: '20px',}}></div> */}
                         <PlaneButton1 width={'100px'} onClick={showProjectModelfunc}>Reviewe</PlaneButton1>
                     </div>

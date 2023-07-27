@@ -9,7 +9,7 @@ import axios from 'axios'
 import { SERVER_ADDRESS } from '../../../../../../staticFiles/constants'
 import { getUserToken } from '../../../../../../staticFiles/functions'
 import { UserContext } from '../../../../../user/userHomePage'
-import { ImStarEmpty, ImStarFull } from 'react-icons/im'
+import { ImStarEmpty, ImStarFull, ImStarHalf } from 'react-icons/im'
 
 export function buildStart(count) {
 
@@ -17,9 +17,19 @@ export function buildStart(count) {
     let x = 0
     for (x = 0; x < 5; x++) {
         if (x < count) {
-            star.push(
-                <ImStarFull size={20} />
-            )
+            if(x+1<=count){
+                star.push(
+                    <ImStarFull size={20} />
+                )
+            }else if(x+0.5<=count){
+                star.push(
+                    <ImStarHalf size={20} />
+                )
+            }else{
+                star.push(
+                    <ImStarEmpty size={20} />
+                )
+            }
         } else {
             star.push(
                 <ImStarEmpty size={20} />
@@ -33,12 +43,12 @@ export function buildStart(count) {
 
 }
 export function SurvayTemplate(props) {
-    const rating = Math.round(props.data.averageRating*10)/10;
+    const rating = Math.round(props.data.averageRating*100)/100;
     return (
         <tr className='user_panchayathInfo_survay_survayList_template'>
             <td className='first'>{props.index}</td>
             <td className='second'>{props.data.wardNo}</td>
-            <td className='third'><div className='intra'><div>{rating}</div>{buildStart(props.data.averageRating)}</div></td>
+            <td className='third'><div className='intra'><div>{rating}</div>{buildStart(rating)}</div></td>
             <td className='fourth'><RectangleButton width='60px' height='30px'><AiOutlineSearch /></RectangleButton></td>
         </tr>
     )

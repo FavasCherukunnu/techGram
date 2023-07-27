@@ -22,7 +22,7 @@ function ComplaintDiv(props) {
                 try {
                     if (user.wardOId) {
                         setIsLoaded(false)
-                        const res = await axios.get(`${SERVER_ADDRESS}/user/getComplaintsByWard/${user.wardOId}`, { headers: { 'u-auth-token': getUserToken() }, params: { key: '' } })
+                        const res = await axios.get(`${SERVER_ADDRESS}/user/getComplaintsByWard/${user.wardOId}`, { headers: { 'u-auth-token': getUserToken() }, params: { key: '',listValue:props.listValue } })
                         setcomplaints(res.data.announcements);
                         setIsLoaded(true);
 
@@ -38,7 +38,7 @@ function ComplaintDiv(props) {
             }
             onLoad();
         }
-        , [user.wardOId, props.updateUi]
+        , [user.wardOId, props.updateUi,props.listValue]
     );
 
     return (

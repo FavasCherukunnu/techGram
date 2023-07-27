@@ -14,13 +14,7 @@ import { checkLoggedIn, getUserToken } from "../../staticFiles/functions";
 
 export const MyContext = React.createContext();
 export const UserContext = React.createContext();
-function OutletMemo(){
-    return <div style={{width:'100%',height:'100%'}}>
-        <Outlet/>
-    </div>
-}
 
-const MemoOutlet = React.memo(OutletMemo);
 
 export default function UserHomePage() {
     const navigate = useNavigate();
@@ -156,7 +150,7 @@ export default function UserHomePage() {
                                 </div>
                                 <div className="userHomePage_contentDiv" id="contentDiv" style={{ width: expanded ? 'calc(100vw - 20px)' : smallScreen ? 'calc(100vw - 20px)' : 'calc(100vw - 270px)', paddingTop: topNavHide ? '0px' : '10px', height: topNavHide ? 'calc(100vh - 20px)' : 'calc(100vh - 80px)', transition: 'all 0.2s' }}>
                                     <div className="userHomePage_contentInnerDiv">
-                                        <MemoOutlet />
+                                        <Outlet />
                                     </div>
                                 </div>
                             </div>
@@ -170,5 +164,3 @@ export default function UserHomePage() {
     );
 
 }
-
-
