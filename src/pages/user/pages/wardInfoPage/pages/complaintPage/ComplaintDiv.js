@@ -1,5 +1,5 @@
 import React from 'react'
-import { ComplaintTemplate } from './component'
+import { ComplaintTemplate2 } from './component'
 import { useState } from 'react';
 import { useContext } from 'react';
 import { UserContext } from '../../../../userHomePage';
@@ -54,7 +54,7 @@ function ComplaintDiv(props) {
                             {
                                 complaints.map(
                                     (complaint) => {
-                                        return <ComplaintTemplate value={complaint} />
+                                        return <ComplaintTemplate2 value={complaint} />
                                     }
                                 )
                             }

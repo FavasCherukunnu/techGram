@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { ProjectTemplate } from "./component";
+import { ProjectTemplate2 } from "./component";
 import axios from "axios";
 import { SERVER_ADDRESS } from "../../../../../../staticFiles/constants";
 import { checkLoggedIn, getUserToken } from "../../../../../../staticFiles/functions";
@@ -51,7 +51,7 @@ function ProjectDiv(props) {
               {
                 projects.map(
                   (project) => {
-                    return <ProjectTemplate value={project} />
+                    return <ProjectTemplate2 value={project} />
                   }
                 )
               }

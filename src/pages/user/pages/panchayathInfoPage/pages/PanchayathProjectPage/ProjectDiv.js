@@ -8,7 +8,7 @@ import axios from "axios";
 import { SERVER_ADDRESS } from "../../../../../../staticFiles/constants";
 import { checkLoggedIn, getUserToken } from "../../../../../../staticFiles/functions";
 import { SimpleLoadingScreen } from "../../../../../../components/LoadingScreen";
-import { ProjectTemplate } from "../../../../../President/pages/panchayathInfoPage/pages/PanchayathProjectPage/component";
+import { ProjectTemplate2 } from "../../../wardInfoPage/pages/projectPage/component";
 
 
 function ProjectDiv(props) {
@@ -53,7 +53,7 @@ function ProjectDiv(props) {
               {
                 projects.map(
                   (project) => {
-                    return <ProjectTemplate value={project} />
+                    return <ProjectTemplate2 value={project} />
                   }
                 )
               }

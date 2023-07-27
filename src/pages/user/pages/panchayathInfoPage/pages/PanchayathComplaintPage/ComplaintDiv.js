@@ -1,30 +1,68 @@
 import React from 'react'
-import { ComplaintTemplate } from './component'
+import { SimpleLoadingScreen } from '../../../../../../components/LoadingScreen';
+import { checkLoggedIn, getUserToken } from '../../../../../../staticFiles/functions';
+import axios from 'axios';
+import { SERVER_ADDRESS } from '../../../../../../staticFiles/constants';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { useContext } from 'react';
+import { UserContext } from '../../../../userHomePage';
+import { ComplaintTemplate2 } from '../../../wardInfoPage/pages/complaintPage/component';
 
-function ComplaintDiv() {
-    const message = [
-        {
-            owner: 'Mohammed Favas',
-            id: '12345',
-            images: ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYS-k-JQ89KtOpNSN1a2XydTIXRX_tMtUI0A&usqp=CAU', 'https://fscl01.fonpit.de/userfiles/7446224/image/apple-iphone-14-pro-max-sample-photos/nextpit_apple_iphone_14_pro_max_review_day_1.1.JPEG'],
-            title: 'This is title',
-            description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been theLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been theLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been theLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the",
-            isSolved: false
-        }, {
-            owner: 'saleel mhd',
-            id: '12345',
-            images: ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYS-k-JQ89KtOpNSN1a2XydTIXRX_tMtUI0A&usqp=CAU', 'https://fscl01.fonpit.de/userfiles/7446224/image/apple-iphone-14-pro-max-sample-photos/nextpit_apple_iphone_14_pro_max_review_day_1.1.JPEG'],
-            title: 'This is title',
-            description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been theLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been theLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been theLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the",
-            isSolved: true
+function ComplaintDiv(props) {
+    
+    
+    const [complaints, setcomplaints] = useState([]);
+    const userCont = useContext(UserContext);
+    const [isLoaded, setIsLoaded] = useState(false);
+    const user = userCont.user;
+    useEffect(
+        () => {
+            const onLoad = async () => {
+                try {
+                    if (user.wardOId) {
+                        setIsLoaded(false)
+                        const res = await axios.get(`${SERVER_ADDRESS}/user/getComplaintsByPanchayath/${user.panchayathOId}`, { headers: { 'u-auth-token': getUserToken() }, params: { key: '',listValue:props.listValue } })
+                        setcomplaints(res.data.announcements);
+                        setIsLoaded(true);
+
+                    }
+                } catch (err) {
+                    console.log(err);
+                    const msg = checkLoggedIn(err);
+                    if (msg) {
+                        alert(msg)
+                    }
+
+                }
+            }
+            onLoad();
         }
-    ]
+        , [user.wardOId, props.updateUi,props.listValue]
+    );
+
     return (
-        <div style={{ width: '100%' }}>
-            
-            <ComplaintTemplate value={message[0]} />
-            <ComplaintTemplate value={message[1]} />
-        </div>
+        <>
+
+            {
+                isLoaded ?
+                    complaints.length === 0 ?
+                        <div style={{ height: '100%', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '40px', color: 'gray', fontWeight: '700' }}>
+                            No Complaints Yet
+                        </div> : <div style={{ height: '100%', width: '100%' }}>
+
+                            {
+                                complaints.map(
+                                    (complaint) => {
+                                        return <ComplaintTemplate2 value={complaint} />
+                                    }
+                                )
+                            }
+                        </div>
+                    :
+                    <SimpleLoadingScreen />
+            }
+        </>
     );
 }
 

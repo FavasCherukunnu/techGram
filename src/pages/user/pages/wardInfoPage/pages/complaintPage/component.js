@@ -44,7 +44,7 @@ export function PlaneButton1(props) {
 }
 
 
-export function ComplaintTemplate(props) {
+export function ComplaintTemplate2(props) {
   const [showDiscussionModel, setShowDiscussionModel] = useState(false);
   const [complaint, setcomplaint] = useState(false);
   const thisComplaint = complaint === false ? props.value : complaint;

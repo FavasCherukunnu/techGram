@@ -8,7 +8,7 @@ import axios from 'axios';
 import { SERVER_ADDRESS } from '../../../../../../staticFiles/constants';
 import { checkLoggedIn, getUserToken } from '../../../../../../staticFiles/functions';
 import { SimpleLoadingScreen } from '../../../../../../components/LoadingScreen';
-import { ComplaintTemplate } from '../../../../../user/pages/wardInfoPage/pages/complaintPage/component';
+import { ComplaintTemplate2 } from '../../../../../user/pages/wardInfoPage/pages/complaintPage/component';
 
 function ComplaintDiv(props) {
     const [complaints, setcomplaints] = useState([]);
@@ -54,7 +54,7 @@ function ComplaintDiv(props) {
                             {
                                 complaints.map(
                                     (complaint) => {
-                                        return <ComplaintTemplate value={complaint} />
+                                        return <ComplaintTemplate2 value={complaint} />
                                     }
                                 )
                             }

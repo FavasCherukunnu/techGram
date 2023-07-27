@@ -43,12 +43,12 @@ export function buildStart(count) {
 
 }
 export function SurvayTemplate(props) {
-    const rating = Math.round(props.data.averageRating*100)/100;
+    const rating = props.sortValue ==='1'?Math.round(props.data.averageRating*100)/100:Math.round(props.data.solveRate*100)/100;
     return (
         <tr className='user_panchayathInfo_survay_survayList_template'>
             <td className='first'>{props.index}</td>
             <td className='second'>{props.data.wardNo}</td>
-            <td className='third'><div className='intra'><div>{rating}</div>{buildStart(rating)}</div></td>
+            <td className='third'><div className='intra'><div>{rating}</div>{props.sortValue ==='1'?buildStart(rating):null}</div></td>
             <td className='fourth'><RectangleButton width='60px' height='30px'><AiOutlineSearch /></RectangleButton></td>
         </tr>
     )

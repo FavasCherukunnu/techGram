@@ -39,7 +39,7 @@ function buildStart(count) {
 
 }
 
-export function ProjectTemplate(props) {
+export function ProjectTemplate2(props) {
 
     const [showProjectModel, setShowProjectModel] = useState(false);
     const [IsRating,setIsRating] = useState(false);
