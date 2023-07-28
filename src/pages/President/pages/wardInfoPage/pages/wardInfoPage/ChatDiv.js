@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { PostTemplate, PostTemplateWithCarousel } from '../../../homePage/component'
+import { PostTemplate } from '../../../homePage/component'
 import axios from 'axios';
 import { SERVER_ADDRESS } from '../../../../../../staticFiles/constants';
 import { UserContext } from '../../../../../user/userHomePage';
 import { checkLoggedIn, getUserToken } from '../../../../../../staticFiles/functions';
 import { SimpleLoadingScreen } from '../../../../../../components/LoadingScreen';
+import { PostTemplateWithCarousel } from '../../../../../user/pages/homePage/component';
 
 export function ChatDiv1(props) {
 

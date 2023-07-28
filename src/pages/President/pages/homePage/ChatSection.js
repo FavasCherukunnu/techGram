@@ -1,5 +1,5 @@
 import React from "react";
-import { PostTemplate, PostTemplateWithCarousel } from "./component";
+import { PostTemplate } from "./component";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
@@ -7,6 +7,7 @@ import { SERVER_ADDRESS } from "../../../../staticFiles/constants";
 import { checkLoggedIn, getUserToken } from "../../../../staticFiles/functions";
 import { useContext } from "react";
 import { UserContext } from "../../../user/userHomePage";
+import { PostTemplateWithCarousel } from "../../../user/pages/homePage/component";
 
 function PostSection(props) {
 

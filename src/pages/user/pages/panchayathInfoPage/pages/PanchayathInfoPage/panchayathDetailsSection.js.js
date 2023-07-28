@@ -1,7 +1,7 @@
 import React from 'react';
 import { PlaneButton } from '../../../../../../components/planeButton';
 import './panchayathDetailsSection.css'
-import { ExpandListHeader, NotificatonTemplate, WardDetailsTable } from './component';
+import { ExpandListHeader, NotificatonTemplate, PanchayathDetailsTable, WardDetailsTable } from './component';
 import { ListGroup } from 'react-bootstrap';
 import { useContext } from 'react';
 import { UserContext } from '../../../../userHomePage';
@@ -52,6 +52,7 @@ export function PanchayathDetailsSection() {
       </div>
       <p className='user_PanchayathInfo_PanchayathDetails_memberName'>{panchayathDetails?.president?.fullName}</p>
       <PlaneButton onClick={()=>{onViewPress(panchayathDetails.president?._id)}}>Show more</PlaneButton>
+      <PanchayathDetailsTable details={panchayathDetails}/>
       <div className='user_panchayathDetails_panchayathInfo_detailsSection'>
         <ExpandListHeader title="Members">
           <ListGroup>

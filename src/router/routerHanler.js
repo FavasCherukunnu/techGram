@@ -178,15 +178,15 @@ export function RouterHandler() {
                             </Route>
                             <Route path="panchayathInfo" element={<MemberPanchayathInfo />} >
                                 <Route path="" element={<MemberPanchayathInfoPageRoot />} />
-                                <Route path="Panchayath Info" element={<MemberPanchayathInfoPageHome />} />
-                                <Route path="Discussion" element={<MemberPanchayathDiscussionPage />} />
-                                <Route path="Project" element={<MemberPanchayathProjectPage />} />
-                                <Route path="Announcement" element={<MemberPanchayathAnnoucementPage />} />
-                                <Route path="Complaint" element={<MemberPanchayathComplaintPage />} />
-                                <Route path="Survay" element={<MemberPanchayathSurvayPage />} />
-                                <Route path="Institutes" element={<MemberPanchayathInstitutePage />} />
+                                <Route path="Panchayath Info" element={<UserPanchayathInfoPageHome />} />
+                                <Route path="Discussion" element={<UserPanchayathDiscussionPage />} />
+                                <Route path="Project" element={<UserPanchayathProjectPage />} />
+                                <Route path="Announcement" element={<UserPanchayathAnnoucementPage />} />
+                                <Route path="Complaint" element={<UserPanchayathComplaintPage />} />
+                                <Route path="Survay" element={<UserPanchayathSurvayPage />} />
+                                <Route path="Institutes" element={<UserPanchayathInstitutePage />} />
                             </Route>
-                            <Route path="locate" element={<MemberLocatePage />} />
+                            <Route path="locate" element={<UserLocatePage />} />
                             <Route path="survay" element={<MemberSurvayPage />} />
                             <Route path="complaints" element={<MemberOnlyComplaintPage />} />
                             <Route path="User Registration" element={<MemberUserRegistration />} >

@@ -10,6 +10,7 @@ import { UserContext } from '../../../../../user/userHomePage'
 export function PresidentDiscussionPage() {
   const [showDiscussionModel , setShowDiscussionModel] = useState(false);
   const usercont = useContext(UserContext).user;
+  const [updateUi,setUpdateUi] = useState(false);
 
   const user = useMemo(
     ()=> {return {...usercont}},
@@ -26,10 +27,10 @@ export function PresidentDiscussionPage() {
   return (
     <UnderNavigationOuterDiv>
       <DivScrollableWithGeasture>
-          <PostSection user={user} />
+          <PostSection user={user} updateUi={updateUi}/>
       </DivScrollableWithGeasture>
         <div style={{ position: 'absolute', bottom: '15px', right: '15px' }}><RoundedIconButton onClick={showDiscussionModelFun}><AiOutlinePlus size={25} /></RoundedIconButton></div>
-        <ShowDiscussionModel show={showDiscussionModel} onClose={closeDiscuusionModelFun}/>
+        <ShowDiscussionModel show={showDiscussionModel} onClose={closeDiscuusionModelFun} changeUi={()=>setUpdateUi(!updateUi)}/>
         {/* <PostTemplate/> */}
     </UnderNavigationOuterDiv>
   )

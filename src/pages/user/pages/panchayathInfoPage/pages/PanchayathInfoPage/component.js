@@ -15,3 +15,36 @@ export function ExpandListHeader(props) {
     </div>
   )
 }
+
+
+export function PanchayathDetailsTable(props) {
+  const {details} = props
+  return (
+    <table className='user_panchayathInfo_panchayath_table'>
+        <tr>
+            <td className='first'>Title</td>
+            <td className='second'>{details?.title}</td>
+        </tr>
+        <tr>
+            <td className='first'>panchayath</td>
+            <td className='second'>{details?.panchayath}</td>
+        </tr>
+        <tr>
+            <td className='first'>District</td>
+            <td className='second'>{details?.district}</td>
+        </tr>
+        <tr>
+            <td className='first'>block</td>
+            <td className='second'>{details?.block}</td>
+        </tr>
+        {/* <tr>
+            <td className='first'>Voters Count</td>
+            <td className='second'>{details.}</td>
+        </tr>
+        <tr>
+            <td className='first'>Users Registered</td>
+            <td className='second'>10</td>
+        </tr> */}
+    </table>
+  )
+}

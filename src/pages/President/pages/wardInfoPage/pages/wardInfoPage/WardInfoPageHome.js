@@ -8,9 +8,9 @@ import { useState, useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { DivScrollableWithGeasture, DivScrollableWithGeasture2, UnderNavigationOuterDiv } from '../../../../../../components/divisions'
 import { ChatSection } from './ChatDiv'
-import { NotificationSection } from './NotificationDiv'
 import { ShowFormmodel } from './Model'
 import { UserContext } from '../../../../../user/userHomePage'
+import { NotificationSection } from '../../../../../user/pages/wardInfoPage/pages/wardInfoPage/NotificationDiv'
 
 
 

@@ -34,17 +34,17 @@
 }
 
 .user_ComplaintTemplate_autherDiv{
-    height: 40px;
     width: 100%;
-    padding-top: 5px;
-    padding-left: 15px;
-    
+    padding: 5px;
+
     border-radius: 12px 12px 0px 0px;
     font-family: 'Alumni Sans';
     font-style: normal;
     font-weight: 500;
     font-size: 20px;
     color: white;
+    display: flex;
+    align-items: center;
 }
 
 .user_ComplaintTemplate_contenDiv{

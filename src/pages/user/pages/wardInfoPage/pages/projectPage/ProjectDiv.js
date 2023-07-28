@@ -50,8 +50,9 @@ function ProjectDiv(props) {
             <div>
               {
                 projects.map(
-                  (project) => {
-                    return <ProjectTemplate2 value={project} />
+                  (project,index) => {
+                    console.log(index);
+                    return <ProjectTemplate2 index={index} value={project} />
                   }
                 )
               }

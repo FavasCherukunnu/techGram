@@ -5,6 +5,7 @@ import { SERVER_ADDRESS } from "../../../../../../staticFiles/constants";
 import { checkLoggedIn, getUserToken } from "../../../../../../staticFiles/functions";
 import { UserContext } from "../../../../../user/userHomePage";
 import { SimpleLoadingScreen } from "../../../../../../components/LoadingScreen";
+import { ProjectTemplate2 } from "../../../../../user/pages/wardInfoPage/pages/projectPage/component";
 
 
 function ProjectDiv(props) {
@@ -51,7 +52,7 @@ function ProjectDiv(props) {
               {
                 projects.map(
                   (project) => {
-                    return <ProjectTemplate value={project} />
+                    return <ProjectTemplate2 value={project} />
                   }
                 )
               }

@@ -4,7 +4,7 @@ import { ImStarFull, ImStarHalf, ImStarEmpty } from 'react-icons/im';
 import { PlaneButton1 } from '../../../homePage/component'
 import './component.css'
 import { ShowProjectModel } from './Model'
-import { PostImage } from '../../../../../../components/imageLoading'
+import { AvatarImageCompressed, PostImage } from '../../../../../../components/imageLoading'
 
 function buildStart(count) {
 
@@ -12,20 +12,20 @@ function buildStart(count) {
     let x = 0
     for (x = 0; x < 5; x++) {
         if (x < count) {
-            if(x+1===count || x+1<count){
+            if (x + 1 === count || x + 1 < count) {
                 star.push(
                     <IconButton ><ImStarFull size={20} /></IconButton>
                 )
-            }else if(x+0.5<=count){
+            } else if (x + 0.5 <= count) {
                 star.push(
                     <IconButton ><ImStarHalf size={20} /></IconButton>
                 )
-            }else{
+            } else {
                 star.push(
                     <IconButton ><ImStarEmpty size={20} /></IconButton>
                 )
             }
-            
+
         } else {
             star.push(
                 <IconButton ><ImStarEmpty size={20} /></IconButton>
@@ -42,26 +42,27 @@ function buildStart(count) {
 export function ProjectTemplate2(props) {
 
     const [showProjectModel, setShowProjectModel] = useState(false);
-    const [IsRating,setIsRating] = useState(false);
+    const [IsRating, setIsRating] = useState(false);
     function showProjectModelfunc() {
         setShowProjectModel(true);
     }
     function closeProjectModelfunc() {
         setShowProjectModel(false)
     }
-    const onRatinChange = (rating)=>{
+    const onRatinChange = (rating) => {
         console.log(rating);
         setIsRating(rating)
     }
     const startDate = new Date(props.value.startDate);
     const endDate = props.value.endDate ? new Date(props.value.endDate) : null;
-    const rating = IsRating===false?Math.round(props.value.averageRating*100)/100:Math.round(IsRating*100)/100;
+    const rating = IsRating === false ? Math.round(props.value.averageRating * 100) / 100 : Math.round(IsRating * 100) / 100;
 
     return (
         <div className='user_userProjectPage_PostOuterDiv'>
             <div className='user_userProjectPage_PostInnerDiv'>
-                <div className='user_userProjectPage_autherDiv'>
-                    <p>{props.value.owner.fullName}</p>
+                <div className='user_postTemplate_autherDiv1'>
+                    <AvatarImageCompressed dId={`project${props.index}-${props.value.owner._id}`} id={props.value.owner._id} height='50px' width='50px' />
+                    <div className='user_postTemplate_autherDiv_text'>{props.value.owner.fullName}</div>
                 </div>
                 <div className='user_userProjectPage_PostcontenDiv'>
                     {props.value.images ? <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>

@@ -60,8 +60,8 @@ export function AnnoucementSection(props) {
 
               {
                 annoucements.map(
-                  (annoucement) => {
-                    return <AnnouncementTemplate value={annoucement} />
+                  (annoucement,index) => {
+                    return <AnnouncementTemplate index={index} value={annoucement} />
                   }
                 )
               }

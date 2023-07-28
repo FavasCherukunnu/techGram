@@ -5,7 +5,7 @@ import { useState } from 'react';
 import React from 'react'
 import { Button } from 'react-bootstrap';
 import { IconButton } from '../../../../../../components/iconButton';
-import { PostImage } from '../../../../../../components/imageLoading';
+import { AvatarImageCompressed, PostImage } from '../../../../../../components/imageLoading';
 // import { ShowDiscussionmodel } from './Model';
 import { useContext } from 'react';
 import { UserContext } from '../../../../userHomePage';
@@ -45,18 +45,19 @@ export function PlaneButton1(props) {
 export function AnnouncementTemplate(props) {
     const time = new Date(props.value.createdAt);
     const [showDiscussionModel, setShowDiscussionModel] = useState(false);
-  const userData = useContext(UserContext).user;
+    const userData = useContext(UserContext).user;
     function showDiscussionModelfunc() {
         setShowDiscussionModel(true);
-      }
-      function closeDiscussionModelfunc() {
+    }
+    function closeDiscussionModelfunc() {
         setShowDiscussionModel(false)
-      }
+    }
     return (
         <div className='user_AnnouncementTemplate_outerDiv' id={`id-${props.value._id}`}>
             <div className='user_AnnouncementTemplate_innerDiv'>
-                <div className='user_AnnouncementTemplate_autherDiv'>
-                    <p>{props.value.owner.fullName}</p>
+                <div className='user_postTemplate_autherDiv1'>
+                    <AvatarImageCompressed dId={`discussion${props.index}${props.value.owner._id}`} id={props.value.owner._id} height='50px' width='50px' />
+                    <div className='user_postTemplate_autherDiv_text'>{props.value.owner.fullName}</div>
                 </div>
                 <div className='user_AnnouncementTemplate_contenDiv'>
                     {props.value.images ? <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
@@ -83,17 +84,17 @@ export function DiscussionTemplate(props) {
     const replay = props.value;
     const date = new Date(replay.createdAt);
     return (
-      <div className='user_homePage_discussion_template'>
-        <div className='user_homePage_discussion_template_userName' >
-          {replay.owner.fullName}
+        <div className='user_homePage_discussion_template'>
+            <div className='user_homePage_discussion_template_userName' >
+                {replay.owner.fullName}
+            </div>
+            <div className='user_homePage_discussion_template_text'>
+                {replay.description}
+            </div>
+            <div className='user_homePage_discussion_template_time'>
+                {date.toLocaleString()}
+            </div>
+
         </div>
-        <div className='user_homePage_discussion_template_text'>
-          {replay.description}
-        </div>
-        <div className='user_homePage_discussion_template_time'>
-          {date.toLocaleString()}
-        </div>
-  
-      </div>
     )
-  }
+}

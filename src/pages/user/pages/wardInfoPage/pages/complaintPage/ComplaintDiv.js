@@ -53,8 +53,8 @@ function ComplaintDiv(props) {
 
                             {
                                 complaints.map(
-                                    (complaint) => {
-                                        return <ComplaintTemplate2 value={complaint} />
+                                    (complaint,index) => {
+                                        return <ComplaintTemplate2 index={index} value={complaint} />
                                     }
                                 )
                             }

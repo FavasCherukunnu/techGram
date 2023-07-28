@@ -27,7 +27,7 @@ function PostDiv(props) {
             }
             onLoad();
         }
-        , [user.wardOId]
+        , [user.wardOId,props.updateUi]
     )
     return (
         <>

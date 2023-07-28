@@ -7,7 +7,7 @@ import { Button } from 'react-bootstrap';
 import { Dropdown, DropdownButton } from 'react-bootstrap';
 import { RectangleButton } from '../../../../../../components/buttonRectangle';
 import { ShowComplaintDiscussionmodel } from './Model';
-import { PostImage } from '../../../../../../components/imageLoading';
+import { AvatarImageCompressed, PostImage } from '../../../../../../components/imageLoading';
 import { ShowDiscussionmodel } from '../../../homePage/Model';
 import axios from 'axios';
 import { SERVER_ADDRESS } from '../../../../../../staticFiles/constants';
@@ -69,7 +69,8 @@ export function ComplaintTemplate2(props) {
     <div className='user_ComplaintTemplate_outerDiv'>
       <div className='user_ComplaintTemplate_innerDiv'>
         <div style={{ backgroundColor: thisComplaint.isSolved === 'true' ? '#81F14D' : '#FF3232' }} className='user_ComplaintTemplate_autherDiv'>
-          <p>{thisComplaint.owner.fullName}</p>
+          <AvatarImageCompressed dId={`discussion${props.index}${thisComplaint.owner._id}`} id={thisComplaint.owner._id} height='50px' width='50px' />
+          <div className='user_postTemplate_autherDiv_text'>{thisComplaint.owner.fullName}</div>
         </div>
         <div className='user_ComplaintTemplate_contenDiv'>
           {thisComplaint.images ? <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
@@ -124,7 +125,7 @@ export function DropdownTop(props) {
   return (
     <div className='user_complaintPage_complaintDiv_dropDownDiv'>
       <div className='dropdownText'>List Only </div>
-      <select className='admin_customDropDownToggle' onChange={(event)=>props.onListDropdownChange(event.target.value)}>
+      <select className='admin_customDropDownToggle' onChange={(event) => props.onListDropdownChange(event.target.value)}>
         <option key={-1} value={-1}>All</option>
         <option key={-1} value={1}>My Complaint</option>
         <option key={-1} value={2}>UnSolved</option>

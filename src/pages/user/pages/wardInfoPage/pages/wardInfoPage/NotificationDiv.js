@@ -9,7 +9,7 @@ import { getUserToken } from '../../../../../../staticFiles/functions';
 import { AvatarImage } from '../../../../../../components/imageLoading';
 import ShowUsermodel from './Model';
 
-function NotificationSection() {
+export function NotificationSection() {
 
   const userCont = useContext(UserContext);
   const [showModel, setShowModal] = useState(false);
@@ -73,4 +73,3 @@ function NotificationSection() {
 
 // const NotificationSection = React.memo(NotificationExample)
 
-export { NotificationSection }

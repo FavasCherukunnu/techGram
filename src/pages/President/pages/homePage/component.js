@@ -111,105 +111,105 @@ export function PostTemplate(props) {
   )
 }
 
-export function PostTemplateWithCarousel(props) {
+// export function PostTemplateWithCarousel(props) {
 
-  const [showDiscussionModel, setShowDiscussionModel] = useState(false);
-  const [isShrink, setisShrink] = useState(true);
-  const post = props.value;
-  const date = new Date(post.createdAt)
-  const [likes, setLikes] = useState(post.likesCount)  
-  const [isLoading, setisLoading] = useState(false);
-  const [isLiked, setIsLiked] = useState(post.isLiked);
-  const userData = useContext(UserContext).user;
-  const onLike = async () => {
-    const dat = {
-      userId: userData.userId,
-      postId: post._id
-    }
-    try {
-      setisLoading(true);
-      const res = await axios.post(`${SERVER_ADDRESS}/user/likeDiscussionPost`, { data: dat }, { headers: { 'u-auth-token': getUserToken() } });
-      setLikes(res.data.likes);
-      setIsLiked(res.data.isLiked);
-      setisLoading(false);
-    } catch (err) {
-      console.log(err);
-      checkLoggedIn(err);
-    }
+//   const [showDiscussionModel, setShowDiscussionModel] = useState(false);
+//   const [isShrink, setisShrink] = useState(true);
+//   const post = props.value;
+//   const date = new Date(post.createdAt)
+//   const [likes, setLikes] = useState(post.likesCount)  
+//   const [isLoading, setisLoading] = useState(false);
+//   const [isLiked, setIsLiked] = useState(post.isLiked);
+//   const userData = useContext(UserContext).user;
+//   const onLike = async () => {
+//     const dat = {
+//       userId: userData.userId,
+//       postId: post._id
+//     }
+//     try {
+//       setisLoading(true);
+//       const res = await axios.post(`${SERVER_ADDRESS}/user/likeDiscussionPost`, { data: dat }, { headers: { 'u-auth-token': getUserToken() } });
+//       setLikes(res.data.likes);
+//       setIsLiked(res.data.isLiked);
+//       setisLoading(false);
+//     } catch (err) {
+//       console.log(err);
+//       checkLoggedIn(err);
+//     }
 
-  }
+//   }
 
-  const onDisLike = async () => {
-    const dat = {
-      userId: userData.userId,
-      postId: post._id
-    }
-    try {
-      setisLoading(true);
-      const res = await axios.post(`${SERVER_ADDRESS}/user/DislikeDiscussionPost`, { data: dat }, { headers: { 'u-auth-token': getUserToken() } });
-      setLikes(res.data.likes);
-      setIsLiked(res.data.isLiked);
-      setisLoading(false);
+//   const onDisLike = async () => {
+//     const dat = {
+//       userId: userData.userId,
+//       postId: post._id
+//     }
+//     try {
+//       setisLoading(true);
+//       const res = await axios.post(`${SERVER_ADDRESS}/user/DislikeDiscussionPost`, { data: dat }, { headers: { 'u-auth-token': getUserToken() } });
+//       setLikes(res.data.likes);
+//       setIsLiked(res.data.isLiked);
+//       setisLoading(false);
 
 
-    } catch (err) {
-      console.log(err);
-      checkLoggedIn(err);
-    }
+//     } catch (err) {
+//       console.log(err);
+//       checkLoggedIn(err);
+//     }
 
-  }
-  function showDiscussionModelfunc() {
-    setShowDiscussionModel(true);
-  }
-  function closeDiscussionModelfunc() {
-    setShowDiscussionModel(false)
-  }
+//   }
+//   function showDiscussionModelfunc() {
+//     setShowDiscussionModel(true);
+//   }
+//   function closeDiscussionModelfunc() {
+//     setShowDiscussionModel(false)
+//   }
 
-  return (
-    <div className='user_postTemplate_outerDiv' >
-      <div className='user_CarouselPost_outerDiv'>
-        <div className='user_CarouselPost_ImageInnerDiv'>
-          <Carousel interval={null}>
+//   return (
+//     <div className='user_postTemplate_outerDiv' >
+//       <div className='user_CarouselPost_outerDiv'>
+//         <div className='user_CarouselPost_ImageInnerDiv'>
+//           <Carousel interval={null}>
 
-            {post.images.map((id, index) =>
-              <Carousel.Item  >
-                <CarouselImage height={props.height} key={index} id={id} dId={id} />
-                {/* <Carousel.Caption>
-      <h3>First slide label</h3>
-      <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-    </Carousel.Caption> */}
-              </Carousel.Item>
-            )}
+//             {post.images.map((id, index) =>
+//               <Carousel.Item  >
+//                 <CarouselImage height={props.height} key={index} id={id} dId={id} />
+//                 {/* <Carousel.Caption>
+//       <h3>First slide label</h3>
+//       <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+//     </Carousel.Caption> */}
+//               </Carousel.Item>
+//             )}
 
-          </Carousel>
-          <div className='user_CarouselPost_whiteBottomDiv' id={`f${post._id}`}>
+//           </Carousel>
+//           <div className='user_CarouselPost_whiteBottomDiv' id={`f${post._id}`}>
 
-          </div>
-        </div>
-        <div className='user_CarouselPost_contenDiv' >
-          {/* {post.description} */}
-          <ShowMore maxHeight={120} backgroundColor='#000' anchor={`#f${post._id}`} defaultAnchor={false} button={isShrink === true ? <PlaneButton3>Show More</PlaneButton3> : <PlaneButton3>Show Less</PlaneButton3>} onChange={(expanded) => { setisShrink(expanded) }}>
-            <p>{post.description}</p>
-          </ShowMore>
-          <div className='intractionDiv'>
-            <div style={{ textAlign: 'center' }}>
-              {
-                isLoading === false ?
-                  isLiked === true
-                    ?
-                    <IconButton onClick={onDisLike} ><AiFillLike color='red' size={30} /></IconButton>
-                    :
-                    <IconButton onClick={onLike} ><AiOutlineLike size={30} /></IconButton>
-                  : <SimpleLoadingScreen />
+//           </div>
+//         </div>
+//         <div className='user_CarouselPost_contenDiv' >
+//           {/* {post.description} */}
+//           <ShowMore maxHeight={120} backgroundColor='#000' anchor={`#f${post._id}`} defaultAnchor={false} button={isShrink === true ? <PlaneButton3>Show More</PlaneButton3> : <PlaneButton3>Show Less</PlaneButton3>} onChange={(expanded) => { setisShrink(expanded) }}>
+//             <p>{post.description}</p>
+//           </ShowMore>
+//           <div className='intractionDiv'>
+//             <div style={{ textAlign: 'center' }}>
+//               {
+//                 isLoading === false ?
+//                   isLiked === true
+//                     ?
+//                     <IconButton onClick={onDisLike} ><AiFillLike color='red' size={30} /></IconButton>
+//                     :
+//                     <IconButton onClick={onLike} ><AiOutlineLike size={30} /></IconButton>
+//                   : <SimpleLoadingScreen />
 
-              }
-              <p>{likes}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+//               }
+//               <p>{likes}</p>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
 
-  )
-}
+//   )
+// }
 

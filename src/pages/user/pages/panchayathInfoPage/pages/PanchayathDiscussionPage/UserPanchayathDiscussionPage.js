@@ -28,7 +28,7 @@ export function UserPanchayathDiscussionPage() {
       <PostSection user={user} updateUi={updateUi} />
       </DivScrollableWithGeasture>
       <div style={{ position: 'absolute', bottom: '15px', right: '15px' }}><RoundedIconButton onClick={showDiscussionModelFun}><AiOutlinePlus size={25} /></RoundedIconButton></div>
-      <ShowDiscussionModel show={showDiscussionModel} onClose={closeDiscuusionModelFun}/>
+      <ShowDiscussionModel show={showDiscussionModel} onClose={closeDiscuusionModelFun}  changeUi={()=>setUpdateUi(!updateUi)}/>
     </UnderNavigationOuterDiv>
   )
 }
