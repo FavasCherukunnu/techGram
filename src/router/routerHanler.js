@@ -217,10 +217,10 @@ export function RouterHandler() {
                                 <Route path="Project" element={<PresidentPanchayathProjectPage />} />
                                 <Route path="Announcement" element={<PresidentPanchayathAnnoucementPage />} />
                                 <Route path="Complaint" element={<PresidentPanchayathComplaintPage />} />
-                                <Route path="Survay" element={<PresidentPanchayathSurvayPage />} />
+                                <Route path="Survay" element={<UserPanchayathSurvayPage />} />
                                 <Route path="Institutes" element={<PresidentPanchayathInstitutePage />} />
                             </Route>
-                            <Route path="locate" element={<PresidentLocatePage />} />
+                            <Route path="locate" element={<UserLocatePage />} />
                             <Route path="survay" element={<PresidentSurvayPage />} />
                             <Route path="complaints" element={<PresidentOnlyComplaintPage />} />
                             <Route path="Member Registration" >

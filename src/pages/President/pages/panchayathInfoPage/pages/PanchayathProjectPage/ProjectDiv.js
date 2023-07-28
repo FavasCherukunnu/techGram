@@ -5,6 +5,7 @@ import axios from "axios";
 import { SERVER_ADDRESS } from "../../../../../../staticFiles/constants";
 import { checkLoggedIn, getUserToken } from "../../../../../../staticFiles/functions";
 import { SimpleLoadingScreen } from "../../../../../../components/LoadingScreen";
+import { ProjectTemplate2 } from "../../../../../user/pages/wardInfoPage/pages/projectPage/component";
 
 
 function ProjectDiv(props) {
@@ -48,8 +49,8 @@ function ProjectDiv(props) {
             <div>
               {
                 projects.map(
-                  (project) => {
-                    return <ProjectTemplate value={project} />
+                  (project, index) => {
+                    return <ProjectTemplate2 index={index} value={project} />
                   }
                 )
               }

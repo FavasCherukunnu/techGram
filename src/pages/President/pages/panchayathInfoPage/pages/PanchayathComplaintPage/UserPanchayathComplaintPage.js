@@ -1,14 +1,22 @@
 import React from 'react'
 import { DivScrollableWithGeasture, UnderNavigationOuterDiv } from '../../../../../../components/divisions'
-import { DropdownTop } from './component'
-import { ComplaintSection } from './ComplaintDiv'
+// import { DropdownTop } from './component'
+import { ComplaintSection } from '../../../../../user/pages/panchayathInfoPage/pages/PanchayathComplaintPage/ComplaintDiv'
+import { useState } from 'react';
+import { DropdownTop } from '../../../../../user/pages/wardInfoPage/pages/complaintPage/component';
+// import { ComplaintSection } from './ComplaintDiv'
 
 export function PresidentPanchayathComplaintPage() {
+  const [listValue, setListValue] = useState(-1);
+  const onListDropdownChange = (val) => {
+    setListValue(val);
+  }
   return (
     <UnderNavigationOuterDiv>
-      <DropdownTop/>
+      <DropdownTop onListDropdownChange={onListDropdownChange} />
+
       <DivScrollableWithGeasture height='calc(100% - 50px)'>
-        <ComplaintSection />
+        <ComplaintSection listValue={listValue} />
       </DivScrollableWithGeasture>
     </UnderNavigationOuterDiv>
   )

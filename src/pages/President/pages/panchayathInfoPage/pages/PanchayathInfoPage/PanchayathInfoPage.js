@@ -3,9 +3,10 @@ import { DivScrollableWithGeasture, UnderNavigationOuterDiv } from '../../../../
 import { RoundedIconButton } from '../PanchayathComplaintPage/component';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { ChatSection } from './ChatDiv';
-import { PanchayathDetailsSection } from './panchayathDetailsSection.js';
+// import { PanchayathDetailsSection } from './panchayathDetailsSection.js';
 import { UserContext } from '../../../../../user/userHomePage';
 import { ShowFormmodel } from './Model';
+import { PanchayathDetailsSection } from '../../../../../user/pages/panchayathInfoPage/pages/PanchayathInfoPage/panchayathDetailsSection.js';
 function PanchayathDetailsDiv(props) {
   const smallScreen = props.smallScreen;
   const user_wardInfo_RightOuter = { "paddingLeft": smallScreen ? '' : "15px", "width": smallScreen ? '100%' : "40%", "height": smallScreen ? 'calc(100% - 65px)' : "100%", "overflow": "hidden" }
