@@ -93,6 +93,8 @@ import { EditWard } from "../pages/President/pages/memberRegistration/pages/edit
 import { PresidentUserRegistration } from "../pages/President/pages/userRegistration/PresidentUserRegistration";
 import { EditMemberpage2 } from "../pages/member/pages/editUserPage/editPage2";
 import { EditMemberPage } from "../pages/member/pages/editUserPage/EditUserPage";
+import { InspectPageRoot } from "../pages/inpectPage/inspectPage";
+import { InspectPanchayathPageRoot } from "../pages/inpectPage/inpectPanchayathPage";
 
 
 
@@ -234,6 +236,31 @@ export function RouterHandler() {
                         </Route>
                         <Route path="editProfile" element={<Editpage2 />} />
                         <Route path="editUser" element={<EditUserPage />} />
+                    </Route>
+                    <Route path="inspect/ward/:wardId" element={<InspectPageRoot />}>
+                        <Route path="" element={<UserWardInfoPage />}>
+                            <Route path="" element={<UserWardInfoPageRoot />} />
+                            <Route path="Ward Info" element={<UserWardInfoPageHome />} />
+                            <Route path="Discussion" element={<UserDiscussionPage />} />
+                            <Route path="Project" element={<UserProjectPage />} />
+                            <Route path="Announcement" element={<UserAnnoucementPage />} />
+                            <Route path="Complaint" element={<UserComplaintPage />} />
+                            <Route path="Gram Sabha" element={<UserGramSabhaPage />} />
+                            <Route path="Institutes" element={<UserInstitutePage />} />
+                            <Route path="Users" element={<UserUsersPage />} />
+                        </Route>
+                    </Route>
+                    <Route path="inspect/panchayath/:panchayathId" element={<InspectPanchayathPageRoot />}>
+                        <Route path="" element={<UserPanchayathInfoPage />} >
+                            <Route path="" element={<UserPanchayathInfoPageRoot />} />
+                            <Route path="Panchayath Info" element={<UserPanchayathInfoPageHome />} />
+                            <Route path="Discussion" element={<UserPanchayathDiscussionPage />} />
+                            <Route path="Project" element={<UserPanchayathProjectPage />} />
+                            <Route path="Announcement" element={<UserPanchayathAnnoucementPage />} />
+                            <Route path="Complaint" element={<UserPanchayathComplaintPage />} />
+                            <Route path="Survay" element={<UserPanchayathSurvayPage />} />
+                            <Route path="Institutes" element={<UserPanchayathInstitutePage />} />
+                        </Route>
                     </Route>
                 </Route>
                 <Route path="*" element={<ForNotFor />} />

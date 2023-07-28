@@ -23,7 +23,7 @@ export function ShowProjectModel(props) {
     const userData = useContext(UserContext).user;
     const [isLoading, setIsLoading] = useState(false);
     const [postData, setPostData] = useState({});
-    const {reset, register, handleSubmit, formState: { errors } } = useForm();
+    const { reset, register, handleSubmit, formState: { errors } } = useForm();
     const [starVal, setstarVal] = useState(-1);
     const [updateUi, setUpdateUi] = useState(false);
 
@@ -33,7 +33,7 @@ export function ShowProjectModel(props) {
         reset();
     }
 
-    const onSubmit = (data)=>{
+    const onSubmit = (data) => {
         setPostData(data);
         setShowApproveModel(true);
     }
@@ -105,14 +105,14 @@ export function ShowProjectModel(props) {
     const onConfirm = async () => {
 
         const form = {
-            reviewText:postData.reviewText,
-            owner:userData.userId,
-            rating:starVal<0?0:starVal,
-            dateOfRating:new Date()
+            reviewText: postData.reviewText,
+            owner: userData.userId,
+            rating: starVal < 0 ? 0 : starVal,
+            dateOfRating: new Date()
         }
         try {
             setIsLoading(true);
-            const res = await axios.post(`${SERVER_ADDRESS}/user/addProjectRatingUser/${props.id}`, {data:form}, { headers: { 'u-auth-token': getUserToken() } });
+            const res = await axios.post(`${SERVER_ADDRESS}/user/addProjectRatingUser/${props.id}`, { data: form }, { headers: { 'u-auth-token': getUserToken() } });
             props.updateReview(res.data.project[0].averageRating)
             setIsLoading(false);
             setShowApproveModel(false);
@@ -139,49 +139,51 @@ export function ShowProjectModel(props) {
                 </Modal.Header>
                 <Modal.Body>
                     <div className='user_wardInfo_projectPage_discussion_bodyDiv'>
-                    {
-                        isLoading === true
-                            ?
-                            <SimpleLoadingScreen />
-                            :
-                            reviewData.length === 0
+                        {
+                            isLoading === true
                                 ?
-                                <div style={{ height: '100%', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '40px', color: 'gray', fontWeight: '700' }}>
-                                    No Reviews Yet
-                                </div> :
-                                <div className='user_wardInfo_homePage_discussion_bodyDiv'>
-                                    {
-                                        reviewData.map(
-                                            (replay) => {
-                                                return <ProJectReviewTemplate value={replay} />;
-                                            }
-                                        )
+                                <SimpleLoadingScreen />
+                                :
+                                reviewData.length === 0
+                                    ?
+                                    <div style={{ height: '100%', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '40px', color: 'gray', fontWeight: '700' }}>
+                                        No Reviews Yet
+                                    </div> :
+                                    <div className='user_wardInfo_homePage_discussion_bodyDiv'>
+                                        {
+                                            reviewData.map(
+                                                (replay) => {
+                                                    return <ProJectReviewTemplate value={replay} />;
+                                                }
+                                            )
 
-                                    }
-                                </div>
-                    }
+                                        }
+                                    </div>
+                        }
                     </div>
                 </Modal.Body>
-                <Modal.Footer>
-                    <div className='user_wardInfo_projectPage_discussion_footerDiv'>
-                        <div className='user_wardInfo_projectPage_discussion_footerDiv_inputDiv'>
-                            {buildStart()}
-                            <PitTextAreaLabelled padding='0px' rows={3} placeholder='Enter Your Review' error={errors['reviewText']} reg={register('reviewText', {
-                                required: {
-                                    message: "cannot be empty",
-                                    value: true
-                                },
-                                minLength: {
-                                    value: 3,
-                                    message: 'Atleast 3 characters'
-                                }
-                            })}></PitTextAreaLabelled>
+                {userData.inspect === true
+                    ? null
+                    : <Modal.Footer>
+                        <div className='user_wardInfo_projectPage_discussion_footerDiv'>
+                            <div className='user_wardInfo_projectPage_discussion_footerDiv_inputDiv'>
+                                {buildStart()}
+                                <PitTextAreaLabelled padding='0px' rows={3} placeholder='Enter Your Review' error={errors['reviewText']} reg={register('reviewText', {
+                                    required: {
+                                        message: "cannot be empty",
+                                        value: true
+                                    },
+                                    minLength: {
+                                        value: 3,
+                                        message: 'Atleast 3 characters'
+                                    }
+                                })}></PitTextAreaLabelled>
+                            </div>
+                            <RectangleButton height='40px' width='70px' onClick={handleSubmit(onSubmit)}>
+                                Sent
+                            </RectangleButton>
                         </div>
-                        <RectangleButton  height='40px' width='70px' onClick={handleSubmit(onSubmit)}>
-                            Sent
-                        </RectangleButton>
-                    </div>
-                </Modal.Footer>
+                    </Modal.Footer>}
             </Modal>
             {/* CONFORM POST */}
             <Modal show={showApproveModel} style={{ background: 'rgba(0, 0, 0, 0.605)' }} onHide={isLoading === false ? () => setShowApproveModel(false) : null}>

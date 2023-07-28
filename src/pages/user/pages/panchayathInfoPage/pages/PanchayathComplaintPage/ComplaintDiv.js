@@ -20,7 +20,7 @@ function ComplaintDiv(props) {
         () => {
             const onLoad = async () => {
                 try {
-                    if (user.wardOId) {
+                    if (user.panchayathOId) {
                         setIsLoaded(false)
                         const res = await axios.get(`${SERVER_ADDRESS}/user/getComplaintsByPanchayath/${user.panchayathOId}`, { headers: { 'u-auth-token': getUserToken() }, params: { key: '',listValue:props.listValue } })
                         setcomplaints(res.data.announcements);
@@ -38,7 +38,7 @@ function ComplaintDiv(props) {
             }
             onLoad();
         }
-        , [user.wardOId, props.updateUi,props.listValue]
+        , [user.panchayathOId, props.updateUi,props.listValue]
     );
 
     return (

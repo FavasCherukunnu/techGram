@@ -150,6 +150,7 @@ export function PostTemplate(props) {
                 <p>{likes}</p>
               </div>
               <div style={{ width: '20px' }}></div>
+              
               <PlaneButton1 height='50px' onClick={showDiscussionModelfunc}>Discussion</PlaneButton1>
             </div>
             <div>
@@ -158,7 +159,7 @@ export function PostTemplate(props) {
           </div>
         </div>
       </div>
-      <ShowDiscussionmodel value={props.value} show={showDiscussionModel} onClose={closeDiscussionModelfunc} />
+      <ShowDiscussionmodel inspect={props.inspect} value={props.value} show={showDiscussionModel} onClose={closeDiscussionModelfunc} />
     </div>
   )
 }

@@ -9,29 +9,32 @@ import { UserContext } from '../../../../userHomePage'
 import { useMemo } from 'react'
 
 export function UserDiscussionPage() {
-  const [showDiscussionModel , setShowDiscussionModel] = useState(false);
+  const [showDiscussionModel, setShowDiscussionModel] = useState(false);
   const usercont = useContext(UserContext).user;
 
   const user = useMemo(
-    ()=> {return {...usercont}},
+    () => { return { ...usercont } },
     [usercont.wardOId]
   )
 
 
-  function showDiscussionModelFun(){
+  function showDiscussionModelFun() {
     setShowDiscussionModel(true);
   }
-  function closeDiscuusionModelFun(){
+  function closeDiscuusionModelFun() {
     setShowDiscussionModel(false);
   }
   return (
     <UnderNavigationOuterDiv>
       <DivScrollableWithGeasture>
-          <PostSection user={user} />
+        <PostSection user={user} />
       </DivScrollableWithGeasture>
-        <div style={{ position: 'absolute', bottom: '15px', right: '15px' }}><RoundedIconButton onClick={showDiscussionModelFun}><AiOutlinePlus size={25} /></RoundedIconButton></div>
-        <ShowDiscussionModel show={showDiscussionModel} onClose={closeDiscuusionModelFun}/>
-        {/* <PostTemplate/> */}
+      {usercont.inspect === true
+        ? null
+        : <div style={{ position: 'absolute', bottom: '15px', right: '15px' }}><RoundedIconButton onClick={showDiscussionModelFun}><AiOutlinePlus size={25} /></RoundedIconButton></div>
+      }
+      <ShowDiscussionModel show={showDiscussionModel} onClose={closeDiscuusionModelFun} />
+      {/* <PostTemplate/> */}
     </UnderNavigationOuterDiv>
   )
 }

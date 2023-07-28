@@ -10,6 +10,7 @@ import { SERVER_ADDRESS } from '../../../../../../staticFiles/constants'
 import { getUserToken } from '../../../../../../staticFiles/functions'
 import { UserContext } from '../../../../../user/userHomePage'
 import { ImStarEmpty, ImStarFull, ImStarHalf } from 'react-icons/im'
+import { Link } from 'react-router-dom'
 
 export function buildStart(count) {
 
@@ -49,7 +50,7 @@ export function SurvayTemplate(props) {
             <td className='first'>{props.index}</td>
             <td className='second'>{props.data.wardNo}</td>
             <td className='third'><div className='intra'><div>{rating}</div>{props.sortValue ==='1'?buildStart(rating):null}</div></td>
-            <td className='fourth'><RectangleButton width='60px' height='30px'><AiOutlineSearch /></RectangleButton></td>
+            <td className='fourth'><Link to={`/inspect/ward/${props.data._id}`} target="_blank" rel="noopener noreferrer"><RectangleButton width='60px' height='30px'><AiOutlineSearch /></RectangleButton></Link></td>
         </tr>
     )
 }

@@ -34,9 +34,9 @@ export function UserPanchayathInstitutePage() {
   useEffect(
     () => {
       const onLoad = async () => {
-        if (user.wardOId) {
+        if (user.panchayathOId) {
           try {
-            if (user.wardOId) {
+            if (user.panchayathOId) {
               setIsLoaded(false)
               const res = await axios.get(`${SERVER_ADDRESS}/user/getInstitutesByPanchayathId/${user.panchayathOId}`, { headers: { 'u-auth-token': getUserToken() }, params: { key: '' } })
               setInsitutes(res.data.institutes);

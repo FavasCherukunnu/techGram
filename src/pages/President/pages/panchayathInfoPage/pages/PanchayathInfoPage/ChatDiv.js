@@ -13,7 +13,7 @@ export function ChatDiv1(props) {
     () => {
       const onLoad = async () => {
         try {
-          const res = await axios.get(`${SERVER_ADDRESS}/user/getGallaryPostsByPanchayath`, { headers: { 'u-auth-token': getUserToken() }, params: { panchayathOId:user.panchayathOId,wardOId:user.wardOId } })
+          const res = await axios.get(`${SERVER_ADDRESS}/user/getGallaryPostsByPanchayath`, { headers: { 'u-auth-token': getUserToken() }, params: { panchayathOId:user.panchayathOId } })
           setPosts(res.data.posts);
         } catch (err) {
           console.log(err);

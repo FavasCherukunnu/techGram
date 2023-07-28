@@ -16,13 +16,13 @@ function ProjectDiv(props) {
   const userCont = useContext(UserContext);
   const [isLoaded, setIsLoaded] = useState(false);
   const user = userCont.user;
-  console.log('rebuilding chat div');
+  console.log('rebuilding project div');
 
   useEffect(
     () => {
       const onLoad = async () => {
         try {
-          if (user.wardOId) {
+          if (user.panchayathOId) {
             setIsLoaded(false)
             const res = await axios.get(`${SERVER_ADDRESS}/user/getProjectByPanchayath/${user.panchayathOId}`, { headers: { 'u-auth-token': getUserToken() }, params: { key: '' ,wardOId:''} })
             setProjects(res.data.projects);
@@ -39,7 +39,7 @@ function ProjectDiv(props) {
       }
       onLoad();
     }
-    , [user.wardOId, props.updateUi]
+    , [user.panchayathOId, props.updateUi]
   )
   return (
     <>

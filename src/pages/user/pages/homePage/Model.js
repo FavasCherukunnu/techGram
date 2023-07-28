@@ -124,22 +124,26 @@ export function ShowDiscussionmodel(props) {
                                 </div>
                     }
                 </Modal.Body>
-                <Modal.Footer>
-                    <div className='user_wardInfo_homePage_discussion_footerDiv'>
+                {userData.inspect === true
+                    ?
+                    null
+                    :
+                    <Modal.Footer>
+                        <div className='user_wardInfo_homePage_discussion_footerDiv'>
 
-                        <div className='user_wardInfo_homePage_discussion_footerDiv_inputDiv'>
-                            <PitTextAreaLabelled padding='0px' rows={3} placeholder='Enter Your Openion' error={errors['description']} reg={register('description', {
-                                required: {
-                                    message: "cannot be empty",
-                                    value: true
-                                },
-                            })} ></PitTextAreaLabelled>
+                            <div className='user_wardInfo_homePage_discussion_footerDiv_inputDiv'>
+                                <PitTextAreaLabelled padding='0px' rows={3} placeholder='Enter Your Openion' error={errors['description']} reg={register('description', {
+                                    required: {
+                                        message: "cannot be empty",
+                                        value: true
+                                    },
+                                })} ></PitTextAreaLabelled>
+                            </div>
+                            <RectangleButton onClick={handleSubmit(onSubmit)} height='40px' width='70px'>
+                                Sent
+                            </RectangleButton>
                         </div>
-                        <RectangleButton onClick={handleSubmit(onSubmit)} height='40px' width='70px'>
-                            Sent
-                        </RectangleButton>
-                    </div>
-                </Modal.Footer>
+                    </Modal.Footer>}
             </Modal>
         </>
     );
