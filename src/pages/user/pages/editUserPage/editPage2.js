@@ -254,7 +254,7 @@ const Editpage2 = (props) => {
 
     // formData.dataTimeNow = 
     try {
-      await axios.post(`${SERVER_ADDRESS}/user/editUser`, form, { headers: { 'u-auth-token': getUserToken() } }).then((res) => {
+      await axios.post(`${SERVER_ADDRESS}/user/dev/editUser`, form, { headers: { 'u-auth-token': getUserToken() } }).then((res) => {
         navigate('../home');
       })
     } catch (err) {

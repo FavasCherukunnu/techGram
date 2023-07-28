@@ -67,7 +67,7 @@ const SignupPage = () => {
 
     // formData.dataTimeNow = 
     try {
-      await axios.post(`${SERVER_ADDRESS}/user/register`, form).then((res) => {
+      await axios.post(`${SERVER_ADDRESS}/user/dev/register`, form).then((res) => {
         // localStorage.setItem('u-auth-token', res.data.token);
         navigate('/login');
       })

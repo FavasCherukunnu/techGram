@@ -6,7 +6,7 @@ import React from 'react'
 import { Button } from 'react-bootstrap';
 import { IconButton, IconButtonWIthText, IconButtonWIthText2 } from '../../../../components/iconButton';
 import { ShowDiscussionmodel } from './Model';
-import { CarouselImage, PostImage } from '../../../../components/imageLoading';
+import { AvatarImageCompressed, CarouselImage, PostImage } from '../../../../components/imageLoading';
 import Carousel from 'react-bootstrap/Carousel';
 import ShowMore from 'react-show-more-button/dist/module';
 import { PlaneButton3 } from '../../../../components/planeButton3';
@@ -122,8 +122,9 @@ export function PostTemplate(props) {
   return (
     <div className='user_postTemplate_outerDiv'>
       <div className='user_postTemplate_innerDiv'>
-        <div className='user_postTemplate_autherDiv'>
-          <p>{post.owner.fullName}</p>
+        <div className='user_postTemplate_autherDiv1'>
+          <AvatarImageCompressed dId={`discussion${props.index}${post.owner._id}`} id={post.owner._id} height='50px' width='50px'/>
+          <div className='user_postTemplate_autherDiv_text'>{post.owner.fullName}</div>
         </div>
         <div className='user_postTemplate_contenDiv'>
           {post.images.length > 0 ? <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
@@ -217,7 +218,9 @@ export function PostTemplateWithCarousel(props) {
   }
 
   return (
-    <div className='user_postTemplate_outerDiv' >
+    <div className='user_carosolPost_outerDiv' >
+      <AvatarImageCompressed height='50px' width='50px' dId={`post-${props.index}${props.value.owner._id}`} id={props.value.owner._id}></AvatarImageCompressed>
+      <div className='user_CarouselPost_OwnerName'>{props.value.owner.fullName}</div>
       <div className='user_CarouselPost_outerDiv'>
         <div className='user_CarouselPost_ImageInnerDiv'>
           <Carousel interval={null}>

@@ -17,7 +17,7 @@ export function AvatarImage(props) {
         setIsLoaded(false);
         try {
             // console.log((await axios.get(`${SERVER_ADDRESS}/user/getProfileImageById/${props.id}`,{headers:{'u-auth-token':getUserToken()}})).data.image.image.data.data)
-            let blob = new Blob([new Uint8Array((await axios.get(`${SERVER_ADDRESS}/user/getProfileImageById/${props.id}`, { headers: { 'u-auth-token': getUserToken() } })).data.image.image.data.data)]);
+            let blob = new Blob([new Uint8Array((await axios.get(`${SERVER_ADDRESS}/user/getProfileImageById/${props.id}`, { headers: { 'u-auth-token': getUserToken() } })).data.image.data.data)]);
             const imageUrl = URL.createObjectURL(blob);
             imageElement.style.backgroundImage = `url(${imageUrl})`
             imageElement.onload = () => URL.revokeObjectURL(imageUrl)
@@ -50,6 +50,97 @@ export function AvatarImage(props) {
         </div>
     );
 }
+
+export function AvatarImage1(props) {
+
+    const [image, setImage] = useState();
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [errText,setErrText] = useState('');
+    const loadImage = async () => {
+        const imageElement = document.getElementById(props.dId ? props.dId : 'id123');
+        imageElement.style.backgroundImage = ''
+        setIsLoaded(false);
+        try {
+            // console.log((await axios.get(`${SERVER_ADDRESS}/user/getProfileImageById/${props.id}`,{headers:{'u-auth-token':getUserToken()}})).data.image.image.data.data)
+            let blob = new Blob([new Uint8Array((await axios.get(`${SERVER_ADDRESS}/user/getImageById/${props.id}`, { headers: { 'u-auth-token': getUserToken() } })).data.image.data.data)]);
+            const imageUrl = URL.createObjectURL(blob);
+            imageElement.style.backgroundImage = `url(${imageUrl})`
+            imageElement.onload = () => URL.revokeObjectURL(imageUrl)
+            setErrText('');
+            // setImage(res.data.image.image)
+        } catch (err) {
+            console.log(err);
+            let msg = checkLoggedIn(err);
+            if(msg){
+                setErrText(msg);
+            }
+        }
+        setIsLoaded(true)
+    }
+
+    useEffect(
+        () => {
+            loadImage();
+        }
+        , [props.id]
+    )
+
+    return (
+        <div key={props.dId} id={props.dId ? props.dId : 'id123'} className='component_AvatarImage_AvatarOuter' style={{
+            minHeight: props.height, maxHeight: props.height, minWidth: props.width, maxWidth: props.width, height: props.height, width: props.width
+        }}>{
+                isLoaded === true ? errText?<div>{errText}</div>:null : <SimpleLoadingScreen />
+            }
+
+        </div>
+    );
+}
+
+export function AvatarImageCompressed(props) {
+
+    const [image, setImage] = useState();
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [errText,setErrText] = useState('');
+    const loadImage = async () => {
+        const imageElement = document.getElementById(props.dId ? props.dId : 'id123');
+        imageElement.style.backgroundImage = ''
+        setIsLoaded(false);
+        try {
+            // console.log((await axios.get(`${SERVER_ADDRESS}/user/getProfileImageById/${props.id}`,{headers:{'u-auth-token':getUserToken()}})).data.image.image.data.data)
+            let blob = new Blob([new Uint8Array((await axios.get(`${SERVER_ADDRESS}/user/getCompressedProfileImageById/${props.id}`, { headers: { 'u-auth-token': getUserToken() } })).data.image.compressedData.data)]);
+            const imageUrl = URL.createObjectURL(blob);
+            imageElement.style.backgroundImage = `url(${imageUrl})`
+            imageElement.onload = () => URL.revokeObjectURL(imageUrl)
+            setErrText('');
+            // setImage(res.data.image.image)
+        } catch (err) {
+            console.log(err);
+            let msg = checkLoggedIn(err);
+            if(msg){
+                setErrText(msg);
+            }
+        }
+        setIsLoaded(true)
+    }
+
+    useEffect(
+        () => {
+            loadImage();
+        }
+        , [props.id]
+    )
+
+    return (
+        <div key={props.dId} id={props.dId ? props.dId : 'id123'} className='component_AvatarImage_AvatarImageCompressed' style={{
+            minHeight: props.height, maxHeight: props.height, minWidth: props.width, maxWidth: props.width, height: props.height, width: props.width
+        }}>{
+                isLoaded === true ? errText?<div>{errText}</div>:null : <SimpleLoadingScreen />
+            }
+
+        </div>
+    );
+}
+
 
 export function PostImage(props) {
 

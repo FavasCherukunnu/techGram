@@ -39,7 +39,7 @@ export function ChatDiv1(props) {
       {
         posts.map(
           (post, index) => {
-            return <PostTemplateWithCarousel key={index} value={post} />
+            return <PostTemplateWithCarousel index={index} key={index} value={post} />
           }
         )
       }

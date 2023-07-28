@@ -5,7 +5,7 @@ import { RectangleButton } from '../../../../components/buttonRectangle';
 import { useNavigate } from 'react-router-dom';
 import { SERVER_ADDRESS } from '../../../../staticFiles/constants';
 import { getUserToken } from '../../../../staticFiles/functions';
-import { AvatarImage } from '../../../../components/imageLoading';
+import { AvatarImage, AvatarImage1 } from '../../../../components/imageLoading';
 
 export function EditMemberPage() {
 
@@ -42,7 +42,7 @@ export function EditMemberPage() {
   return (
     <div className='EditUserPage_outerDiv'>
       <div>
-      <AvatarImage height='200px' width='200px' id={userData._id}/>
+      <AvatarImage1 height='200px' width='200px' id={userData.image1}/>
 
       </div>
       <div className='EditUserPage_formDiv'>

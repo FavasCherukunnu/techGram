@@ -193,8 +193,8 @@ export function RouterHandler() {
                                 <Route path="" element={<MemberUserRegistration />} />
                             </Route>
                         </Route>
-                        <Route path="editProfile" element={<EditMemberpage2 />} />
-                        <Route path="editUser" element={<EditMemberPage />} />
+                        <Route path="editProfile" element={<Editpage2 />} />
+                        <Route path="editUser" element={<EditUserPage />} />
                     </Route>
                     <Route path="president">
                         <Route path="home" element={<PresidentHomePage />}>
@@ -232,8 +232,8 @@ export function RouterHandler() {
                                 <Route path="" element={<PresidentUserRegistration />} />
                             </Route>
                         </Route>
-                        <Route path="editProfile" element={<EditPresidentpage2 />} />
-                        <Route path="editUser" element={<EditPresidentPage />} />
+                        <Route path="editProfile" element={<Editpage2 />} />
+                        <Route path="editUser" element={<EditUserPage />} />
                     </Route>
                 </Route>
                 <Route path="*" element={<ForNotFor />} />

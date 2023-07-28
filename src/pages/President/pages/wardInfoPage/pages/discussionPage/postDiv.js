@@ -41,7 +41,7 @@ function PostDiv(props) {
                     {
                         posts.map(
                             (post, index) => {
-                                return <PostTemplate key={index} value={post} />
+                                return <PostTemplate index={index} key={index} value={post} />
                             }
                         )
                     }

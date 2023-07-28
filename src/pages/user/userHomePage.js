@@ -39,7 +39,7 @@ export default function UserHomePage() {
         dob: { day: '', month: '', year: '' },
         adharNo: '',
         dataTimeNow: '',
-        image: { data: { data: '' }, contentType: '' }
+        image: { data: { data: '' }, contentType: '' },
     });
     const memoUserData = useMemo(() => userData)
     function ReturnexpandedButton() {

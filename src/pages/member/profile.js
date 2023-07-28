@@ -2,7 +2,7 @@ import React from 'react';
 import './profile.css';
 import { PlaneButton } from '../../components/planeButton';
 import { useNavigate } from 'react-router-dom';
-import { AvatarImage } from '../../components/imageLoading';
+import { AvatarImage, AvatarImage1 } from '../../components/imageLoading';
 
 const ProfileComponent = (props) => {
   const userData = props.userData;
@@ -16,7 +16,7 @@ const ProfileComponent = (props) => {
   return (
     <div className='profile_Container'>
       <div className='user_profile_avatarDiv' >
-        <AvatarImage dId='sideProfileAvatar' id={userData._id} height='100%' width='100%' />
+        <AvatarImage1 dId='sideProfileAvatar' id={userData.image1} height='100%' width='100%' />
       </div>
       <p className='profile_profileName'>{userData.fullName}</p>
       <div style={{ margin: '10px' }}>

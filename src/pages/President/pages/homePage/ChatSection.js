@@ -36,7 +36,7 @@ function PostSection(props) {
             {
                 posts.map(
                     (post, index) => {
-                        return <PostTemplateWithCarousel height='500px' key={index} value={post} />
+                        return <PostTemplateWithCarousel index={index} height='500px' key={index} value={post} />
                     }
                 )
             }
