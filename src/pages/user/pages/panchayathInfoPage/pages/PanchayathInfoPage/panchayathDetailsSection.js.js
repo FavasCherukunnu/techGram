@@ -17,8 +17,9 @@ export function PanchayathDetailsSection() {
   const userCont = useContext(UserContext);
   const [showModel, setShowModal] = useState(false);
   const user = userCont.user;
-  const [panchayathDetails,setPanchayathDetails] = useState({})
+  const [panchayathDetails, setPanchayathDetails] = useState({})
   const [selectedUserId, setSelectedUserId] = useState(null)
+  const [wards, setWards] = useState([])
 
   function onViewPress(userId) {
     setSelectedUserId(userId);
@@ -29,20 +30,22 @@ export function PanchayathDetailsSection() {
   }
 
   useEffect(
-    ()=>{
-      const loadWard = async ()=>{
+    () => {
+      const loadWard = async () => {
 
-        try{
+        try {
           const res = await axios.get(
-            `${SERVER_ADDRESS}/user/getPanchayathByPanchayathOId/${user.panchayathOId}`,{headers:{'u-auth-token':getUserToken()}}
+            `${SERVER_ADDRESS}/user/getPanchayathByPanchayathOId/${user.panchayathOId}`, { headers: { 'u-auth-token': getUserToken() } }
           );
           setPanchayathDetails(res.data.panchayath);
-        }catch(err){
+          const res1 = await axios.get(`${SERVER_ADDRESS}/user/searchWard`, { headers: { 'u-auth-token': getUserToken() }, params: { key: '', panchayathOId: user.panchayathOId } })
+          setWards(res1.data?.wards)
+        } catch (err) {
           console.log(err);
         }
       }
       loadWard();
-    },[user.wardOId]
+    }, [user.wardOId]
   )
 
   return (
@@ -51,29 +54,32 @@ export function PanchayathDetailsSection() {
         <AvatarImage id={panchayathDetails?.president?._id} dId={'thisissaample'} height='100%' width='100%' />
       </div>
       <p className='user_PanchayathInfo_PanchayathDetails_memberName'>{panchayathDetails?.president?.fullName}</p>
-      <PlaneButton onClick={()=>{onViewPress(panchayathDetails.president?._id)}}>Show more</PlaneButton>
-      <PanchayathDetailsTable details={panchayathDetails}/>
+      <PlaneButton onClick={() => { onViewPress(panchayathDetails.president?._id) }}>Show more</PlaneButton>
+      <PanchayathDetailsTable details={panchayathDetails} />
       <div className='user_panchayathDetails_panchayathInfo_detailsSection'>
         <ExpandListHeader title="Members">
-          <ListGroup>
-            <ListGroup.Item action variant="light">Krishi Bhavan</ListGroup.Item>
-          </ListGroup>
+          {
+            wards.map(
+              (ward) => {
+                return (
+                  <ListGroup>
+                    <ListGroup.Item action variant="light">
+                      <div className='userPanchayathInstitute_listOuter'>
+                        <div>
+                          {ward.member.fullName}
+                        </div>
+                        <div className='innerWardText'>
+                          {ward.wardNo}
+                        </div>
+                      </div>
+                    </ListGroup.Item>
+                  </ListGroup>)
+              }
+            )
+          }
+
         </ExpandListHeader>
-        <ExpandListHeader title="Standing Committe">
-          <ListGroup>
-            <ListGroup.Item action variant="light">Krishi Bhavan</ListGroup.Item>
-          </ListGroup>
-        </ExpandListHeader>
-        <ExpandListHeader title="Govt Employees">
-          <ListGroup>
-            <ListGroup.Item action variant="light">Krishi Bhavan</ListGroup.Item>
-          </ListGroup>
-        </ExpandListHeader>
-        <ExpandListHeader title="Asha Workers">
-          <ListGroup>
-            <ListGroup.Item action variant="light">Krishi Bhavan</ListGroup.Item>
-          </ListGroup>
-        </ExpandListHeader>
+
       </div>
       {/* <NotificatonTemplate /> */}
       <ShowUsermodel selectedUserId={selectedUserId} show={showModel} onClose={onCloseModel} />

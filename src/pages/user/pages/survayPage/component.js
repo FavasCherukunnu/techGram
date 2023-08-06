@@ -7,7 +7,7 @@ import { UserContext } from "../../userHomePage";
 import { SERVER_ADDRESS } from "../../../../staticFiles/constants";
 import axios from "axios";
 import { getUserToken } from "../../../../staticFiles/functions";
-import { SurvayTemplate } from "../../../President/pages/LocatePage/component";
+import { SurvayTemplate1 } from "../../../President/pages/LocatePage/component";
 
 function buildStart() {
 
@@ -33,7 +33,7 @@ export function SurvayList(props) {
             const loadPanchayath = async () => {
                 if (user.panchayathOId) {
                     try {
-                        const res = await axios.get(`${SERVER_ADDRESS}/user/getAllPanchayathSorted`, { headers: { 'u-auth-token': getUserToken() }, params: { key: props.sortValue ,searchString:props.searchString} });
+                        const res = await axios.get(`${SERVER_ADDRESS}/user/getAllPanchayath`, { headers: { 'u-auth-token': getUserToken() }, params: { key:props.key1 } });
                         setpanchayath(res.data.panchayaths);
 
                     } catch (err) {
@@ -42,7 +42,7 @@ export function SurvayList(props) {
                 }
             }
             loadPanchayath();
-        }, [user.panchayathOId,props.sortValue,props.searchString]
+        }, [user.panchayathOId,props.sortValue,props.key1]
     )
     return (
         <div className='user_survay_survayList_outerDiv'>
@@ -50,13 +50,12 @@ export function SurvayList(props) {
                 <tr>
                     <th className='h_first'>No</th>
                     <th className='h_second'>Panchayath Name</th>
-                    <th className='h_third'>{props.sortValue==='1'?'Rating':'Solve Rate'}</th>
                     <th className='h_fourth'></th>
                 </tr>
                 {
                     panchayath.map(
                         (panchayath, index) => {
-                            return <SurvayTemplate sortValue={props.sortValue} data={panchayath} index={index + 1} />;
+                            return <SurvayTemplate1 sortValue={props.sortValue} data={panchayath} index={index + 1} />;
                         }
                     )
                 }

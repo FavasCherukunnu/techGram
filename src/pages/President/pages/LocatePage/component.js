@@ -18,8 +18,18 @@ export function SurvayTemplate(props) {
     return (
         <tr className='user_survay_survayList_template'>
             <td className='first'>{props.index}</td>
-            <td className='second'>{props.data.title}</td>
+            <td className='second'>{props.data.panchayath}</td>
             <td className='third'><div className='intra'><div>{rating}</div>{props.sortValue ==='1'?buildStart(rating):null}</div></td>
+            <td className='fourth'><Link to={`/inspect/panchayath/${props.data._id}`} target="_blank" rel="noopener noreferrer"><RectangleButton width='60px' height='30px'><AiOutlineSearch /></RectangleButton></Link></td>
+        </tr>
+    )
+}
+export function SurvayTemplate1(props) {
+    const rating = props.sortValue ==='1'?Math.round(props.data.averageRating*100)/100:Math.round(props.data.solveRate*100)/100;
+    return (
+        <tr className='user_survay_survayList_template'>
+            <td className='first'>{props.index}</td>
+            <td className='second'>{props.data.panchayath}</td>
             <td className='fourth'><Link to={`/inspect/panchayath/${props.data._id}`} target="_blank" rel="noopener noreferrer"><RectangleButton width='60px' height='30px'><AiOutlineSearch /></RectangleButton></Link></td>
         </tr>
     )

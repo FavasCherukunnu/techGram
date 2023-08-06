@@ -147,8 +147,8 @@ export function RouterHandler() {
                                 <Route path="Survay" element={<UserPanchayathSurvayPage />} />
                                 <Route path="Institutes" element={<UserPanchayathInstitutePage />} />
                             </Route>
-                            <Route path="locate" element={<UserLocatePage />} />
-                            <Route path="survay" element={<UserSurvayPage />} />
+                            <Route path="locate" element={<UserSurvayPage />} />
+                            <Route path="survay" element={<UserLocatePage />} />
                         </Route>
                         <Route path="editProfile" element={<Editpage2 />} />
                         <Route path="editUser" element={<EditUserPage />} />
@@ -188,8 +188,8 @@ export function RouterHandler() {
                                 <Route path="Survay" element={<UserPanchayathSurvayPage />} />
                                 <Route path="Institutes" element={<UserPanchayathInstitutePage />} />
                             </Route>
-                            <Route path="locate" element={<UserLocatePage />} />
-                            <Route path="survay" element={<MemberSurvayPage />} />
+                            <Route path="locate" element={<UserSurvayPage />} />
+                            <Route path="survay" element={<UserLocatePage />} />
                             <Route path="complaints" element={<MemberOnlyComplaintPage />} />
                             <Route path="User Registration" element={<MemberUserRegistration />} >
                                 <Route path="" element={<MemberUserRegistration />} />
@@ -222,8 +222,8 @@ export function RouterHandler() {
                                 <Route path="Survay" element={<UserPanchayathSurvayPage />} />
                                 <Route path="Institutes" element={<PresidentPanchayathInstitutePage />} />
                             </Route>
-                            <Route path="locate" element={<UserLocatePage />} />
-                            <Route path="survay" element={<PresidentSurvayPage />} />
+                            <Route path="locate" element={<UserSurvayPage />} />
+                            <Route path="survay" element={<UserLocatePage />} />
                             <Route path="complaints" element={<PresidentOnlyComplaintPage />} />
                             <Route path="Member Registration" >
                                 <Route path="" element={<PresidentMemberRegistration />} />
