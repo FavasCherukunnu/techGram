@@ -43,6 +43,7 @@ export function ShowFormmodel(props) {
             setIsLoading(false);
             setShowApproveModel(false);
             props.onClose();
+            props.changeUi();
         } catch (err) {
             console.log(err);
             let res = checkLoggedIn(err);

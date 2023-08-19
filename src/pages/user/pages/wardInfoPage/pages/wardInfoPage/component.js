@@ -6,7 +6,7 @@ export function WardDetailsTable(props) {
   const { details } = props
   return (
     <table className='user_wardInfo_wardDetails_table'>
-      {details.title?
+      {details?.title?
         <tr>
           <td className='first'>Title</td>
           <td className='second'>{details?.title}</td>

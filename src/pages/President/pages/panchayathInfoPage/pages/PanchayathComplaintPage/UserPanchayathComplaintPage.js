@@ -6,13 +6,13 @@ import { useState } from 'react';
 import { DropdownTop } from '../../../../../user/pages/wardInfoPage/pages/complaintPage/component';
 // import { ComplaintSection } from './ComplaintDiv'
 
-export function PresidentPanchayathComplaintPage() {
+export function PresidentPanchayathComplaintPage(props) {
   const [listValue, setListValue] = useState(-1);
   const onListDropdownChange = (val) => {
     setListValue(val);
   }
   return (
-    <UnderNavigationOuterDiv>
+    <UnderNavigationOuterDiv height={props.isMain?'100%':null}>
       <DropdownTop onListDropdownChange={onListDropdownChange} />
 
       <DivScrollableWithGeasture height='calc(100% - 50px)'>

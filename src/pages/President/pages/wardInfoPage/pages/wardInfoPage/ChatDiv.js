@@ -29,7 +29,7 @@ export function ChatDiv1(props) {
       }
       onLoad();
     }
-    , [user.wardOId]
+    , [user.wardOId,props.updateUi]
   )
 
   return (

@@ -4,6 +4,7 @@ import { DropdownTop } from './component'
 import { ComplaintSection } from './ComplaintDiv'
 
 export function PresidentOnlyComplaintPage() {
+  
   return (
     <UnderNavigationOuterDiv height='100%'>
       <DropdownTop/>

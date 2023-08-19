@@ -190,7 +190,7 @@ export function RouterHandler() {
                             </Route>
                             <Route path="locate" element={<UserSurvayPage />} />
                             <Route path="survay" element={<UserLocatePage />} />
-                            <Route path="complaints" element={<MemberOnlyComplaintPage />} />
+                            <Route path="complaints" element={<PresidentComplaintPage />} />
                             <Route path="User Registration" element={<MemberUserRegistration />} >
                                 <Route path="" element={<MemberUserRegistration />} />
                             </Route>
@@ -224,7 +224,7 @@ export function RouterHandler() {
                             </Route>
                             <Route path="locate" element={<UserSurvayPage />} />
                             <Route path="survay" element={<UserLocatePage />} />
-                            <Route path="complaints" element={<PresidentOnlyComplaintPage />} />
+                            <Route path="complaints" element={<PresidentPanchayathComplaintPage isMain/>} />
                             <Route path="Member Registration" >
                                 <Route path="" element={<PresidentMemberRegistration />} />
                                 <Route path="createWard" element={<CreateWard />} />
