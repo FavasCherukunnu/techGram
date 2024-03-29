@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { DivScrollableWithGeasture, DivScrollableWithGeastureP0, UnderNavigationOuterDiv } from '../../../../components/divisions'
-import './MemberUserRegistration.css'
+import './memberUserRegistration.css'
 import { SurvayList } from './component'
 import { UserContext } from '../../../user/userHomePage'
 import axios from 'axios'
